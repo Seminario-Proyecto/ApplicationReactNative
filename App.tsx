@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Clients from "./src/screens/Clients";
+import Clients from "./src/screens/users/Clients";
 import Order from "./src/screens/Order";
 import Reports from "./src/screens/Reports";
 import Icons from "react-native-vector-icons/AntDesign";
@@ -13,10 +13,11 @@ class App extends Component {
     <NavigationContainer>
       <Tab.Navigator
       screenOptions={({route}) => ({
+        
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           switch (route.name) {
-            case 'Clientes': {
+            case 'Usuarios': {
               if (focused) {
                 return <Icons name="smile-circle" size={23} color={MyColors.secondary} />;
               } else {
@@ -45,7 +46,7 @@ class App extends Component {
         },
       })}
       >
-        <Tab.Screen name="Clientes" component={Clients} />
+        <Tab.Screen name="Usuarios" component={Clients} />
         <Tab.Screen name="Pedidos" component={Order} />
         <Tab.Screen name="Reportes" component={Reports} />
       </Tab.Navigator>

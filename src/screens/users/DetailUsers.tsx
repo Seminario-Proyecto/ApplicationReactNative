@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import {View, Text} from "react-native"; 
-class Clients extends Component {
+class DetailUsers extends Component {
   render() {
     return (
         <View>
             <Text>
-                Clientes
+                Pedidos
             </Text>
         </View>
     )
   }
 }
-export default Clients;
+export default DetailUsers;
