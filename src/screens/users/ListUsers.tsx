@@ -3,7 +3,6 @@ import {View, Text, Platform, FlatList, StyleSheet} from "react-native";
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
-import DataContext from "../../context/dataContext";
 
 interface ItemUser{
   _id: string,
@@ -28,7 +27,6 @@ interface MyProps {
 }
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 class ListUsers extends Component<MyProps, MyState> {
-    static contextType = DataContext;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -67,15 +65,10 @@ class ListUsers extends Component<MyProps, MyState> {
       }
   }
   render() {
-      const {data} = this.context;
     return (
         <View style={styles.container}>
           <View>
-          {data && <Searchbar
-            placeholder="Search"
-            onChangeText={() => {}}
-            value=""
-          />}
+          
           </View>
           <View>
             <FlatList

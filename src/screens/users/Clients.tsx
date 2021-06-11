@@ -6,12 +6,11 @@ import {Appbar} from "react-native-paper"
 import ListUsers from "./ListUsers";
 import RegisterUsers from "./RegisterUsers";
 import DetailUsers from "./DetailUsers";
-import DataContext from "../../context/dataContext";
+import TakePicture from "./TakePicture";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 var Stack = createStackNavigator();
 class Clients extends Component<any, any> {
   test: any
-  static contextType = DataContext
   constructor(props: any) {
     super(props);
     this.state = {
@@ -20,23 +19,26 @@ class Clients extends Component<any, any> {
     
   }
   render() {
-    const {data, testFunction} = this.context;
     return (
         <NavigationContainer independent={true}>
           <Stack.Navigator>
-            <Stack.Screen name="list" component={ListUsers} options={() => ({
-              header:() => <Appbar.Header>
-              <Appbar.BackAction onPress={() => {}} />
-              <Appbar.Content title="Gestor de Usuarios" subtitle={'Gestión'} />
-              <Appbar.Action icon="magnify" onPress={() => {
-                console.log(data);
-                testFunction(!data);
-              }} />
-              <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
-            </Appbar.Header>
-            })}/> 
-            <Stack.Screen name="RegisterUsers" component={RegisterUsers}/>
+            <Stack.Screen name="list" component={ListUsers} options={() => (
+              {header: () => <Appbar.Header>
+                <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
+                 <Appbar.Action icon="magnify" onPress={() => {}} />
+                 <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
+             </Appbar.Header>}
+            )}/> 
+            <Stack.Screen name="RegisterUsers" component={RegisterUsers} options={() => (
+              {header: () => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
+             </Appbar.Header>}
+            )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers}/>
+            <Stack.Screen name="TakePicture" component={TakePicture}/>
           </Stack.Navigator>
         </NavigationContainer>
     )
