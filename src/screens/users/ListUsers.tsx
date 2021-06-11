@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
+import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
-import {Appbar, List, Avatar, FAB} from "react-native-paper";
+import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
+import DataContext from "../../context/dataContext";
+
 interface ItemUser{
   _id: string,
   username: string,
@@ -20,8 +23,12 @@ interface MyState {
 interface ItemData {
   item: ItemUser
 }
+interface MyProps {
+    navigation: StackNavigationProp<any, any>
+}
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
-class ListUsers extends Component<any, MyState> {
+class ListUsers extends Component<MyProps, MyState> {
+    static contextType = DataContext;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -32,19 +39,19 @@ class ListUsers extends Component<any, MyState> {
     var result: Array<ItemUser> = await axios.get<ServerResponse>("http://192.168.0.106:8000/api/users").then((item) => {
       return item.data.serverResponse
     });
-    this.props.navigation.setOptions({
-        tabBarVisible: false
-    });
     this.setState({
       dataUsers: result
     });
   }
-  listItem(params: ItemData) {
-      var item : ItemUser = params.item
+  listItem(item: ItemUser) {
+      //var item : ItemUser = params.item
       if (item.uriavatar == null) {
         return <List.Item
         title={item.username}
         description={item.email}
+        onPress={() => {
+            this.props.navigation.push("DetailUsers");
+        }}
         left={props => <List.Icon {...props} icon="incognito" />}
         />
       } else {
@@ -52,23 +59,29 @@ class ListUsers extends Component<any, MyState> {
         return <List.Item
                   title={item.username}
                   description={item.email}
+                  onPress={() => {
+                    this.props.navigation.push("DetailUsers");
+                }}
                   left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
         />
       }
   }
   render() {
+      const {data} = this.context;
     return (
         <View style={styles.container}>
-          <Appbar.Header>
-            <Appbar.Content title="Gestor de Usuarios" subtitle={'Gestión'} />
-            <Appbar.Action icon="magnify" onPress={() => {}} />
-            <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
-          </Appbar.Header>
+          <View>
+          {data && <Searchbar
+            placeholder="Search"
+            onChangeText={() => {}}
+            value=""
+          />}
+          </View>
           <View>
             <FlatList
               data={this.state.dataUsers}
               renderItem={({item}) => (
-                <this.listItem item={item}/>
+                this.listItem(item)
               )}
               keyExtractor={(item) => item._id}
             />

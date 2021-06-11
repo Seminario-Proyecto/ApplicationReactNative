@@ -5,7 +5,7 @@ class DetailUsers extends Component {
     return (
         <View>
             <Text>
-                Pedidos
+                Detalle
             </Text>
         </View>
     )
