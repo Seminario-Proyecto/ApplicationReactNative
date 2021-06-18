@@ -4,12 +4,19 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
 import AppContext from "../../context/AppContext"
-interface ItemUser{
+import {Types} from "../../context/ContantTypes"; 
+export interface IRoles {
+  _id: string,
+  name: string,
+  urn:  string,
+  method: string
+}
+export interface ItemUser{
   _id: string,
   username: string,
   email: string,
   registerdate: string,
-  roles: Array<any>,
+  roles: Array<IRoles>,
   pathavatar?: string,
   uriavatar?: string
 }
@@ -17,7 +24,9 @@ interface ServerResponse {
   serverResponse:Array<ItemUser>
 }
 interface MyState {
-  dataUsers: Array<ItemUser>
+  dataUsers: Array<ItemUser>,
+  completeList: Array<ItemUser>,
+  searchKey: string
 }
 interface ItemData {
   item: ItemUser
@@ -31,7 +40,9 @@ class ListUsers extends Component<MyProps, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      dataUsers: []
+      dataUsers: [],
+      searchKey : "",
+      completeList: []
     }
   }
   async componentDidMount() {
@@ -40,16 +51,19 @@ class ListUsers extends Component<MyProps, MyState> {
       return item.data.serverResponse
     });
     this.setState({
-      dataUsers: result
+      dataUsers: result,
+      completeList: result,
     });
   }
   listItem(item: ItemUser) {
+      const {dispatch} = this.context;
       //var item : ItemUser = params.item
       if (item.uriavatar == null) {
         return <List.Item
         title={item.username}
         description={item.email}
         onPress={() => {
+            dispatch({type: Types.CHANGEITEMUSER, payload: item});
             this.props.navigation.push("DetailUsers");
         }}
         left={props => <List.Icon {...props} icon="incognito" />}
@@ -60,11 +74,34 @@ class ListUsers extends Component<MyProps, MyState> {
                   title={item.username}
                   description={item.email}
                   onPress={() => {
+                    dispatch({type: Types.CHANGEITEMUSER, payload: item});
                     this.props.navigation.push("DetailUsers");
                 }}
                   left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
         />
       }
+  }
+  searchList(key: string) {
+    this.setState({
+      searchKey: key
+    });
+    var result: Array<ItemUser> = this.state.completeList.filter((item) => {
+      var regx = new RegExp(key, "i");
+      if (item.username.match(regx) != null) {
+        return true;
+      }
+      return false;
+    });
+    if (result.length == 0) {
+      // Buscar dentro del servidor
+      //Consumir una API. y poder revisar ese resltado en la base de datos
+
+    } else {
+      this.setState({
+        dataUsers: result
+      }); 
+    }
+    
   }
   render() {
     var {searchbarVisible} = this.context;
@@ -74,8 +111,11 @@ class ListUsers extends Component<MyProps, MyState> {
           {
             searchbarVisible && 
             <Searchbar
-            placeholder="Search"
-            value=""
+            placeholder="Buscar"
+            value={this.state.searchKey}
+            onChangeText={(msn) => {
+              this.searchList(msn);
+            }}
             />
           }
           </View>

@@ -35,14 +35,23 @@ class Clients extends Component<any, any> {
              </Appbar.Header>}
             )}/> 
             <Stack.Screen name="RegisterUsers" component={RegisterUsers} options={() => (
-              {header: () => <Appbar.Header>
+              {header: (navigate) => <Appbar.Header>
                 <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
                 <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
              </Appbar.Header>}
             )}/>
-            <Stack.Screen name="DetailUsers" component={DetailUsers}/>
+            <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
+              {header: (navigate) => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Datos de Usuario" subtitle={'Sistema de roles'} />
+             </Appbar.Header>}
+            )}/>
             <Stack.Screen name="TakePicture" component={TakePicture}/>
           </Stack.Navigator>
         </NavigationContainer>

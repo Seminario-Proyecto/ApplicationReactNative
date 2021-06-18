@@ -5,6 +5,12 @@ export interface ActionType {
 }
 export default (state: any, action: ActionType) => {
     switch (action.type) {
+        case Types.CHANGEITEMUSER: {
+            return {
+                ...state,
+                itemuser: action.payload
+            }
+        }
         case Types.CHANGEURI: {
             return {
                 ...state,
