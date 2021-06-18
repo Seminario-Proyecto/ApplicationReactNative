@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import {Button} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
+import AppContext from "../../context/AppContext";
 interface IParams {
     onTake: Function
 }
@@ -15,17 +16,19 @@ interface MyProps {
 }
 class TakePicture extends PureComponent<MyProps, any> {
    camera: any
+  static contextType = AppContext;
   constructor(props: MyProps) {
       super(props)
   }
   async takePicture() {
-      
+    const {changeUri} = this.context;
     if (this.camera) {
         const options = { quality: 0.5, base64: true };
         const data = await this.camera.takePictureAsync(options);
         //console.log(data.uri);
         console.log("Enter here " + data.uri);
-        this.props.route.params.onTake(data.uri);
+        changeUri(data.uri);
+        //this.props.route.params.onTake(data.uri);
         this.props.navigation.navigate("RegisterUsers");
       }
   }

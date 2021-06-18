@@ -3,7 +3,7 @@ import {View, Text, Platform, FlatList, StyleSheet} from "react-native";
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
-
+import AppContext from "../../context/AppContext"
 interface ItemUser{
   _id: string,
   username: string,
@@ -27,6 +27,7 @@ interface MyProps {
 }
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 class ListUsers extends Component<MyProps, MyState> {
+  static contextType = AppContext;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -34,6 +35,7 @@ class ListUsers extends Component<MyProps, MyState> {
     }
   }
   async componentDidMount() {
+    console.log(this.context);
     var result: Array<ItemUser> = await axios.get<ServerResponse>("http://192.168.0.106:8000/api/users").then((item) => {
       return item.data.serverResponse
     });
@@ -65,10 +67,17 @@ class ListUsers extends Component<MyProps, MyState> {
       }
   }
   render() {
+    var {searchbarVisible} = this.context;
     return (
         <View style={styles.container}>
           <View>
-          
+          {
+            searchbarVisible && 
+            <Searchbar
+            placeholder="Search"
+            value=""
+            />
+          }
           </View>
           <View>
             <FlatList

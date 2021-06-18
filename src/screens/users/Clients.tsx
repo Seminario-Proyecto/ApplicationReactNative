@@ -7,10 +7,12 @@ import ListUsers from "./ListUsers";
 import RegisterUsers from "./RegisterUsers";
 import DetailUsers from "./DetailUsers";
 import TakePicture from "./TakePicture";
+import AppContext from "../../context/AppContext";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 var Stack = createStackNavigator();
 class Clients extends Component<any, any> {
   test: any
+  static contextType = AppContext
   constructor(props: any) {
     super(props);
     this.state = {
@@ -19,13 +21,16 @@ class Clients extends Component<any, any> {
     
   }
   render() {
+    const {searchbarVisible, changeSearchBarVisible} = this.context;
     return (
         <NavigationContainer independent={true}>
           <Stack.Navigator>
             <Stack.Screen name="list" component={ListUsers} options={() => (
               {header: () => <Appbar.Header>
                 <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
-                 <Appbar.Action icon="magnify" onPress={() => {}} />
+                 <Appbar.Action icon="magnify" onPress={() => {
+                   changeSearchBarVisible(!searchbarVisible);
+                 }} />
                  <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
              </Appbar.Header>}
             )}/> 

@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from "react-native";
 import {TextInput, Button, Avatar} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
+import AppContext from "../../context/AppContext";
 interface ItemUser{
     username?: string,
     email?: string,
@@ -21,6 +22,7 @@ interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
 class RegisterUsers extends Component<MyProps, Mystate> {
+    static contextType = AppContext;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -79,8 +81,8 @@ class RegisterUsers extends Component<MyProps, Mystate> {
         })
     }
     showAvatar() {
-        if (this.state.isload) {
-            return <Avatar.Image size={150} source={{uri: this.state.pathImg}} />
+        if (this.context.uriphoto != "") {
+            return <Avatar.Image size={150} source={{uri: this.context.uriphoto}} />
         } else {
             return <Avatar.Image size={150} source={require('../../../assets/img/batman.png')} />
             
