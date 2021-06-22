@@ -1,43 +1,10 @@
 import React, { Component } from "react";
-import {View, Text} from "react-native"; 
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import ClientsRegulars from "./TopTab/ClientsRegulars";
-import ClientsPotencials from "./TopTab/ClientsPotencials";
-import Agend from "./TopTab/Agend";
-
-const TopTab = createMaterialTopTabNavigator();
-
-class Clients extends Component<any, any> {
- 
-  render() {
-    
-    return (
-         
-          <TopTab.Navigator>
-            <TopTab.Screen name="ClientsRegulars" component={ClientsRegulars}/>
-            <TopTab.Screen name="ClientsPotencials" component={ClientsPotencials}/>
-            <TopTab.Screen name="Agend" component={Agend}/>
-          </TopTab.Navigator>
-        
-          )
-}}
-export default Clients;
-
-
-
-
-
-
-
-
-
-/*import React, { Component } from "react";
 import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
-import AppContext from "../../context/AppContext"
-import {Types} from "../../context/ContantTypes"; 
+import AppContext from "../../../context/AppContext"
+import {Types} from "../../../context/ContantTypes"; 
 export interface IRoles {
   _id: string,
   name: string,
@@ -68,7 +35,7 @@ interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
-class ListUsers extends Component<MyProps, MyState> {
+class ClientsRegulars extends Component<MyProps, MyState> {
   static contextType = AppContext;
   constructor(props: any) {
     super(props);
@@ -184,4 +151,4 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 })
-export default ListUsers;*/
+export default ClientsRegulars;

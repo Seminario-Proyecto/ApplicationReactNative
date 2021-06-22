@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {View, Text, StyleSheet, Alert, FlatList} from "react-native";
 import AppContext from "../../context/AppContext";
-import {IRoles, ItemUser} from "./ListUsers"
+import {IRoles, ItemUser} from "./TopTab/ClientsRegulars"
 import { Avatar, Button, Card, Title, Paragraph , Chip, Searchbar, List} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
@@ -24,7 +24,7 @@ class DetailUsers extends Component<any, MyState> {
     }
   }
   async componentDidMount() {
-    var result: Array<IRoles> = await axios.get<ServerResponse>("http://192.168.0.106:8000/api/roles").then((item) => {
+    var result: Array<IRoles> = await axios.get<ServerResponse>("http://192.168.100.9:8000/api/roles").then((item) => {
       return item.data.serverResponse
     });
     this.setState({
@@ -44,7 +44,7 @@ class DetailUsers extends Component<any, MyState> {
         {
           itemuser.roles.map(item => {
             return <Chip icon="information" onPress={async () => {
-              var result: ItemUser = await axios.put<ServerResponsePutRoles>("http://192.168.0.106:8000/api/removerol/" + this.context.itemuser._id, {idRol: item._id}).then((item) => {
+              var result: ItemUser = await axios.put<ServerResponsePutRoles>("http://192.168.100.9:8000/api/removerol/" + this.context.itemuser._id, {idRol: item._id}).then((item) => {
                 return item.data.serverResponse;
               });
               dispatch({type: Types.CHANGEITEMUSER, payload: result});
@@ -61,7 +61,7 @@ class DetailUsers extends Component<any, MyState> {
       title={item.name}
       description={item.method}
       onPress={async () => {
-        var result: ItemUser = await axios.put<ServerResponsePutRoles>("http://192.168.0.106:8000/api/addrol/" + this.context.itemuser._id, {idRol: item._id}).then((item) => {
+        var result: ItemUser = await axios.put<ServerResponsePutRoles>("http://192.168.100.9:8000/api/addrol/" + this.context.itemuser._id, {idRol: item._id}).then((item) => {
           return item.data.serverResponse;
         });
           dispatch({type: Types.CHANGEITEMUSER, payload: result});
@@ -76,7 +76,7 @@ class DetailUsers extends Component<any, MyState> {
         <View style={styles.container}>
             <View>
               <Card>
-                <Card.Cover source={{ uri: 'http://192.168.0.106:8000' + itemuser.uriavatar }} />
+                <Card.Cover source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
                   <Card.Content>
                     <Title>{itemuser.username}</Title>
                     <Paragraph>El nombre de usuario es{itemuser.email} </Paragraph>

@@ -8,7 +8,9 @@ import RegisterUsers from "./RegisterUsers";
 import DetailUsers from "./DetailUsers";
 import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
+import Icons3 from "react-native-vector-icons/Foundation";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
+
 var Stack = createStackNavigator();
 class Clients extends Component<any, any> {
   test: any
@@ -27,12 +29,14 @@ class Clients extends Component<any, any> {
           <Stack.Navigator>
             <Stack.Screen name="list" component={ListUsers} options={() => (
               {header: () => <Appbar.Header>
-                <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
-                 <Appbar.Action icon="magnify" onPress={() => {
+                <Appbar.Action icon="alpha-r-box" size={40} />
+                <Appbar.Content title="ROCKABYE" subtitle={'Modulo Clientes'} />
+                 <Appbar.Action icon="magnify" size={30} onPress={() => {
                    changeSearchBarVisible(!searchbarVisible);
                  }} />
+                 
                  <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
-             </Appbar.Header>}
+             </Appbar.Header >}
             )}/> 
             <Stack.Screen name="RegisterUsers" component={RegisterUsers} options={() => (
               {header: (navigate) => <Appbar.Header>
@@ -40,7 +44,7 @@ class Clients extends Component<any, any> {
                   navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
-                <Appbar.Content title="Gestor de Usuarios" subtitle={'Sistema de Roles'} />
+                <Appbar.Content title="Registro de Clientes" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
@@ -49,7 +53,7 @@ class Clients extends Component<any, any> {
                   navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
-                <Appbar.Content title="Datos de Usuario" subtitle={'Sistema de roles'} />
+                <Appbar.Content title="Datos del Cliente" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="TakePicture" component={TakePicture}/>

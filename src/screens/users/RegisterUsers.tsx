@@ -36,7 +36,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
         if (this.state.password != this.state.repassword) {
             return;
         }
-        var result: any = await axios.post<ItemUser, AxiosResponse<any>>("http://192.168.0.106:8000/api/users", this.state)
+        var result: any = await axios.post<ItemUser, AxiosResponse<any>>("http://192.168.100.9:8000/api/users", this.state)
         .then((response) => {
             return response.data;
         });
@@ -47,8 +47,8 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             name: "avatar.jpg", 
             uri: this.state.pathImg, 
             type: "image/jpg"});
-            console.log("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id)
-            fetch("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id, {
+            console.log("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id)
+            fetch("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id, {
                 method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data"
