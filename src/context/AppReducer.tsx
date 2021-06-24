@@ -23,6 +23,7 @@ export default (state: any, action: ActionType) => {
                 searchbarVisible: action.payload
             }
         }
+        
         default: {
             return state;
         }

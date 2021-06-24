@@ -3,13 +3,14 @@ import AppReducer, {ActionType} from "./AppReducer";
 import AppContext from "./AppContext";
 import {Types} from "./ContantTypes";
 import { AsyncStorage } from "react-native";
-import {ItemUser} from "../screens/users/ListUsers"
+import {ItemUser} from "../screens/users/TopTab/ClientsRegulars"
 // Es el conjunto de datos
 const DataState = (props: any) => {
     const initialState = {
         searchbarVisible: false,
         uriphoto: "",
-        itemuser: {}
+        itemuser: {},
+        changeswitchValue: false,
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);
     const changeSearchBarVisible = (value: Boolean) => {
@@ -18,6 +19,8 @@ const DataState = (props: any) => {
     const changeUri = (value: string) => {
         dispatch({type: Types.CHANGEURI, payload: value});
     }
+
+    
     
     return (
         <AppContext.Provider value={{
@@ -26,7 +29,8 @@ const DataState = (props: any) => {
         uriphoto: state.uriphoto, 
         changeUri, 
         dispatch,
-        itemuser: state.itemuser}}>
+        itemuser: state.itemuser,
+         }}>
             {props.children}
         </AppContext.Provider>
     )
