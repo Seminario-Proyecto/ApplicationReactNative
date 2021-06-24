@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text} from "react-native"; 
+import {View, Text, StyleSheet} from "react-native"; 
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ClientsRegulars from "./TopTab/ClientsRegulars";
 import ClientsPotencials from "./TopTab/ClientsPotencials";
@@ -12,15 +12,19 @@ class Clients extends Component<any, any> {
   render() {
     
     return (
+          
+          <TopTab.Navigator >
+        
+              <TopTab.Screen name="Clientes Regulares" component={ClientsRegulars}/>
+              <TopTab.Screen name="Clientes Potenciales" component={ClientsPotencials}/>
+              <TopTab.Screen name="Agenda" component={Agend}/>
          
-          <TopTab.Navigator>
-            <TopTab.Screen name="ClientsRegulars" component={ClientsRegulars}/>
-            <TopTab.Screen name="ClientsPotencials" component={ClientsPotencials}/>
-            <TopTab.Screen name="Agend" component={Agend}/>
           </TopTab.Navigator>
+          
         
           )
 }}
+
 export default Clients;
 
 
