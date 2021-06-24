@@ -9,8 +9,6 @@ import DataState from "./src/context/AppState"
 import { NavigationEvents } from "react-navigation";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 var Stack = createStackNavigator();
-
-
 class App extends Component<any, any> {
   constructor(props: any) {
     super(props);

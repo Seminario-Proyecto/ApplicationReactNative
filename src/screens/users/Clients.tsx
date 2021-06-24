@@ -8,6 +8,8 @@ import RegisterUsers from "./RegisterUsers";
 import DetailUsers from "./DetailUsers";
 import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
+import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";
+import RegisterUsersPotenciales from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
 import Icons3 from "react-native-vector-icons/Foundation";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
@@ -47,7 +49,25 @@ class Clients extends Component<any, any> {
                 <Appbar.Content title="Registro de Clientes" />
              </Appbar.Header>}
             )}/>
+            <Stack.Screen name="RegisterUsersPotenciales" component={RegisterUsersPotenciales} options={() => (
+              {header: (navigate) => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Registro de Clientes" />
+             </Appbar.Header>}
+            )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
+              {header: (navigate) => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Datos del Cliente" />
+             </Appbar.Header>}
+            )}/>
+            <Stack.Screen name="DetailUsersPotenciales" component={DetailUsersPotenciales} options={() => (
               {header: (navigate) => <Appbar.Header>
                 <Appbar.BackAction onPress={() => {
                   navigate.navigation.pop();
