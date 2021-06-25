@@ -64,6 +64,7 @@ class Agenda extends Component<MyProps, MyState> {
           <FAB
             style={styles.fab}
             small={false}
+            label=" Agendar Nueva Reunion"
             icon="plus"
             onPress={() => {
                 this.props.navigation.push("RegisterAgenda");
