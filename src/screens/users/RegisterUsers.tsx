@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet} from "react-native"; 
+import {View, Text, StyleSheet, Alert} from "react-native"; 
 import {TextInput, Button, Avatar} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../context/AppContext";
+import ButtonRadio from "../../Components/ButtonRadio";
 interface ItemUser{
     username?: string,
     email?: string,
-    tipo?: string,
+    tipo: string,
     password?: string,
     repassword?: string
   }
@@ -38,11 +39,13 @@ class RegisterUsers extends Component<MyProps, Mystate> {
         if (this.state.password != this.state.repassword) {
             return;
         }
+        console.log("aqui  "+this.state)
         var result: any = await axios.post<ItemUser, AxiosResponse<any>>("http://192.168.100.9:8000/api/users", this.state)
         .then((response) => {
             return response.data;
         });
-        console.log(result);
+       console.log(this.state.pathImg);
+        //console.log("debug2 "+this.state.username+" "+this.state.email+" "+this.state.tipo+" "+this.state.password);
         if (this.state.isload) {
             var data = new FormData();
             data.append("avatar", {
@@ -52,7 +55,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             console.log("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id)
             fetch("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id, {
                 method: "POST",
-                headers: {
+                headers: { 
                     "Content-Type": "multipart/form-data"
                 },
                 body: data
@@ -72,8 +75,11 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             navigation.push("list");
             //console.log(result_img);
             */
+        }else{
+            this.showAvatar();
+            navigation.push("list");
         }
-        navigation.push("list");
+        
         
     }
     onTakePicture(path: string) {
@@ -108,6 +114,15 @@ class RegisterUsers extends Component<MyProps, Mystate> {
                     email: text
                 })
             }}/>
+            
+            <TextInput style={styles.txtStyles}
+            label="Tipo"
+            onChangeText={text => {   
+                this.setState({
+                    tipo: text
+                })
+            }}/>
+            
             <TextInput style={styles.txtStyles}
             label="Tipo"
             onChangeText={text => {   
@@ -133,6 +148,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
                 //this.checkandSendData();
                 this.props.navigation.push("TakePicture", {onTake: (params: string) => {
                     this.onTakePicture(params);
+                    console.log(params);
                 }});
             }}>
                 Tomar Foto

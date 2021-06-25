@@ -10,6 +10,7 @@ import axios from "axios";
 import {Types} from "../../context/ContantTypes"; 
 import { Value } from "react-native-reanimated";
 import Switch1 from "../../Components/Switch";
+import Fabgr from "../../Components/FabGroup";
 
 
 
@@ -34,79 +35,98 @@ class DetailUsers extends Component<any, any> {
   render() {
     var itemuser: ItemUser = this.context.itemuser;
     return (
-        <View style={styles.container}>
-            <View> 
-              <Card >
-                <View style= {styles.Cabecera} >
-                  <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
-                    <View style={styles.contacto}>
-                      <Text style={styles.textoCabecera1}>Contacto: {itemuser.username}</Text>
-                      <Text style={styles.textoCabecera2}>Email</Text>
-                      <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
-                      <TouchableHighlight onPress={()=>{
-                          //this.click();
-                             }}>
-                          
-                          <View style={styles.containerText2}>
-                          <View>
-                              <Icons name="phone-call" size={25} color={MyColors.lastcolor}/>
-                          </View>
-                            <Text style={styles.text2}>
-                                Llamar
-                            </Text>
+      <KeyboardAwareScrollView style={{flex:1}}>
+          <View style={styles.container}>
+              <View> 
+                <Card >
+                  <View style= {styles.Cabecera} >
+                    <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
+                      <View style={styles.contacto}>
+                        <Text style={styles.textoCabecera1}>Contacto: {itemuser.username}</Text>
+                        <Text style={styles.textoCabecera2}>Email</Text>
+                        <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
+                         
+                        <TouchableHighlight onPress={()=>{
+                            //this.click();
+                              }}>
+                            
+                            <View style={styles.containerText2}>
+                            <View>
+                                <Icons name="phone-call" size={25} color={MyColors.lastcolor}/>
                             </View>
-                        </TouchableHighlight>
-                    </View>
+                              <Text style={styles.text2}>
+                                  Llamar
+                              </Text>
+                              </View>
+                          </TouchableHighlight>
+                      </View>
+                      
+                  </View>
+                    <Card.Content>
+                      {/*<Title>{itemuser.username}</Title>*/}
+                      {/*<Paragraph style={styles.segundaCabecera}>Probabilidad de captar cliente: 90 %</Paragraph>*/}
+                      <Paragraph style={styles.segundaCabecera}>{itemuser.username}</Paragraph>
+                    </Card.Content>
+
+                    <Card.Content style={{marginTop: 4}}>    
+                        <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
+                        <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
+                    </Card.Content>
+                            
+                    <Card.Content style={styles.enRuta}>    
+                        <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>En Ruta</Paragraph>  
+                        <Switch1></Switch1>
+                    </Card.Content>  
+                          
+                      <Text style={{fontSize: 18, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos</Text>        
+                      <List.Item
+                          
+                          title="First Item"
+                          description="Item description"
+                          left={props => <List.Icon  icon="folder" />}
+                      />    
+                      <List.Item
+                          
+                          title="First Item"
+                          description="Item description"
+                          left={props => <List.Icon  icon="folder" />}
+                      />   
+                      <List.Item
+                          
+                          title="First Item"
+                          description="Item description"
+                          left={props => <List.Icon  icon="folder" />}
+                      />         
+                      <Fabgr></Fabgr>   
+                    {/*<Card.Actions>
+                      <Button icon="account-edit" onPress={() => {
+
+                      }}>Edit</Button>
+                      <Button icon="delete" onPress={() => {
+                        Alert.alert("Borrar usuario", "Desea Borrar Al usuario " + itemuser.username, [
+                          {text: "Confirmar", onPress: () => {
+
+                          }},
+                          {text: "Cancelar", onPress: () => {
+
+                          }}
+                        ])
+                      }}>Borrar</Button>
+                    </Card.Actions>*/}
+                  </Card>
+              </View>
+              <View style={styles.cardViewContainer}>
                     
-                </View>
+                {/*<Card>
                   <Card.Content>
-                    {/*<Title>{itemuser.username}</Title>*/}
-                    {/*<Paragraph style={styles.segundaCabecera}>Probabilidad de captar cliente: 90 %</Paragraph>*/}
-                    <Paragraph style={styles.segundaCabecera}>{itemuser.username}</Paragraph>
+                      <Title>Roles</Title>
+                      
                   </Card.Content>
-
-                  <Card.Content style={{marginTop: 4}}>    
-                      <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
-                      <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
-                  </Card.Content>
-
-                  <Card.Content style={styles.enRuta}>    
-                      <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>En Ruta</Paragraph>  
-                      <Switch1></Switch1>
-                      
-                      
-                      
-                  </Card.Content>          
-
-
-
-                  {/*<Card.Actions>
-                    <Button icon="account-edit" onPress={() => {
-
-                    }}>Edit</Button>
-                    <Button icon="delete" onPress={() => {
-                      Alert.alert("Borrar usuario", "Desea Borrar Al usuario " + itemuser.username, [
-                        {text: "Confirmar", onPress: () => {
-
-                        }},
-                        {text: "Cancelar", onPress: () => {
-
-                        }}
-                      ])
-                    }}>Borrar</Button>
-                  </Card.Actions>*/}
-                </Card>
-            </View>
-            <View style={styles.cardViewContainer}>
-              {/*<Card>
-                <Card.Content>
-                    <Title>Roles</Title>
-                     
-                </Card.Content>
-                  
-              </Card>*/}
-            </View>
-        </View>
+                    
+                </Card>*/}
+              </View>
+          </View>
+        </KeyboardAwareScrollView>
     )
   }
 }
@@ -139,7 +159,8 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   textoCabecera1: {
-      fontSize: 20,
+      fontSize: 18,
+      textAlign:"justify"
   },
   textoCabecera2: {
     marginTop: 10,
@@ -148,6 +169,8 @@ const styles = StyleSheet.create({
   },
   textoCabecera3: {
     fontSize: 15,
+    textAlign:"center",
+    marginBottom:20,
   },
   containerText2:{
     height: 65,
@@ -156,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
     borderRadius:20,
     elevation: 15,
-    marginTop: 20,
+    
     flexDirection: "row",
     paddingLeft: 25,
     
