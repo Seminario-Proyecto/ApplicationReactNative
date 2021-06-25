@@ -35,7 +35,7 @@ interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
-class Agenda extends Component<MyProps, MyState> {
+class ClientsRegulars extends Component<MyProps, MyState> {
   static contextType = AppContext;
   constructor(props: any) {
     super(props);
@@ -55,19 +55,86 @@ class Agenda extends Component<MyProps, MyState> {
       completeList: result,
     });
   }
-  
+  listItem(item: ItemUser) {
+      const {dispatch} = this.context;
+      //var item : ItemUser = params.item
+      if (item.uriavatar == null) {
+        return <List.Item
+        title={item.username}
+        description={item.email}
+        onPress={() => {
+            dispatch({type: Types.CHANGEITEMUSER, payload: item});
+            this.props.navigation.push("DetailUsersAgenda");
+        }}
+        left={props => <List.Icon {...props} icon="incognito" />}
+        />
+      } else {
+        var uriImg: string = "http://192.168.100.9:8000" + item.uriavatar;
+        return <List.Item
+                  title={item.username}
+                  description={item.email}
+                  onPress={() => {
+                    dispatch({type: Types.CHANGEITEMUSER, payload: item});
+                    this.props.navigation.push("DetailUsersAgenda");
+                }}
+                  left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
+        />
+      }
+  }
+  searchList(key: string) {
+    this.setState({
+      searchKey: key
+    });
+    var result: Array<ItemUser> = this.state.completeList.filter((item) => {
+      var regx = new RegExp(key, "i");
+      if (item.username.match(regx) != null) {
+        return true;
+      }
+      return false;
+    });
+    if (result.length == 0) {
+      // Buscar dentro del servidor
+      //Consumir una API. y poder revisar ese resltado en la base de datos
+
+    } else {
+      this.setState({
+        dataUsers: result
+      }); 
+    }
+    
+  }
   render() {
     var {searchbarVisible} = this.context;
     return (
         <View style={styles.container}>
-         
+          <View>
+          {
+            searchbarVisible && 
+            <Searchbar
+            placeholder="Buscar"
+            value={this.state.searchKey}
+            onChangeText={(msn) => {
+              this.searchList(msn);
+            }}
+            />
+          }
+          </View>
+          <View>
+            <FlatList
+              data={this.state.dataUsers}
+              renderItem={({item}) => (
+                this.listItem(item)
+              )}
+              keyExtractor={(item) => item._id}
+            />
+          </View>
           <FAB
             style={styles.fab}
             small={false}
-            label=" Agendar Nueva Reunion"
+            label="Agendar Nueva Reunion"
             icon="plus"
             onPress={() => {
-                this.props.navigation.push("RegisterAgenda");
+                this.props.navigation.push("RegisterUsersAgenda");
             }}
           />
         </View>
@@ -85,4 +152,4 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 })
-export default Agenda;
+export default ClientsRegulars;

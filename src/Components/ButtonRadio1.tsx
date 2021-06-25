@@ -9,17 +9,14 @@ const ButtonRadio = () => {
     <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value} >
        <View style={styles.container}>
         <View style={styles.container2}>
-          <Text>Mayorista</Text>
+          <Text>Con exito</Text>
           <RadioButton value="first" />
         </View>
         <View style={styles.container2}>
-          <Text>Supermercado</Text>
+          <Text>Sin exito</Text>
           <RadioButton value="second" />
         </View>
-        <View style={styles.container2}>
-          <Text>Off</Text>
-          <RadioButton value="tree" />
-        </View>
+       
       </View>
       
       

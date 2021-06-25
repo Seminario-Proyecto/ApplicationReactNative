@@ -10,6 +10,8 @@ import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
 import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";
 import RegisterUsersPotenciales from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
+import RegisterUsersAgenda from "../users/DetailUserAgenda/RegisterUserAgenda";
+import  DetailUsersAgenda from "../users/DetailUserAgenda/DetailUserAgenda";
 
 import Icons3 from "react-native-vector-icons/Foundation";
 import TakePicturePotenciales from "./DetailUserPotenciaeles/TakePicturePotenciales";
@@ -60,6 +62,15 @@ class Clients extends Component<any, any> {
                 <Appbar.Content title="Registro de Clientes Potenciales" />
              </Appbar.Header>}
             )}/>
+             <Stack.Screen name="RegisterUsersAgenda" component={RegisterUsersAgenda} options={() => (
+              {header: (navigate) => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Registro de Agenda" />
+             </Appbar.Header>}
+            )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
               {header: (navigate) => <Appbar.Header>
                 <Appbar.BackAction onPress={() => {
@@ -76,6 +87,15 @@ class Clients extends Component<any, any> {
                   //this.props.navigation.pop();
                 }} />
                 <Appbar.Content title="Datos del Clientes Potenciales" />
+             </Appbar.Header>}
+            )}/>
+              <Stack.Screen name="DetailUsersAgenda" component={DetailUsersAgenda} options={() => (
+              {header: (navigate) => <Appbar.Header>
+                <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                <Appbar.Content title="Detalle de agenda" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="TakePicture" component={TakePicture}/>
