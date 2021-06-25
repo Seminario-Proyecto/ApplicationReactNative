@@ -11,6 +11,7 @@ const DataState = (props: any) => {
         uriphoto: "",
         itemuser: {},
         changeswitchValue: false,
+        itemclient:{},
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);
     const changeSearchBarVisible = (value: Boolean) => {
@@ -30,6 +31,7 @@ const DataState = (props: any) => {
         changeUri, 
         dispatch,
         itemuser: state.itemuser,
+        itemclient:state.itemclient,
          }}>
             {props.children}
         </AppContext.Provider>

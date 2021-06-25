@@ -23,6 +23,12 @@ export default (state: any, action: ActionType) => {
                 searchbarVisible: action.payload
             }
         }
+        case Types.CHANGEITEMCLIENT: {
+            return {
+                ...state,
+                itemclient: action.payload
+            }
+        }
         
         default: {
             return state;

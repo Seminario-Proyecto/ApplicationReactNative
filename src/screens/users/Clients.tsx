@@ -10,7 +10,9 @@ import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
 import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";
 import RegisterUsersPotenciales from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
+
 import Icons3 from "react-native-vector-icons/Foundation";
+import TakePicturePotenciales from "./DetailUserPotenciaeles/TakePicturePotenciales";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 var Stack = createStackNavigator();
@@ -55,7 +57,7 @@ class Clients extends Component<any, any> {
                   navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
-                <Appbar.Content title="Registro de Clientes" />
+                <Appbar.Content title="Registro de Clientes Potenciales" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
@@ -73,10 +75,11 @@ class Clients extends Component<any, any> {
                   navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
-                <Appbar.Content title="Datos del Cliente" />
+                <Appbar.Content title="Datos del Clientes Potenciales" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="TakePicture" component={TakePicture}/>
+            <Stack.Screen name="TakePicturePotenciales" component={TakePicturePotenciales}/>
           </Stack.Navigator>
         </NavigationContainer>
     )

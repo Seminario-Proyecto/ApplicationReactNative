@@ -7,12 +7,14 @@ import AppContext from "../../context/AppContext";
 interface ItemUser{
     username?: string,
     email?: string,
+    tipo?: string,
     password?: string,
     repassword?: string
   }
 interface Mystate {
     username: string,
     email: string,
+    tipo: string,
     password: string,
     repassword: string,
     isload: boolean,
@@ -27,7 +29,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
         super(props);
         this.state = {
             isload: false,
-            username: "", email: "", password: "", repassword:""
+            username: "", email: "", password: "", repassword:"", tipo:""
         }
     }
     async checkandSendData() {
@@ -71,6 +73,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             //console.log(result_img);
             */
         }
+        navigation.push("list");
         
     }
     onTakePicture(path: string) {
@@ -103,6 +106,13 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             onChangeText={text => {   
                 this.setState({
                     email: text
+                })
+            }}/>
+            <TextInput style={styles.txtStyles}
+            label="Tipo"
+            onChangeText={text => {   
+                this.setState({
+                    tipo: text
                 })
             }}/>
             <TextInput style={styles.txtStyles}

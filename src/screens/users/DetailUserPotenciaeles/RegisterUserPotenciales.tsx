@@ -4,6 +4,8 @@ import {TextInput, Button, Avatar} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../../context/AppContext";
+import Switch1 from "../../../Components/Switch";
+
 interface ItemUser{
     username?: string,
     email?: string,
@@ -102,28 +104,28 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
         <View style= {styles.container}>
             <View style={styles.container2}>
                     <View style={styles.text}>
-                            <TextInput 
+                            <TextInput style={styles.datos}
                             label="Nombres"
                             onChangeText={text => {  
                                 this.setState({
                                     username: text
                                 })
                             }}/>
-                            <TextInput 
+                            <TextInput style={styles.datos}
                             label="Apellidos"
                             onChangeText={text => {   
                                 this.setState({
                                     email: text
                                 })
                             }}/>
-                            <TextInput 
+                            <TextInput style={styles.datos}
                             label="Contacto "
                             onChangeText={text => {   
                                 this.setState({
                                     password: text
                                 })
                             }}/>
-                            <TextInput 
+                            <TextInput style={styles.datos}
                             label="Correo electronico "
                             onChangeText={text => {   
                                 this.setState({
@@ -135,38 +137,54 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                     
                     
                     <View >
-                    <Button style={styles.buton} icon="camera" mode="contained" onPress={() => {
-                        //this.checkandSendData();
-                        this.props.navigation.push("TakePicture", {onTake: (params: string) => {
-                            this.onTakePicture(params);
-                        }});
-                    }}>
-                        Tomar Foto
-                    </Button>
+                        <Button style={styles.buton} icon="camera" mode="contained" onPress={() => {
+                            //this.checkandSendData();
+                            this.props.navigation.push("TakePicturePotenciales", {onTake: (params: string) => {
+                                this.onTakePicture(params);
+                            }});
+                        }}>
+                            Tomar Foto
+                        </Button>
                     
-
+                       
+                        <View style={styles.stylescommit}>
                         {this.showAvatar()}
+                        </View>
+                        <View style={styles.stylescommit}>
+                        <Text style={styles.datosin} >Estado del cliente      off/on </Text>
+                        <Text style={styles.datosin}>Potencial:                  <Switch1></Switch1></Text>
+                            
+                        <Text style={styles.datosin}>Probabilidad de negosiacion:</Text>
+                        <Text style={styles.datosin}>80%</Text>
+                        </View>
+                       
+                       
                     </View>
 
             </View>
-            
+            <View   style= {styles.container} >
+                        <Text style={styles.datosin}>Direcccion:</Text> 
+                        <View style= {styles.maps}>
 
-            <Text>Estado del cliente Potencial:</Text>
-                    
-                  
-            <Text>Probabilidad de  negosiacion:</Text>
-            <Button  icon="gnome" mode="contained" onPress={() => {
-                this.checkandSendData();
-            }}>
-                Create
-            </Button>
+                            {this.showAvatar()} 
+
+                        </View>
+                                
+                        <Button style={styles.buton}  mode="contained" onPress={() => {
+                            this.checkandSendData();
+                        }}>
+            
+                            Create
+                        </Button>
+            </View>
         </View>
     )
   }
 }
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
+        margin:3,
+    
         
     },
     container2: {
@@ -174,15 +192,38 @@ const styles = StyleSheet.create({
         
         
     },
-    text: {
-        width:200,
-        padding: 10
+    stylescommit: {
+        marginTop:10
         
         
     },
+    text: {
+        width:200,
+        padding: 5
+        
+        
+    },
+    datos: {
+        
+        marginTop: 10
+        
+        
+    },
+    datosin: {
+       fontWeight:"bold"
+       
+        
+    },
     buton: {
-        marginTop: 10,
-        marginRight:2
+        marginTop: 20,
+        borderRadius:70
+        
+    },
+    maps: {
+        marginTop: 40,
+        marginRight:2,
+        alignItems: "center",
+        
         
     },
     

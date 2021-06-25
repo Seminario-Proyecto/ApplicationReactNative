@@ -11,14 +11,30 @@ export interface IRoles {
   urn:  string,
   method: string
 }
+
+
 export interface ItemUser{
+  
+
+
   _id: string,
-  username: string,
-  email: string,
-  registerdate: string,
-  roles: Array<IRoles>,
-  pathavatar?: string,
-  uriavatar?: string
+  firtsname: string;
+  lastname: string;
+  email: string;
+  telephone: string;
+  descriptionphone?: string;
+  uriphoto?: string; //aqui entrara la uri donde nos llevara a la imagen
+  pathphoto?: string;
+  state: string;
+  probability: number;
+  zona: string;
+  street: string;
+  tipo: string; //Regular o Potencial
+  registerdate: Date;
+  //edidos?: Array<IPedidos>;
+  //reunion?: Array<IReunion>;
+
+
 }
 interface ServerResponse {
   serverResponse:Array<ItemUser>
@@ -47,7 +63,7 @@ class ClientsPotenciales extends Component<MyProps, MyState> {
   }
   async componentDidMount() {
     console.log(this.context);
-    var result: Array<ItemUser> = await axios.get<ServerResponse>("http://192.168.100.9:8000/api/users").then((item) => {
+    var result: Array<ItemUser> = await axios.get<ServerResponse>("http://192.168.100.9:8000/client/client/tipo/Potencial").then((item) => {
       return item.data.serverResponse
     });
     this.setState({
@@ -58,23 +74,23 @@ class ClientsPotenciales extends Component<MyProps, MyState> {
   listItem(item: ItemUser) {
       const {dispatch} = this.context;
       //var item : ItemUser = params.item
-      if (item.uriavatar == null) {
+      if (item.uriphoto == null) {
         return <List.Item
-        title={item.username}
+        title={item.firtsname+" "+ item.lastname} 
         description={item.email}
         onPress={() => {
-            dispatch({type: Types.CHANGEITEMUSER, payload: item});
+            dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
             this.props.navigation.push("DetailUsersPotenciales");
         }}
         left={props => <List.Icon {...props} icon="incognito" />}
         />
       } else {
-        var uriImg: string = "http://192.168.100.9:8000" + item.uriavatar;
+        var uriImg: string = "http://192.168.100.9:8000" + item.uriphoto;
         return <List.Item
-                  title={item.username}
+                  title={item.firtsname+" "+ item.lastname}
                   description={item.email}
                   onPress={() => {
-                    dispatch({type: Types.CHANGEITEMUSER, payload: item});
+                    dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
                     this.props.navigation.push("DetailUsersPotenciales");
                 }}
                   left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
@@ -87,7 +103,7 @@ class ClientsPotenciales extends Component<MyProps, MyState> {
     });
     var result: Array<ItemUser> = this.state.completeList.filter((item) => {
       var regx = new RegExp(key, "i");
-      if (item.username.match(regx) != null) {
+      if (item.firtsname.match(regx) != null) {
         return true;
       }
       return false;

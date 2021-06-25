@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import {Button} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
-import AppContext from "../../context/AppContext";
+import AppContext from "../../../context/AppContext";
 interface IParams {
     onTake: Function
 }
@@ -14,7 +14,7 @@ interface MyProps {
     navigation: StackNavigationProp<any, any>,
     route: IRoute
 }
-class TakePicture extends PureComponent<MyProps, any> {
+class TakePicturePotenciales extends PureComponent<MyProps, any> {
    camera: any
   static contextType = AppContext;
   constructor(props: MyProps) {
@@ -29,7 +29,7 @@ class TakePicture extends PureComponent<MyProps, any> {
         console.log("Enter here " + data.uri);
         changeUri(data.uri);
         //this.props.route.params.onTake(data.uri);
-        this.props.navigation.navigate("RegisterUsers");
+        this.props.navigation.navigate("RegisterUsersPotenciales");
       }
   }
 
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
       margin: 20,
     },
   });
-export default TakePicture;
+export default TakePicturePotenciales;
