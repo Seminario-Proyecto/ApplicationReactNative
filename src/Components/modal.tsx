@@ -57,7 +57,7 @@ const modal = () => {
                                             
                                             <View style={styles.containerText2}>
                                             <View>
-                                                <Icons name="watch" size={25} color={MyColors.lastcolor}/>
+                                                <Icons name="watch" size={20} color={MyColors.lastcolor}/>
                                             </View>
                                             <Text style={styles.text2}>
                                                 aceptar
@@ -99,13 +99,13 @@ const modal = () => {
 };
 const styles=StyleSheet.create({
     containerText2:{
-        height: 50,
+        height: 40,
         width: 140,
         backgroundColor: MyColors.maincolor,
         alignItems:"center",
-        
+        borderRadius:10,
         elevation: 15,
-        
+        marginTop:0,
         flexDirection: "row",
         paddingLeft: 25,
         
