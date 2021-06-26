@@ -1,11 +1,14 @@
 import React, { Component ,useState} from "react";
 import {View, Text, StyleSheet,Switch} from "react-native"; 
-import {TextInput, Button, Avatar} from "react-native-paper";
+import {TextInput, Button, Avatar,Paragraph,Card} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../../context/AppContext";
 import Switch1 from "../../../Components/Switch";
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import MyColors from "../../../color/MyColors";
+import RadioButton  from "../../../Components/ButtonRadio"
+import { black } from "react-native-paper/lib/typescript/styles/colors";
 interface ItemUser{
     username?: string,
     email?: string,
@@ -23,6 +26,10 @@ interface Mystate {
 interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
+interface ServerResponsePutRoles {
+    serverResponse: ItemUser
+  }
+  
 class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
     static contextType = AppContext;
     constructor(props: any) {
@@ -101,6 +108,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
       }
   render() {
     return (
+        <KeyboardAwareScrollView style={{flex:1}}>
         <View style= {styles.container}>
             <View style={styles.container2}>
                     <View style={styles.text}>
@@ -146,9 +154,13 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                             Tomar Foto
                         </Button>
                     
+                        
+                        
                        
-                        <View style={styles.stylescommit}>
-                        {this.showAvatar()}
+                        <View style={styles.stylescommit} >
+
+                                {this.showAvatar()} 
+                        
                         </View>
                         <View style={styles.stylescommit}>
                         <Text style={styles.datosin} >Estado del cliente      off/on </Text>
@@ -166,24 +178,48 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                         <Text style={styles.datosin}>Direcccion:</Text> 
                         <View style= {styles.maps}>
 
+                            
+
                             {this.showAvatar()} 
 
                         </View>
+
+                        <TextInput style={styles.datos}
+                            label="Zona "
+                            onChangeText={text => {   
+                                this.setState({
+                                    repassword: text
+                                })
+                            }}/>
+                             <TextInput style={styles.datos}
+                            label="Calle"
+                            onChangeText={text => {   
+                                this.setState({
+                                    repassword: text
+                                })
+                            }}/>
+                            <Text style={{fontSize: 17, marginTop:20,fontWeight:"bold" }}>Tipo de Cliente </Text>
+                            <RadioButton ></RadioButton>
                                 
                         <Button style={styles.buton}  mode="contained" onPress={() => {
                             this.checkandSendData();
                         }}>
+                            
             
                             Create
                         </Button>
             </View>
         </View>
+        </KeyboardAwareScrollView>
     )
   }
 }
 const styles = StyleSheet.create({
     container: {
         margin:3,
+        backgroundColor:'rgb(255,255,255)'
+            
+        
     
         
     },
@@ -193,8 +229,9 @@ const styles = StyleSheet.create({
         
     },
     stylescommit: {
-        marginTop:10
-        
+        marginTop:15,
+        alignItems: "center",
+       
         
     },
     text: {
@@ -226,6 +263,9 @@ const styles = StyleSheet.create({
         
         
     },
+    Maps:{
+        borderRadius: 10,
+      },
     
 }   
 );
