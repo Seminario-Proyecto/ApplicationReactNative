@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import {View, Text, Platform, FlatList, StyleSheet,TouchableHighlight, } from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
-import {Appbar, List, Avatar, FAB, Searchbar,TextInput, Modal, Portal, Button, Provider,} from "react-native-paper";
+import {Appbar, List, Avatar, FAB, Searchbar,TextInput, Portal, Button, Provider,} from "react-native-paper";
 import AppContext from "../../../context/AppContext"
 import {Types} from "../../../context/ContantTypes"; 
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../../color/MyColors";
+import Modal  from "../../../Components/modal"
 
 export interface IRoles {
   _id: string,
@@ -53,10 +54,7 @@ interface ItemData {
 interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
-const [visible, setVisible] = React.useState(false);
-const showModal = () => setVisible(true);
-const hideModal = () => setVisible(false);
-const containerStyle = {backgroundColor: 'white', padding: 20};
+
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 class RegisterUsersAgenda extends Component<MyProps, MyState> {
   static contextType = AppContext;
@@ -134,12 +132,8 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
   render() {
     var {searchbarVisible} = this.context;
     return (
-<Provider >
-      <Portal>
-      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-        <Text>Example Modal.  Click outside this area to dismiss.</Text>
-      </Modal>
-    </Portal>
+
+    
         <View style={styles.container}>
           <View>
           {
@@ -159,67 +153,33 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
                       <View>
                         <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Fecha (DD/MM/YYYY): </Text>        
                         
-                              <View style={styles.fechas}>
-                            
-                                  <TextInput style={styles.fecha}
-                                                      label="Dia"
-                                                      onChangeText={text => {  
-                                                          
-                                                      }}/>
+                              <View >
 
-                                  <TextInput  style={styles.fecha}
-                                                      label="Mes"
-                                                      onChangeText={text => {  
-                                                          
-                                                      }}/>
-                                  <TextInput style={styles.fecha}
-                                                      label="Año"
-                                                      onChangeText={text => {  
-                                                          
-                                                      }}/>
+                                  <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>17 de Mayo de 2002 </Text>
+                                 
                               </View>
                               <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Hora</Text>
-                              <View style={styles.fechas}>
+                              <View >
 
-                                  <TextInput style={styles.fecha}
-                                                          label="hora"
-                                                          onChangeText={text => {  
-                                                              
-                                                          }}/>
-                                  <TextInput style={styles.fecha}
-                                                          label="min"
-                                                          onChangeText={text => {  
-                                                              
-                                                          }}/>
-
-
+                                 
+                              <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>14:00 hrs</Text>
 
                               </View>
                     
                       </View>
                       
-                      <View   style={styles.set}>
+                      
+                    
+                      
                                    
-                      <TouchableHighlight onPress={
-                                            showModal
-                                            }>
-                                            
-                                            <View style={styles.containerText2}>
-                                            <View>
-                                                <Icons name="watch" size={25} color={MyColors.lastcolor}/>
-                                            </View>
-                                            <Text style={styles.text2}>
-                                                set
-                                            </Text>
-                                            </View>
-                                    </TouchableHighlight>
-                  </View>
+                      <Modal></Modal>
+                  
       </View>
 
 
                   
           <View>
-          <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Reuniones ya Agendadas:</Text> 
+          <Text style={{fontSize: 18, marginTop:40, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Reuniones ya Agendadas:</Text> 
             <FlatList
               
               data={this.state.dataUsers}
@@ -239,7 +199,7 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
             }}
           />
         </View>
-        </Provider>
+      
     )
   }
 }
