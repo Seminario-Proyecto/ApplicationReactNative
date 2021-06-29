@@ -1,4 +1,33 @@
+
 import React, { Component } from "react";
+import {View, Text, StyleSheet} from "react-native"; 
+import {} from "react-native"
+class Otro1 extends Component {
+  render() {
+    return (
+        <View style={style.container}>
+            <Text style={style.text}> 
+                Reportes
+            </Text>
+        </View>
+    )
+  }
+}
+const style = StyleSheet.create({
+  container:{
+    flex:1,
+  },
+  text:{
+    color : "#000000"
+  }
+})
+  
+
+export default Otro1;
+
+
+
+/*import React, { Component } from "react";
 import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
@@ -152,4 +181,4 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 })
-export default ClientsRegulars;
+export default ClientsRegulars;*/

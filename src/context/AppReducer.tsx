@@ -29,6 +29,18 @@ export default (state: any, action: ActionType) => {
                 itemclient: action.payload
             }
         }
+        case Types.SIGN_IN: {
+            return {
+                ...state,
+                SignIn:action.payload
+            }
+        }
+        case Types.RESTORE_TOKEN:
+            return {
+              ...state,
+              userToken: action.payload,
+              
+        };
         
         default: {
             return state;

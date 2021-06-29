@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         width: 420,
         height:750,
-       
+        backgroundColor: "#00fadd",
         opacity: 1 
       },
 

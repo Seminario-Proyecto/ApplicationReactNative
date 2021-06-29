@@ -1,21 +1,53 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, Dimensions, Image, ImageBackground,ColorPropType, Touchable} from "react-native"; 
+import {View, Text, StyleSheet, Dimensions, Image, ImageBackground,ColorPropType, Touchable, Alert} from "react-native"; 
 import {TextInput, Button, Avatar, RadioButton} from "react-native-paper";
 import {NavigationScreenProp} from "react-navigation";
 import Icons from "react-native-vector-icons/AntDesign";
+import axios, { AxiosResponse } from "axios";
+import AppContext from "../../context/AppContext";
+import { Types } from "../../context/ContantTypes";
 
 const background = require('../../../images/desvanecido.png');
+
 const {width: widthScreen, height: heightScreen} = Dimensions.get('window');
 
 
 //<Image style={styles.backgroundImage} source={background}/>
 
+interface DateUsers {
+    _id: string,
+    username: string,
+    //email:string,
+    password: string,
+    token: string,
+    tipo: string,
+}
+interface ServerResponse {
+    serverResponse:Array<DateUsers>
+}
+
+interface ItemData {
+    item: DateUsers
+}
+interface Mystate {
+    //username: string,
+    email: string,
+    password: string,
+}
+
+
+
+
 interface MyProps {
     navigation: NavigationScreenProp<any,any>
 }  
-class Login extends Component <MyProps, any> {
+class Login extends Component <MyProps, Mystate> {
+    static contextType = AppContext;
     constructor(props: MyProps){
         super(props);
+        this.state={
+             password: "", email:""
+        }
     }
     
     IndexClients() {
@@ -23,6 +55,54 @@ class Login extends Component <MyProps, any> {
         this.props.navigation.navigate("IndexClients");
           
     }
+
+    async DataSend() {
+        const {dispatch} = this.context;
+        console.log(this.state);
+        var result: any = await axios.post<DateUsers, AxiosResponse<any>>("http://192.168.100.9:8000/api/login", this.state)
+        .then((response) => {
+            return response.data;
+        });
+        if(result.serverResponse._id == undefined){
+            Alert.alert("error")
+        }else {
+            dispatch({type: Types.SIGN_IN, payload: true})
+            dispatch({type: Types.RESTORE_TOKEN , payload: result.serverResponse})
+            var res: any = await axios.get<ServerResponse>("http://192.168.100.9:8000/api/users/"+result.serverResponse._id.toString()).then((response)=>{
+                return response.data
+            })
+            dispatch({type: Types.CHANGEITEMUSER, payload: res})
+
+
+
+
+            this.IndexClients();
+        }
+
+
+
+
+
+
+
+
+
+
+        console.log(result.serverResponse._id+" "+result.serverResponse.username+ " "+result.serverResponse.token)
+        
+    }
+    /*validar() {
+        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        console.log(this.state.email.toString());
+        if (!reg.test(this.state.email.toString())){
+            console.log("entrando");
+            this.setState.username
+            var aux2 = (()=>{this.setState({email:""})}) ;
+        }
+        console.log(aux+" "+aux2)
+        console.log(reg.test(this.state.email.toString()));
+           
+    }*/
     
 
   render() {
@@ -37,19 +117,30 @@ class Login extends Component <MyProps, any> {
         
             
                 <TextInput style={styles.txtStyles} 
-                label="Usuario"
+                label="Username o Email"
                 onChangeText={text => {  
                     this.setState({
-                        username: text
+                        email:text,
+                       
                     })
                 }}/>
                 <TextInput style={styles.txtStyles} 
                 label="Password"
                 secureTextEntry
+                onChangeText={text => {  
+                    this.setState({
+                        password: text
+                    })
+                }}
                 right={<TextInput.Icon name="eye" />}
                 />
 
-                <Button   style={styles.boton}  mode="contained" onPress={() =>{this.IndexClients()}
+                <Button   style={styles.boton}  mode="contained" onPress={() =>{
+                    
+                    //this.validar() //validamos si es un correo electronico lo que esta mandando, sino es un correo electronico se envia como "" 
+                    //
+                    this.DataSend();
+                }
                     
                 }>
                     Ingresar

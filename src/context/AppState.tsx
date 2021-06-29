@@ -12,6 +12,8 @@ const DataState = (props: any) => {
         itemuser: {},
         changeswitchValue: false,
         itemclient:{},
+        SignIn: false,
+        userToken: null,
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);
     const changeSearchBarVisible = (value: Boolean) => {
@@ -20,6 +22,7 @@ const DataState = (props: any) => {
     const changeUri = (value: string) => {
         dispatch({type: Types.CHANGEURI, payload: value});
     }
+
 
     
     
@@ -32,7 +35,8 @@ const DataState = (props: any) => {
         dispatch,
         itemuser: state.itemuser,
         itemclient:state.itemclient,
-         }}>
+        SignIn: state.SignIn,
+        userToken: state.userToken }}>
             {props.children}
         </AppContext.Provider>
     )
