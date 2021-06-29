@@ -12,7 +12,9 @@ const Fabgr = () => {
     <Provider>
       <Portal>
         <FAB.Group
+        
         visible={true}
+        
 
           open={open}
           icon={open ? 'calendar-today' : 'folder'}

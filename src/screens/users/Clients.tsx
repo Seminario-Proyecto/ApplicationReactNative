@@ -63,13 +63,17 @@ class Clients extends Component<any, any> {
              </Appbar.Header>}
             )}/>
              <Stack.Screen name="RegisterUsersAgenda" component={RegisterUsersAgenda} options={() => (
-              {header: (navigate) => <Appbar.Header>
-                <Appbar.BackAction onPress={() => {
-                  navigate.navigation.pop();
-                  //this.props.navigation.pop();
-                }} />
-                <Appbar.Content title="Registro de Agenda" />
-             </Appbar.Header>}
+              {
+                header: () => <Appbar.Header>
+                  <Appbar.Action icon="alpha-r-box" size={40} />
+                  <Appbar.Content title="Buscar Cliente"  />
+                   <Appbar.Action icon="magnify" size={30} onPress={() => {
+                     changeSearchBarVisible(!searchbarVisible);
+                   }} />
+                   
+                   <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
+               </Appbar.Header >
+              }
             )}/>
             <Stack.Screen name="DetailUsers" component={DetailUsers} options={() => (
               {header: (navigate) => <Appbar.Header>
