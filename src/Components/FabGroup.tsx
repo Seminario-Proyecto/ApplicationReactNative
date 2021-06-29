@@ -15,7 +15,7 @@ const Fabgr = () => {
         
         visible={true}
         
-
+          style={{ }}
           open={open}
           icon={open ? 'calendar-today' : 'folder'}
           actions={[

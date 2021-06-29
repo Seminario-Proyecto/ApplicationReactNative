@@ -35,7 +35,8 @@ class DetailUsers extends Component<any, any> {
   render() {
     var itemuser: ItemUser = this.context.itemuser;
     return (
-      <KeyboardAwareScrollView style={{flex:1}}>
+      <View style={{flex:1}}>
+      <KeyboardAwareScrollView >
           <View style={styles.container}>
               <View> 
                 <Card >
@@ -45,7 +46,7 @@ class DetailUsers extends Component<any, any> {
                         <Text style={styles.textoCabecera1}>Contacto: {itemuser.username}</Text>
                         <Text style={styles.textoCabecera2}>Email</Text>
                         <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
-                         
+                        
                         <TouchableHighlight onPress={()=>{
                             //this.click();
                               }}>
@@ -62,7 +63,8 @@ class DetailUsers extends Component<any, any> {
                       </View>
                       
                   </View>
-                    <Card.Content>
+                  <View>
+                  <Card.Content>
                       {/*<Title>{itemuser.username}</Title>*/}
                       {/*<Paragraph style={styles.segundaCabecera}>Probabilidad de captar cliente: 90 %</Paragraph>*/}
                       <Paragraph style={styles.segundaCabecera}>{itemuser.username}</Paragraph>
@@ -72,13 +74,14 @@ class DetailUsers extends Component<any, any> {
                         <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
                         <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
                     </Card.Content>
-                            
+                    
                     <Card.Content style={styles.enRuta}>    
                         <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>En Ruta</Paragraph>  
                         <Switch1></Switch1>
                     </Card.Content>  
-                          
+                    </View>
                       <Text style={{fontSize: 18, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos</Text>        
+                      
                       <List.Item
                           
                           title="First Item"
@@ -96,8 +99,13 @@ class DetailUsers extends Component<any, any> {
                           title="First Item"
                           description="Item description"
                           left={props => <List.Icon  icon="folder" />}
-                      />         
-                      <Fabgr></Fabgr>   
+                      />  
+
+                  
+                    
+            
+                      
+                   
                     {/*<Card.Actions>
                       <Button icon="account-edit" onPress={() => {
 
@@ -127,6 +135,11 @@ class DetailUsers extends Component<any, any> {
               </View>
           </View>
         </KeyboardAwareScrollView>
+      
+              <Fabgr></Fabgr>  
+          
+
+          </View>
     )
   }
 }
@@ -215,6 +228,8 @@ const styles = StyleSheet.create({
   switch:{
     fontSize: 50,
   }
+
+
 
 
 });
