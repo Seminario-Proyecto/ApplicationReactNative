@@ -3,37 +3,111 @@ import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight} from "react
 import AppContext from "../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../color/MyColors";
-import {IRoles, ItemUser} from "./TopTab/ClientsRegulars"
-import { Avatar, Button, Card, Title, Paragraph , Chip, Searchbar, List, Switch} from 'react-native-paper';
+import {IRoles, ItemUser, IClients, IPedido, IRecibo, ISimpleProducts} from "./TopTab/ClientsRegulars"
+import { Avatar, Button, Card, Title, Paragraph , Chip, Searchbar, List, Switch, FAB, Portal, Provider as ProviderFAB, DefaultTheme, withTheme} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
 import {Types} from "../../context/ContantTypes"; 
 import { Value } from "react-native-reanimated";
-import Switch1 from "../../Components/Switch";
 import Fabgr from "../../Components/FabGroup";
+import { DarkTheme } from "@react-navigation/native";
+import Switch1 from "../../Components/Switch";
 
 
 
-
-interface ServerResponsePutRoles {
-  serverResponse: ItemUser
+interface MyState{
+  isEnable: boolean;
+  open: boolean,
+  systemPedido: Array<IPedido>,
+}
+interface ServerResponse {
+  serverResponse: Array<IPedido>
 }
 
-class DetailUsers extends Component<any, any> {
+class DetailUsers extends Component<any, MyState> {
   static contextType = AppContext;
   
   constructor(props: any) {
     super(props);
+    this.state={
+      isEnable: false,
+      open: false,
+      systemPedido: [],
+    }
    
   }
   async componentDidMount() {
+    var direccion: string = "http://192.168.100.9:8000/pedido/pedidos/"+this.context.itemclient._id;
+    var result: Array<IPedido> = await axios.get<ServerResponse>(direccion).then((item) => {
+      return item.data.serverResponse
+    });
+    if(result==undefined){
+      result=[];
+    }
+    console.log("Hasta aqui llegue " +result+ "tambien aqui")
+    this.setState({
+      systemPedido: result,
+      
+    });
+  }
+
+  async ListaPedidos(itemclient: IClients){
+    
+    /*if(result == undefined){
+      return <Text>No hay pedidos</Text>
+    }
+    return (
+      result.map(item=>{
+        <List.Item
+          title="First Item"
+          description="Item description"
+          left={props => <List.Icon {...props} icon="folder" />}
+        />
+      })
+    )*/
     
   }
   
+  image(itemclient: IClients){
+      if(itemclient.uriphoto != null) {
+        console.log(itemclient.uriphoto);
+        return <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemclient.uriphoto }} />
+      } else {
+       return <Avatar.Text size={178} label={itemclient.firtsname.charAt(0)+itemclient.lastname.charAt(0)} />
+      }
 
+  }
+  changevalueSwitch(enable: boolean){
+    this.setState({
+      isEnable: !enable,
+  })
+  }
+
+  stateFabGroup(open: boolean){
+    this.setState({
+      open: !open,
+  })
+  }
+
+  enruta(itemclient: IClients){
+    console.log(itemclient.state.toString())
+    if(itemclient.state.toString() == "En ruta"){ ///aqui debemos cambiar este atributo debe tener falso(que indica que no esta en ruta) y true (que significa que esta en ruta)
+      return <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>En Ruta</Paragraph>  
+    } else {
+      return <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>No en Ruta</Paragraph>  
+    }
+  }
+
+
+  ExistsPedidos(){
+    
+  }
  
   render() {
-    var itemuser: ItemUser = this.context.itemuser;
+    var itemclient: IClients = this.context.itemclient;
+    var enable: boolean = this.state.isEnable;
+    var opens: boolean = this.state.open;
+    var itempedido: Array<IPedido> = this.state.systemPedido;
     return (
       <View style={{flex:1}}>
       <KeyboardAwareScrollView >
@@ -41,11 +115,11 @@ class DetailUsers extends Component<any, any> {
               <View> 
                 <Card >
                   <View style= {styles.Cabecera} >
-                    <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
+                    {this.image(itemclient)}
                       <View style={styles.contacto}>
-                        <Text style={styles.textoCabecera1}>Contacto: {itemuser.username}</Text>
+                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.firtsname}</Text>
                         <Text style={styles.textoCabecera2}>Email</Text>
-                        <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
+                        <Text style={styles.textoCabecera3}>{itemclient.email}</Text>
                         
                         <TouchableHighlight onPress={()=>{
                             //this.click();
@@ -67,77 +141,103 @@ class DetailUsers extends Component<any, any> {
                   <Card.Content>
                       {/*<Title>{itemuser.username}</Title>*/}
                       {/*<Paragraph style={styles.segundaCabecera}>Probabilidad de captar cliente: 90 %</Paragraph>*/}
-                      <Paragraph style={styles.segundaCabecera}>{itemuser.username}</Paragraph>
+                      <Paragraph style={styles.segundaCabecera}>{itemclient.firtsname+" "+itemclient.lastname}</Paragraph>
                     </Card.Content>
 
                     <Card.Content style={{marginTop: 4}}>    
                         <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
-                        <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
+                        {this.image(itemclient)}
+                        {/*<Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />  */}  
                     </Card.Content>
                     
                     <Card.Content style={styles.enRuta}>    
-                        <Paragraph style={{fontSize: 17, marginLeft: 10, marginRight: 220, }}>En Ruta</Paragraph>  
-                        <Switch1></Switch1>
+                        {this.enruta(itemclient)}
+                        <Switch
+                          trackColor={{ false: MyColors.thirth, true: "#81b0ff" }} //colores cuando se apaga
+                          thumbColor={enable ? MyColors.secondary : MyColors.thirth} //colores cuando se prende
+                          //ios_backgroundColor="#3e3e3e"
+                          value={enable}
+                          
+                          onValueChange={()=>{
+                                this.changevalueSwitch(enable);
+                          }}
+                          
+                        />
+                       
                     </Card.Content>  
                     </View>
-                      <Text style={{fontSize: 18, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos</Text>        
-                      
-                      <List.Item
-                          
-                          title="First Item"
-                          description="Item description"
-                          left={props => <List.Icon  icon="folder" />}
-                      />    
-                      <List.Item
-                          
-                          title="First Item"
-                          description="Item description"
-                          left={props => <List.Icon  icon="folder" />}
-                      />   
-                      <List.Item
-                          
-                          title="First Item"
-                          description="Item description"
-                          left={props => <List.Icon  icon="folder" />}
-                      />  
-
-                  
-                    
-            
-                      
-                   
-                    {/*<Card.Actions>
-                      <Button icon="account-edit" onPress={() => {
-
-                      }}>Edit</Button>
-                      <Button icon="delete" onPress={() => {
-                        Alert.alert("Borrar usuario", "Desea Borrar Al usuario " + itemuser.username, [
-                          {text: "Confirmar", onPress: () => {
-
-                          }},
-                          {text: "Cancelar", onPress: () => {
-
-                          }}
-                        ])
-                      }}>Borrar</Button>
-                    </Card.Actions>*/}
+  
                   </Card>
+                  <Text style={{fontSize: 18, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos</Text>        
+                      <View>
+                       {
+                         this.state.systemPedido.map(item =>{
+                          return (
+                  
+                              <List.Item
+                                title={item.state}
+                                titleStyle={{alignContent:"center"}}
+                                descriptionNumberOfLines={8}
+                                description={item.products.map(item=>{
+                                  return item.name + " x " + item.cantidad + "\n"
+                                }) }
+                                onPress={()=>{
+                                  
+                                }}
+                                right={props=> <Text style={{}}>{item.Recibo.map(item=>{
+                                  return "Bs." + item.total 
+                                })}</Text> } 
+                                left={props => <List.Icon {...props} icon="folder" />}
+                              />
+                          )
+                          
+                         })
+                       }
+                         
+                      </View>
               </View>
-              <View style={styles.cardViewContainer}>
-                    
-                {/*<Card>
-                  <Card.Content>
-                      <Title>Roles</Title>
-                      
-                  </Card.Content>
-                    
-                </Card>*/}
-              </View>
+           
           </View>
         </KeyboardAwareScrollView>
       
-              <Fabgr></Fabgr>  
-          
+             
+              <ProviderFAB>
+                  <Portal>
+                    <FAB.Group
+                    
+                    visible={true}
+                    
+                      style={{ }}
+                      open={opens}
+                      icon={opens ? 'calendar-today' : 'folder'}
+                      actions={[
+                        
+                        
+                        {
+                          icon: 'account-edit',
+                          label: 'Eliminar',
+                          onPress: () => console.log('Pressed eliminar'),
+                        },
+                        {
+                            icon: 'account-edit',
+                            label: 'Editar',
+                            onPress: () => console.log('Pressed editar'),
+                            small: false
+                          },
+                      ]}
+                      onStateChange={()=>{
+                        this.stateFabGroup(opens)
+                      }}
+                      onPress={() => {
+                        if (!opens) {
+                          this.setState({
+                            open: true,
+                        })
+                        }
+                      }}
+                    />
+                  </Portal>
+              </ProviderFAB>
 
           </View>
     )
