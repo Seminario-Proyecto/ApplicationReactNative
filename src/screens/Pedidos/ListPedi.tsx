@@ -8,82 +8,24 @@ import {Types} from "../../context/ContantTypes"
 import { KeyboardAwareScrollView  } from "react-native-keyboard-aware-scroll-view";
 import { red100 } from "react-native-paper/lib/typescript/styles/colors";
 import { BorderlessButton } from "react-native-gesture-handler";
-export interface IRoles {
-  _id: string,
-  name: string,
-  urn:  string,
-  method: string
-}
-export interface IReunion {
-  fecha: string;
-  hora: string;
-  resultado: string;
-}
-export interface ISimpleProducts{
-  id: string;
-  name: string;
-  cantidad: number;
-  priceUnitary: number;
-  priceTotal: number;
-  registerdate: Date;
-}
-export interface IRecibo{
-  nameclient: string;
-  namevendedor: string;
-  total: number;
-  registerdateRecibo: Date;
-}
-export interface IPedido {
-  state: string;
-  products: Array<ISimpleProducts>;
-  registerdate: Date;
-  ordenarP: string;
-  methodpay: string;
-  cuentaBancaria?: string;
-  total: number;
-  Recibo: Array<IRecibo>;
-}
-export interface IClients {
-  _id: string;
-  firtsname: string;
-  lastname: string;
-  email: string;
-  telephone: string;
-  descriptionphone?: string;
-  uriphoto?: string; //aqui entrara la uri donde nos llevara a la imagen
-  pathphoto?: string;
-  state: string;
-  probability: number;
-  zona: string;
-  street: string;
-  tipo: string; //Regular o Potencial
-  registerdate: Date;
-  idUser: string,
-  //pedidos?: Array<IPedido>;
- // reunion?: Array<IReunion>;
-}
-export interface ItemUser{
-  _id: string,
-  username: string,
-  email: string,
-  registerdate: string,
-  roles: Array<IRoles>,
-  clients: Array<IClients>
-  pathavatar?: string,
-  uriavatar?: string
-}
+import {IRecibo,IClients,IReunion,IPedido,ISimpleProducts,IRoles,ItemUser} from "../users/TopTab/ClientsRegulars"
+import { Icon } from "react-native-paper/lib/typescript/components/Avatar/Avatar";
+
+
+
+
+
 interface ServerResponse {
   serverResponse:Array<IClients>
   //serverResponse:Array<IClients>
 }
 interface MyState {
-  dataUsers: Array<IClients>,
+  dataPedido: Array<IClients>,
   completeList: Array<IClients>,
   searchKey: string,
   searrchKey: string,
-  
-
   systemclients: Array<IClients>
+  systempedidos: Array<IPedido>
 }
 interface ItemData {
   item: ItemUser
@@ -101,18 +43,18 @@ class ListPedi extends Component<MyProps, MyState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      dataUsers: [],
+      dataPedido: [],
       searchKey : "",
       searrchKey : "",
       completeList: [],
-      systemclients: []
+      systemclients: [],
+      systempedidos: [],
 
     }
   }
   async componentDidMount() {
     const {userToken}=this.context;
     const {_id} = userToken; 
-    const {token} = userToken;
     const id: string = _id.toString();
     //console.log("hola"+_id+" fin");
     var direccion: string = "http://192.168.100.9:8000/client/client/tipo/Regular/"+id;
@@ -126,45 +68,46 @@ class ListPedi extends Component<MyProps, MyState> {
       result=[];
     }
     console.log("Hasta aqui llegue " +result+ "tambien aqui")
+    var res = await result.filter(item=>{
+      if(item.pedidos.length==0){
+        return false
+      }
+      return true
+    })
     this.setState({
-      dataUsers: result,
-      completeList: result,
+      dataPedido: res,
+      completeList: res,
     });
 
   }
+  verificarpedido(item: IClients){
+    if(item.pedidos.length==0){
+      return "hola"
+    } else{
+    return item.pedidos.map(item=>{
+      return item.FechaEntrega+ "  Hora Entrega: "+item.horaEntrega + "\n"
+    })
+  }
+  }
   
   listItem(item: IClients) {
+    console.log(item);
     const {dispatch} = this.context;
     //var item : ItemUser = params.item
-  
-    if(item.uriphoto == null) {
-
       return <List.Item
       title={item.firtsname+" "+item.lastname}
-      description={item.email}
+      description={this.verificarpedido(item)}
       onPress={() => {
           dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
           this.props.navigation.push("DetailUsers");
       }}
-      left={props => <Avatar.Text size={48} label={item.firtsname.charAt(0)+item.lastname.charAt(0)} />}
+      left={props => <List.Icon {...props} icon="folder" />}
       />
-    } else {
-      var uriImg: string = "http://192.168.100.9:8000" + item.uriphoto;
-      return <List.Item
-                title={item.firtsname+" "+item.lastname}
-                description={item.email}
-                onPress={() => {
-                  dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
-                  this.props.navigation.push("DetailUsers");
-              }}
-                left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
-      />
-    }  
+    
 }
 
 
-
-
+ 
 
 
 
@@ -186,7 +129,7 @@ class ListPedi extends Component<MyProps, MyState> {
 
     } else {
       this.setState({
-        dataUsers: result
+        dataPedido: result
       }); 
     }
     
@@ -194,6 +137,7 @@ class ListPedi extends Component<MyProps, MyState> {
   render() {
     var {searchbarVisible} = this.context;
     var {searchbarrVisible} = this.context;
+    var res= []
     return (
       
         <View style={styles.container}>
@@ -227,14 +171,16 @@ class ListPedi extends Component<MyProps, MyState> {
           <View>
           { 
             
-            this.state.dataUsers.length!=0 ? <FlatList //aqui pregunto si dataUsers tiene algun elemento, si lo tiene muestro la lista
+            this.state.dataPedido.length!=0 ? <FlatList //aqui pregunto si dataUsers tiene algun elemento, si lo tiene muestro la lista
                 
-                      data={this.state.dataUsers}
-                      renderItem={({item}) => (
-                        this.listItem(item)
-                      )}
-                      keyExtractor={(item) => item._id}
-                  />   : <Text style={styles.textSinClients}>No hay Pedidos</Text>  //en caso de que no tenga muestro este mensaje
+                        data={this.state.dataPedido}
+                        renderItem={({item}) => (
+                          this.listItem(item)
+                        )}
+                        keyExtractor={(item) => item._id}
+                    />  
+            
+                     : <Text style={styles.textSinClients}>No hay Pedidos</Text>  //en caso de que no tenga muestro este mensaje
           
 
           }
@@ -272,7 +218,9 @@ const styles = StyleSheet.create({
   },
   coloriten:{
   marginLeft:110,
-    width:"100%"
+    width:"100%",
+    position: "absolute",
+    
    
   }
 })
