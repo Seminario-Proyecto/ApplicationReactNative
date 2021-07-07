@@ -1,6 +1,6 @@
 import React, { Component ,useState} from "react";
-import {View, Text, StyleSheet,Switch} from "react-native"; 
-import {TextInput, Button, Avatar,Paragraph,Card} from "react-native-paper";
+import {View, Text, StyleSheet,Switch,ImageBackground} from "react-native"; 
+import {TextInput, Button, Avatar,Paragraph,Card,} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../../context/AppContext";
@@ -108,8 +108,9 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
       }
   render() {
     return (
+        <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
         <KeyboardAwareScrollView style={{flex:1}}>
-        <View style= {styles.container}>
+       
             <View style={styles.container2}>
                     <View style={styles.text}>
                             <TextInput style={styles.datos}
@@ -209,15 +210,17 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                             Create
                         </Button>
             </View>
-        </View>
+        
         </KeyboardAwareScrollView>
+        </ImageBackground>
     )
   }
 }
 const styles = StyleSheet.create({
     container: {
         margin:3,
-        backgroundColor:'rgb(255,255,255)'
+        backgroundColor:'rgb(255,255,255)',
+        flex:1
             
         
     

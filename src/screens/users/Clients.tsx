@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {createStackNavigator} from "@react-navigation/stack"
 import { NavigationContainer } from '@react-navigation/native';
-import {View, Text,StyleSheet, Platform} from "react-native"; 
+import {View, Text,StyleSheet, Platform,Image} from "react-native"; 
 import {Appbar} from "react-native-paper"
 import ListUsers from "./ListUsers";
 import RegisterUsers from "./RegisterUsers";
@@ -10,6 +10,7 @@ import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
 import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";
 import RegisterUsersPotenciales from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
+import RegisterUsersR from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
 import RegisterUsersAgenda from "../users/DetailUserAgenda/RegisterUserAgenda";
 import  DetailUsersAgenda from "../users/DetailUserAgenda/DetailUserAgenda";
 
@@ -35,7 +36,12 @@ class Clients extends Component<any, any> {
           <Stack.Navigator>
             <Stack.Screen name="list" component={ListUsers} options={() => (
               {header: () => <Appbar.Header>
-                <Appbar.Action icon="alpha-r-box" size={40} />
+                <Appbar.Action icon={({ size, color }) => (
+                  <Image
+                    source={require('../../../images/R.png')}
+                    style={{ width: 40, height: 50}}
+                  />
+                )} size={40} />
                 <Appbar.Content title="ROCKABYE" subtitle={'Modulo Clientes'} />
                  <Appbar.Action icon="magnify" size={30} onPress={() => {
                    changeSearchBarVisible(!searchbarVisible);
@@ -44,13 +50,13 @@ class Clients extends Component<any, any> {
                  <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
              </Appbar.Header >}
             )}/> 
-            <Stack.Screen name="RegisterUsers" component={RegisterUsers} options={() => (
+             <Stack.Screen name="RegisterUsersR" component={RegisterUsersPotenciales} options={() => (
               {header: (navigate) => <Appbar.Header>
                 <Appbar.BackAction onPress={() => {
                   navigate.navigation.pop();
                   //this.props.navigation.pop();
                 }} />
-                <Appbar.Content title="Registro de Clientes" />
+                <Appbar.Content title="Registro de Clientes Regulares" />
              </Appbar.Header>}
             )}/>
             <Stack.Screen name="RegisterUsersPotenciales" component={RegisterUsersPotenciales} options={() => (
@@ -62,6 +68,7 @@ class Clients extends Component<any, any> {
                 <Appbar.Content title="Registro de Clientes Potenciales" />
              </Appbar.Header>}
             )}/>
+           
              <Stack.Screen name="RegisterUsersAgenda" component={RegisterUsersAgenda} options={() => (
               {
                 header: () => <Appbar.Header>

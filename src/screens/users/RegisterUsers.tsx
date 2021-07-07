@@ -5,6 +5,7 @@ import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../context/AppContext";
 import ButtonRadio from "../../Components/ButtonRadio";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 interface ItemUser{
     username?: string,
     email?: string,
@@ -99,82 +100,88 @@ class RegisterUsers extends Component<MyProps, Mystate> {
     }
   render() {
     return (
-        <View style= {styles.container}>
-            <TextInput style={styles.txtStyles}
-            label="User Name"
-            onChangeText={text => {  
-                this.setState({
-                    username: text
-                })
-            }}/>
-            <TextInput style={styles.txtStyles}
-            label="Email"
-            onChangeText={text => {   
-                this.setState({
-                    email: text
-                })
-            }}/>
+
+        <KeyboardAwareScrollView style={{flex:1}}>
+
+                <View >
+                    <TextInput style={styles.txtStyles}
+                    label="User Name"
+                    onChangeText={text => {  
+                        this.setState({
+                            username: text
+                        })
+                    }}/>
+                    <TextInput style={styles.txtStyles}
+                    label="Email"
+                    onChangeText={text => {   
+                        this.setState({
+                            email: text
+                        })
+                    }}/>
+                    
+                    <TextInput style={styles.txtStyles}
+                    label="Tipo"
+                    onChangeText={text => {   
+                        this.setState({
+                            tipo: text
+                        })
+                    }}/>
+                    
+                    <TextInput style={styles.txtStyles}
+                    label="Tipo"
+                    onChangeText={text => {   
+                        this.setState({
+                            tipo: text
+                        })
+                    }}/>
+                    <TextInput style={styles.txtStyles}
+                    label="Password"
+                    onChangeText={text => {   
+                        this.setState({
+                            password: text
+                        })
+                    }}/>
+                    <TextInput style={styles.txtStyles}
+                    label="Re. Password"
+                    onChangeText={text => {   
+                        this.setState({
+                            repassword: text
+                        })
+                    }}/>
+                    <Button style={styles.txtStyles} icon="camera" mode="contained" onPress={() => {
+                        //this.checkandSendData();
+                        this.props.navigation.push("TakePicture", {onTake: (params: string) => {
+                            this.onTakePicture(params);
+                            console.log(params);
+                        }});
+                    }}>
+                        Tomar Foto
+                    </Button>
+                    <View style={styles.avatarView}>
+                        {this.showAvatar()}
+                    </View>
+                    <Button style={styles.txtStyles} icon="gnome" mode="contained" onPress={() => {
+                        this.checkandSendData();
+                    }}>
+                        Create
+                    </Button>
+                </View>
+            </KeyboardAwareScrollView>
+            )
             
-            <TextInput style={styles.txtStyles}
-            label="Tipo"
-            onChangeText={text => {   
-                this.setState({
-                    tipo: text
-                })
-            }}/>
-            
-            <TextInput style={styles.txtStyles}
-            label="Tipo"
-            onChangeText={text => {   
-                this.setState({
-                    tipo: text
-                })
-            }}/>
-            <TextInput style={styles.txtStyles}
-            label="Password"
-            onChangeText={text => {   
-                this.setState({
-                    password: text
-                })
-            }}/>
-            <TextInput style={styles.txtStyles}
-            label="Re. Password"
-            onChangeText={text => {   
-                this.setState({
-                    repassword: text
-                })
-            }}/>
-            <Button style={styles.txtStyles} icon="camera" mode="contained" onPress={() => {
-                //this.checkandSendData();
-                this.props.navigation.push("TakePicture", {onTake: (params: string) => {
-                    this.onTakePicture(params);
-                    console.log(params);
-                }});
-            }}>
-                Tomar Foto
-            </Button>
-            <View style={styles.avatarView}>
-                {this.showAvatar()}
-            </View>
-            <Button style={styles.txtStyles} icon="gnome" mode="contained" onPress={() => {
-                this.checkandSendData();
-            }}>
-                Create
-            </Button>
-        </View>
-    )
-  }
-}
-const styles = StyleSheet.create({
-    container: {
-        padding: 10
-    },
-    txtStyles: {
-        marginTop: 10
-    },
-    avatarView: {
-        alignItems: "center"
-    }
+        }
+
+        }
+        const styles = StyleSheet.create({
+            container: {
+                padding: 10
+            },
+            txtStyles: {
+                marginTop: 10
+            },
+            avatarView: {
+                alignItems: "center"
+            }
 }   
 );
 export default RegisterUsers;

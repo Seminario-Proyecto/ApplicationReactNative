@@ -213,7 +213,7 @@ class ClientsPotencials extends Component<MyProps, MyState> {
             small={false}
             icon="plus"
             onPress={() => {
-                this.props.navigation.push("RegisterUsers");
+                this.props.navigation.push("RegisterUsersPotenciales");
             }}
           />
         </View>

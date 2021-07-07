@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
+import {View, Text, Platform, FlatList, StyleSheet,ImageBackground} from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
@@ -188,8 +188,10 @@ class ClientsRegulars extends Component<MyProps, MyState> {
   render() {
     var {searchbarVisible} = this.context;
     return (
+
       
-        <View style={styles.container}>
+      <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+        
           <View>
           {
             searchbarVisible && 
@@ -224,10 +226,12 @@ class ClientsRegulars extends Component<MyProps, MyState> {
             small={false}
             icon="plus"
             onPress={() => {
-                this.props.navigation.push("RegisterUsers");
+                this.props.navigation.push("RegisterUsersR");
             }}
           />
-        </View>
+        
+
+        </ImageBackground>
         
     )
   }

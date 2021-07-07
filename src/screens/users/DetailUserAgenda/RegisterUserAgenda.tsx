@@ -195,7 +195,7 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
             label="Agendar"
             icon="plus"
             onPress={() => {
-                this.props.navigation.push("RegisterUsersPotenciales");
+                this.props.navigation.pop();
             }}
           />
         </View>
