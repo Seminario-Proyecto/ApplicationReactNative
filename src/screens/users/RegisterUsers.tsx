@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {View, Text, StyleSheet, Alert} from "react-native"; 
-import {TextInput, Button, Avatar} from "react-native-paper";
+import {TextInput, Button, Avatar, RadioButton} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../context/AppContext";
@@ -19,7 +19,10 @@ interface Mystate {
     password: string,
     repassword: string,
     isload: boolean,
-    pathImg?: string
+    pathImg?: string,
+
+
+    value: string,
 }
 interface MyProps {
     navigation: StackNavigationProp<any, any>
@@ -30,7 +33,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
         super(props);
         this.state = {
             isload: false,
-            username: "", email: "", password: "", repassword:"", tipo:""
+            username: "", email: "", password: "", repassword:"", tipo:"", value:"first"
         }
     }
     async checkandSendData() {
@@ -97,7 +100,17 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             
         }
     }
+
+    changevalueRadio(values: string){
+        console.log(values);
+        this.setState({
+            value : values
+        })
+    }
+
+
   render() {
+      var value = this.state.value;
     return (
         <View style= {styles.container}>
             <TextInput style={styles.txtStyles}
@@ -115,13 +128,23 @@ class RegisterUsers extends Component<MyProps, Mystate> {
                 })
             }}/>
             
-            <TextInput style={styles.txtStyles}
-            label="Tipo"
-            onChangeText={text => {   
-                this.setState({
-                    tipo: text
-                })
-            }}/>
+            <RadioButton.Group onValueChange={newvalue=>{
+                                this.changevalueRadio(newvalue);
+                            }} value={value} >
+                <View style={styles.container}>
+                    <View style={styles.container2}>
+                    <Text>Con exito</Text>
+                    <RadioButton value="first" />
+                    </View>
+                    <View style={styles.container2}>
+                    <Text>Sin exito</Text>
+                    <RadioButton value="second" />
+                    </View>
+                
+                </View>
+                
+                
+            </RadioButton.Group>
             
             <TextInput style={styles.txtStyles}
             label="Tipo"
@@ -174,7 +197,13 @@ const styles = StyleSheet.create({
     },
     avatarView: {
         alignItems: "center"
-    }
+    },
+    container2:{
+        alignContent:"center",
+        marginLeft:10,
+        padding:20
+        
+      }
 }   
 );
 export default RegisterUsers;

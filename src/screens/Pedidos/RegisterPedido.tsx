@@ -5,19 +5,34 @@ import {Switch,Button,RadioButton } from "react-native-paper"
 import ButtonRadio from "../../Components/ButtonRadio";
 
 
+interface MyState{
+  isEnable : boolean;
+}
 
-class  RegisterPedido extends Component {
-    state = {  
-        switchValue: true  
-    };  
+
+
+class  RegisterPedido extends Component<any,MyState> {
+    constructor(props: any){
+      super (props);
+      this.state={
+        isEnable: false
+      }
+    }
     
+    
+    changevalueSwitch(enable: boolean){
+      this.setState({
+        isEnable: !enable,
+    })
+    }
   
   render() {
+    var enable = this.state.isEnable;
     return (
         <View style={style.container}>
             <View style={style.container2}>
-                    <View style={style.container3}>
-                        <Text style={style.text}> 
+                    <View >
+                        <Text style={style.text} > 
                             hoy 10  de mayo 
                         </Text>
                         <Text style={style.text}> 
@@ -25,14 +40,19 @@ class  RegisterPedido extends Component {
                         </Text>
 
                     </View>
-                    <View >  
-                        <Text style={style.textStyle}>Switch Example</Text>  
-                        <Text style={style.textStyle}>{this.state.switchValue ? 'on' :'off'}</Text>  
-                        <Switch  
-                            value={this.state.switchValue}  
-                            onValueChange ={(switchValue)=>this.setState({switchValue})}/>  
-                    </View>  
-
+                    <View>
+                      <Switch
+                            trackColor={{ false: MyColors.thirth, true: "#81b0ff" }} //colores cuando se apaga
+                            thumbColor={enable ? MyColors.secondary : MyColors.thirth} //colores cuando se prende
+                            //ios_backgroundColor="#3e3e3e"
+                            value={enable}
+                            
+                            onValueChange={()=>{
+                                this.changevalueSwitch(enable);
+                            }}
+                            
+                          />
+                    </View>
             </View>
             <View style={style.container4}>
                     <Text style={style.text}> 
@@ -66,9 +86,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: 1,
   },
-  container3:{
   
-},
 container4:{
   marginTop:30
 },
@@ -77,7 +95,7 @@ container4:{
     color:"#000080",
     fontFamily:"Times New Roman",
     paddingLeft:5,
-    paddingRight:30,
+    
     textShadowColor:"#585858",
     textShadowOffset:{width: 5, height: 5},
     textShadowRadius:10,

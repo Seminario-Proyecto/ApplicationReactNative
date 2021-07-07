@@ -216,7 +216,16 @@ class DetailUsers extends Component<any, MyState> {
                         {
                           icon: 'account-edit',
                           label: 'Eliminar',
-                          onPress: () => console.log('Pressed eliminar'),
+                          onPress: () => {
+                            Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
+                              {text: "Confirmar", onPress: () => {
+      
+                              }},
+                              {text: "Cancelar", onPress: () => {
+      
+                              }}
+                            ])
+                          }
                         },
                         {
                             icon: 'account-edit',

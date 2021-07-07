@@ -32,6 +32,7 @@ export interface IRecibo{
   registerdateRecibo: Date;
 }
 export interface IPedido {
+  _id: string,
   state: string;
   products: Array<ISimpleProducts>;
   registerdate: Date;
@@ -40,6 +41,8 @@ export interface IPedido {
   cuentaBancaria?: string;
   total: number;
   Recibo: Array<IRecibo>;
+  horaEntrega: string;
+  FechaEntrega: string;
 }
 export interface IClients {
   _id: string;
@@ -57,8 +60,8 @@ export interface IClients {
   tipo: string; //Regular o Potencial
   registerdate: Date;
   idUser: string,
-  //pedidos?: Array<IPedido>;
- // reunion?: Array<IReunion>;
+  pedidos: Array<IPedido>;
+  reunion?: Array<IReunion>;
 }
 export interface ItemUser{
   _id: string,
