@@ -6,8 +6,9 @@ import { AsyncStorage } from "react-native";
 import {ItemUser} from "../screens/users/TopTab/ClientsRegulars"
 // Es el conjunto de datos
 const DataState = (props: any) => {
-    const initialState = {
-        searchbarVisible: false,
+    const initialState = {//variables
+        searchbarVisible: false,//para el boton
+        earchbarrVisible: false, //para mi otro  snak
         uriphoto: "",
         itemuser: {},
         changeswitchValue: false,
@@ -15,9 +16,12 @@ const DataState = (props: any) => {
         SignIn: false,
         userToken: null,
     }
-    const [state, dispatch] = useReducer(AppReducer, initialState);
+    const [state, dispatch] = useReducer(AppReducer, initialState);//esto siempre
     const changeSearchBarVisible = (value: Boolean) => {
         dispatch({type: Types.SEARCHBARVISIBLE, payload: value});
+    }
+    const changeSearchBarrVisible = (value: Boolean) => {
+        dispatch({type: Types.SEARCHBARRVISIBLE, payload: value});
     }
     const changeUri = (value: string) => {
         dispatch({type: Types.CHANGEURI, payload: value});
@@ -26,10 +30,12 @@ const DataState = (props: any) => {
 
     
     
-    return (
+    return (  //envolver en papagina principal
         <AppContext.Provider value={{
         searchbarVisible: state.searchbarVisible, 
         changeSearchBarVisible, 
+        searchbarrVisible: state.searchbarrVisible, 
+        changeSearchBarrVisible, 
         uriphoto: state.uriphoto, 
         changeUri, 
         dispatch,
@@ -37,8 +43,8 @@ const DataState = (props: any) => {
         itemclient:state.itemclient,
         SignIn: state.SignIn,
         userToken: state.userToken }}>
-            {props.children}
-        </AppContext.Provider>
+       {props.children}   
+        </AppContext.Provider>//children a los  hijos
     )
 }
 export default DataState;

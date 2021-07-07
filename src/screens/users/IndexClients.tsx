@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { NavigationContainer , DarkTheme} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Clients from "./Clients";
-import IndexOrder from "../Order";
-import Reports from "../Reports";
+import IndexOrder from "../Pedidos/Order"
+import Reports from "../Reportes/Reports";
 import Icons from "react-native-vector-icons/AntDesign";
 import Icons2 from "react-native-vector-icons/Entypo";
 import Icons3 from "react-native-vector-icons/Foundation";

@@ -23,6 +23,12 @@ export default (state: any, action: ActionType) => {
                 searchbarVisible: action.payload
             }
         }
+        case Types.SEARCHBARRVISIBLE: {
+            return {
+                ...state,
+                searchbarrVisible: action.payload//variable de searvh
+            }
+        }
         case Types.CHANGEITEMCLIENT: {
             return {
                 ...state,
