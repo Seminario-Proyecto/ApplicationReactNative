@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FAB, Portal, Provider } from 'react-native-paper';
+import { FAB, Portal, Provider as ProviderFAB } from 'react-native-paper';
 
 const Fabgr = () => {
   const [state, setState] = React.useState({ open: false });
@@ -9,13 +9,13 @@ const Fabgr = () => {
   const { open } = state;
 
   return (
-    <Provider>
+    <ProviderFAB>
       <Portal>
         <FAB.Group
         
         visible={true}
         
-
+          style={{ }}
           open={open}
           icon={open ? 'calendar-today' : 'folder'}
           actions={[
@@ -41,7 +41,7 @@ const Fabgr = () => {
           }}
         />
       </Portal>
-    </Provider>
+    </ProviderFAB>
   );
 };
 
