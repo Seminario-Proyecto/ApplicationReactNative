@@ -179,24 +179,8 @@ class RegisterUsers extends Component<MyProps, Mystate> {
                         Create
                     </Button>
                 </View>
-            </KeyboardAwareScrollView>
-            )
             
-<<<<<<< HEAD
-        }
-
-        }
-        const styles = StyleSheet.create({
-            container: {
-                padding: 10
-            },
-            txtStyles: {
-                marginTop: 10
-            },
-            avatarView: {
-                alignItems: "center"
-            }
-=======
+            
             <RadioButton.Group onValueChange={newvalue=>{
                                 this.changevalueRadio(newvalue);
                             }} value={value} >
@@ -253,7 +237,9 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             }}>
                 Create
             </Button>
-        </View>
+        
+    </KeyboardAwareScrollView>
+        
     )
   }
 }
@@ -273,7 +259,7 @@ const styles = StyleSheet.create({
         padding:20
         
       }
->>>>>>> bd3eb6af30d989206b5b865a31e5327859e63288
+
 }   
 );
 export default RegisterUsers;

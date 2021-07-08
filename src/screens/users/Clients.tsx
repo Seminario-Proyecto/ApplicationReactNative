@@ -10,12 +10,14 @@ import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
 import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";
 import RegisterUsersPotenciales from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
+import RegisterUserRegulares from "../users/DetailUserRegulares/RegisterUSerRegulares"
 import RegisterUsersR from "../users/DetailUserPotenciaeles/RegisterUserPotenciales";
 import RegisterUsersAgenda from "../users/DetailUserAgenda/RegisterUserAgenda";
 import  DetailUsersAgenda from "../users/DetailUserAgenda/DetailUserAgenda";
-
+import ClientesRegulares from "./TopTab/ClientsRegulars"
 import Icons3 from "react-native-vector-icons/Foundation";
 import TakePicturePotenciales from "./DetailUserPotenciaeles/TakePicturePotenciales";
+import TakePictureRegulares from "./DetailUserRegulares/TakePictureRegulares";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 var Stack = createStackNavigator();
@@ -38,7 +40,7 @@ class Clients extends Component<any, any> {
               {header: () => <Appbar.Header>
                 <Appbar.Action icon={({ size, color }) => (
                   <Image
-                    source={require('../../../images/R.png')}
+                    source={require('../../../images/logo.png')}
                     style={{ width: 40, height: 50}}
                   />
                 )} size={40} />
@@ -50,7 +52,7 @@ class Clients extends Component<any, any> {
                  <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
              </Appbar.Header >}
             )}/> 
-             <Stack.Screen name="RegisterUsersR" component={RegisterUsersPotenciales} options={() => (
+             <Stack.Screen name="RegisterUsersR" component={RegisterUserRegulares} options={() => (
               {header: (navigate) => <Appbar.Header>
                 <Appbar.BackAction onPress={() => {
                   navigate.navigation.pop();
@@ -111,6 +113,9 @@ class Clients extends Component<any, any> {
             )}/>
             <Stack.Screen name="TakePicture" component={TakePicture}/>
             <Stack.Screen name="TakePicturePotenciales" component={TakePicturePotenciales}/>
+            <Stack.Screen name="TakePictureRegulares" component={TakePictureRegulares}/>
+            <Stack.Screen name="ClientesRegulares" component={ClientesRegulares}/>
+            
           </Stack.Navigator>
         </NavigationContainer>
     )
