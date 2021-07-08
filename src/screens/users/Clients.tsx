@@ -38,12 +38,8 @@ class Clients extends Component<any, any> {
           <Stack.Navigator>
             <Stack.Screen name="list" component={ListUsers} options={() => (
               {header: () => <Appbar.Header>
-                <Appbar.Action icon={({ size, color }) => (
-                  <Image
-                    source={require('../../../images/logo.png')}
-                    style={{ width: 40, height: 50}}
-                  />
-                )} size={40} />
+                  <Appbar.Action icon="alpha-r-box" size={40} />
+                
                 <Appbar.Content title="ROCKABYE" subtitle={'Modulo Clientes'} />
                  <Appbar.Action icon="magnify" size={30} onPress={() => {
                    changeSearchBarVisible(!searchbarVisible);

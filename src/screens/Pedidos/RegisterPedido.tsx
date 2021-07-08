@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet} from "react-native"; 
+import {View, Text, StyleSheet,Image} from "react-native"; 
 import MyColors from "../../color/MyColors";
-import {Switch,Button,RadioButton } from "react-native-paper"
+import {Switch,Button} from "react-native-paper"
 import ButtonRadio from "../../Components/ButtonRadio";
 
 
@@ -33,14 +33,17 @@ class  RegisterPedido extends Component<any,MyState> {
             <View style={style.container2}>
                     <View >
                         <Text style={style.text} > 
-                            hoy 10  de mayo 
+                            Hoy  8  de julio 
                         </Text>
                         <Text style={style.text}> 
                             Pagado o a deuda
                         </Text>
 
                     </View>
-                    <View>
+                    <View style={style.container8}>
+                    <Text > 
+                            Estado Deuda
+                        </Text>
                       <Switch
                             trackColor={{ false: MyColors.thirth, true: "#81b0ff" }} //colores cuando se apaga
                             thumbColor={enable ? MyColors.secondary : MyColors.thirth} //colores cuando se prende
@@ -58,7 +61,7 @@ class  RegisterPedido extends Component<any,MyState> {
                     <Text style={style.text}> 
                                     Productos
                     </Text>
-                      <Button style={{height:60 }} icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
+                      <Button style={{height:60 }} icon="shoppingcart" mode="contained" onPress={() => console.log('Pressed')}>
                         Seleccionar Stock
                     </Button>
             </View>
@@ -66,6 +69,11 @@ class  RegisterPedido extends Component<any,MyState> {
                     <Text style={style.text}> 
                                     Metodo de Pago :
                     </Text>
+
+                    <ButtonRadio></ButtonRadio>
+            </View>
+            <View style={style.container9}>
+                <Image style={{width:100, height:200}} source={require('../../../images/pagarr.jpg')} />
             </View>
 
         </View>
@@ -89,6 +97,16 @@ const style = StyleSheet.create({
   
 container4:{
   marginTop:30
+},
+container8:{
+  marginTop:40,
+  marginLeft:80
+  
+},
+container9:{
+ 
+  marginLeft:120
+  
 },
   text:{
     fontSize:20,

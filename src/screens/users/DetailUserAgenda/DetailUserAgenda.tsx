@@ -106,7 +106,7 @@ class DetailUsersAgenda extends Component<any, any> {
                           icon="gesture-tap-button"
                           label="Guardar"
                           onPress={() => {
-                              this.props.navigation.push("RegisterUsers");
+                            this.props.navigation.pop();
                           }}
                         />
                
