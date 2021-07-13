@@ -7,7 +7,7 @@ import AppContext from "../../../context/AppContext";
 import Switch1 from "../../../Components/Switch";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import MyColors from "../../../color/MyColors";
-
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 import { black } from "react-native-paper/lib/typescript/styles/colors";
 interface ItemClient{
@@ -219,13 +219,21 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             <View   style= {styles.container} >
                     
                         <Text style={styles.datosin}>Direcccion:</Text> 
-                        <View style= {styles.maps}>
-
-                            
-
-                            {this.showAvatar()} 
-
-                        </View>
+                        <View style={styles.containermap}>
+                            <MapView
+                                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                style={styles.map}
+                                region={{
+                                latitude: -19.58877845631177,
+                                longitude:  -65.75353445345742,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                                
+                                }}
+                            >
+                            </MapView>
+                            </View>
+                    <View style={styles.contcon}>
                         <TextInput style={styles.datos}
                             label="zona"
                             onChangeText={text => {   
@@ -234,7 +242,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                             })
                         }}/>
 
-                    <TextInput style={styles.datos}
+                        <TextInput style={styles.datos}
                             label="street"
                             onChangeText={text => {   
                             this.setState({
@@ -273,6 +281,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             
                             Create
                         </Button>
+                    </View>
             </View>
         
         </KeyboardAwareScrollView>
@@ -313,6 +322,12 @@ const styles = StyleSheet.create({
         
         
     },
+    contcon: {
+        
+        marginTop: 250
+        
+        
+    },
     datosin: {
        fontWeight:"bold"
        
@@ -344,7 +359,19 @@ const styles = StyleSheet.create({
         marginLeft:10,
         padding:20
         
-      }
+      },
+      containermap: {
+        ...StyleSheet.absoluteFillObject,
+        height: 250,
+        width: 380,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginTop:20,
+      },
+      map: {
+        ...StyleSheet.absoluteFillObject,
+      },
+    
     
 }   
 );
