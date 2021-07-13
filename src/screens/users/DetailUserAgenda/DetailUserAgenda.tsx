@@ -12,6 +12,7 @@ import { Value } from "react-native-reanimated";
 import Switch1 from "../../../Components/Switch";
 import Fabgr from "../../../Components/FabGroup";
 import RadioButton  from "../../../Components/ButtonRadio1"
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 
@@ -78,8 +79,22 @@ class DetailUsersAgenda extends Component<any, any> {
                   
 
                     <Card.Content style={{marginTop: 4}}>    
-                        <Paragraph style={{fontSize: 18, marginTop:5, fontFamily: "sans-serif-medium", marginLeft: 25,}}>Dirección</Paragraph>      
-                        <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
+                        <Paragraph style={{fontSize: 18, marginTop:8, fontFamily: "sans-serif-medium", marginLeft: 25,}}>Dirección</Paragraph>     
+                        <View style={styles.containermap}>
+                            <MapView
+                                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                style={styles.map}
+                                region={{
+                                latitude: -19.58877845631177,
+                                longitude:  -65.75353445345742,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                                
+                                }}
+                            >
+                            </MapView>
+                            </View>
+                           
                     </Card.Content>
                     <View style={styles.containeer4}>
                         <TouchableHighlight onPress={()=>{
@@ -226,7 +241,7 @@ const styles = StyleSheet.create({
   },
   containeer4:{
     alignItems:"center",
-    marginTop:10
+    marginTop:260
   },
   segundaCabecera:{
     marginTop: 20,
@@ -252,7 +267,20 @@ const styles = StyleSheet.create({
   },
   switch:{
     fontSize: 50,
-  }
+  },
+ 
+  containermap: {
+    ...StyleSheet.absoluteFillObject,
+    height: 250,
+    width: 380,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop:30,
+    marginLeft:1.5
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
 
 
 });

@@ -12,6 +12,7 @@ import { Value } from "react-native-reanimated";
 import Fabgr from "../../Components/FabGroup";
 import { DarkTheme } from "@react-navigation/native";
 import Switch1 from "../../Components/Switch";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 
@@ -146,8 +147,20 @@ class DetailUsers extends Component<any, MyState> {
 
                     <Card.Content style={{marginTop: 4}}>    
                         <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
-                        {this.image(itemclient)}
-                        {/*<Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />  */}  
+                        <View style={styles.containermap}>
+                            <MapView
+                                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                style={styles.map}
+                                region={{
+                                latitude: -19.58877845631177,
+                                longitude:  -65.75353445345742,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                                
+                                }}
+                            >
+                            </MapView>
+                            </View> 
                     </Card.Content>
                     
                     <Card.Content style={styles.enRuta}>    
@@ -336,9 +349,20 @@ const styles = StyleSheet.create({
   },
   switch:{
     fontSize: 50,
-  }
+  },
 
-
+  containermap: {
+    ...StyleSheet.absoluteFillObject,
+    height: 250,
+    width: 380,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop:30,
+    marginLeft:1.5
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
 
 
 });

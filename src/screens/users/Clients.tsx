@@ -38,8 +38,8 @@ class Clients extends Component<any, any> {
               {header: () => <Appbar.Header>
                 <Appbar.Action icon={({ size, color }) => (
                   <Image
-                    source={require('../../../images/R.png')}
-                    style={{ width: 40, height: 50}}
+                    source={require('../../../images/logo.png')}
+                    style={{ width: 40, height: 60}}
                   />
                 )} size={40} />
                 <Appbar.Content title="ROCKABYE" subtitle={'Modulo Clientes'} />

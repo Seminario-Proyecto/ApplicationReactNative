@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import MyColors from "../../../color/MyColors";
 import RadioButton  from "../../../Components/ButtonRadio"
 import { black } from "react-native-paper/lib/typescript/styles/colors";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 interface ItemUser{
     username?: string,
     email?: string,
@@ -177,14 +178,21 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             </View>
             <View   style= {styles.container} >
                         <Text style={styles.datosin}>Direcccion:</Text> 
-                        <View style= {styles.maps}>
-
-                            
-
-                            {this.showAvatar()} 
-
-                        </View>
-
+                        <View style={styles.containermap}>
+                            <MapView
+                                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                style={styles.map}
+                                region={{
+                                latitude: -19.58877845631177,
+                                longitude:  -65.75353445345742,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                                
+                                }}
+                            >
+                            </MapView>
+                            </View>
+                        <View style={styles.cont3}>
                         <TextInput style={styles.datos}
                             label="Zona "
                             onChangeText={text => {   
@@ -199,8 +207,12 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                                     repassword: text
                                 })
                             }}/>
+                            </View>
+                            <View style={styles.cont4}>
                             <Text style={{fontSize: 17, marginTop:20,fontWeight:"bold" }}>Tipo de Cliente </Text>
+
                             <RadioButton ></RadioButton>
+                        
                                 
                         <Button style={styles.buton}  mode="contained" onPress={() => {
                             this.checkandSendData();
@@ -209,6 +221,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             
                             Create
                         </Button>
+                        </View>
             </View>
         
         </KeyboardAwareScrollView>
@@ -249,6 +262,18 @@ const styles = StyleSheet.create({
         
         
     },
+    cont3: {
+        
+        marginTop: 300
+        
+        
+    },
+    cont4: {
+        
+        marginTop: 20
+        
+        
+    },
     datosin: {
        fontWeight:"bold"
        
@@ -268,6 +293,17 @@ const styles = StyleSheet.create({
     },
     Maps:{
         borderRadius: 10,
+      },
+      containermap: {
+        ...StyleSheet.absoluteFillObject,
+        height: 250,
+        width: 380,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginTop:20,
+      },
+      map: {
+        ...StyleSheet.absoluteFillObject,
       },
     
 }   
