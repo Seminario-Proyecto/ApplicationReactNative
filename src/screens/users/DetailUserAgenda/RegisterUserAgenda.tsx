@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, Platform, FlatList, StyleSheet,TouchableHighlight, } from "react-native"; 
+import {View, Text, Platform, FlatList, StyleSheet,TouchableHighlight,ImageBackground  } from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar,TextInput, Portal, Button, Provider,} from "react-native-paper";
@@ -133,8 +133,8 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
     var {searchbarVisible} = this.context;
     return (
 
-    
-        <View style={styles.container}>
+      <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+        
           <View>
           {
             searchbarVisible && 
@@ -169,9 +169,7 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
                       </View>
                       
                       
-                    
-                      
-                                   
+                   
                       <Modal></Modal>
                   
       </View>
@@ -180,6 +178,7 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
                   
           <View>
           <Text style={{fontSize: 18, marginTop:40, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Reuniones ya Agendadas:</Text> 
+
             <FlatList
               
               data={this.state.dataUsers}
@@ -188,7 +187,16 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
               )}
               keyExtractor={(item) => item._id}
             />
+            
           </View>
+          <List.Section>
+            <List.Subheader>Reuniones Provistas</List.Subheader>
+            <List.Item title="8:00 am Reunion prevista" left={() => <List.Icon icon="folder" />} />
+            <List.Item
+              title="10:00 am Reunion prevista"
+              left={() => <List.Icon color="#000" icon="folder" />}
+            />
+          </List.Section>
           <FAB
             style={styles.fab}
             small={false}
@@ -198,7 +206,8 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
                 this.props.navigation.pop();
             }}
           />
-        </View>
+        
+        </ImageBackground>
       
     )
   }

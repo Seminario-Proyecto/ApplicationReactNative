@@ -44,7 +44,7 @@ class Order extends Component<any, any> {
              </Appbar.Header >}
             )}/> 
 
-            <Stack.Screen name="RegisterPedido" component={RegisterPedido} options={() => (
+            <Stack.Screen name="RegisterP" component={RegisterPedido} options={() => (
               {
                 header: (navigate) => <Appbar.Header>
                  

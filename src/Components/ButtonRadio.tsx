@@ -9,17 +9,14 @@ const ButtonRadio = () => {
     <RadioButton.Group onValueChange={newValue => setValue(newValue)} value={value} >
        <View style={styles.container}>
         <View style={styles.container2}>
-          <Text>Mayorista</Text>
+          <Text>CREDITO</Text>
           <RadioButton value="first" />
         </View>
         <View style={styles.container2}>
-          <Text>Supermercado</Text>
+          <Text>CONTADO</Text>
           <RadioButton value="second" />
         </View>
-        <View style={styles.container2}>
-          <Text>Off</Text>
-          <RadioButton value="tree" />
-        </View>
+       
       </View>
       
       
@@ -36,7 +33,7 @@ const styles=StyleSheet.create({
   },
   container2:{
     alignContent:"center",
-    marginLeft:10,
+    marginLeft:60,
     padding:20
     
   }

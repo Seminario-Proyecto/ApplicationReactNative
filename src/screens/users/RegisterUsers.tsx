@@ -179,9 +179,7 @@ class RegisterUsers extends Component<MyProps, Mystate> {
                         Create
                     </Button>
                 </View>
-            
-            
-            
+
             <RadioButton.Group onValueChange={newvalue=>{
                                 this.changevalueRadio(newvalue);
                             }} value={value} >
@@ -238,8 +236,10 @@ class RegisterUsers extends Component<MyProps, Mystate> {
             }}>
                 Create
             </Button>
+
         </View>
     ) 
+
   }
 }
 const styles = StyleSheet.create({
