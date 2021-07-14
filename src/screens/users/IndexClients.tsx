@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 class IndexClients extends Component {
   render() {
     return (
-      <NavigationContainer theme={DarkTheme} independent={true}>
+      <NavigationContainer  independent={true}>
         <Tab.Navigator
         screenOptions={({route}) => ({
           

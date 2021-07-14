@@ -192,7 +192,7 @@ class ListPedi extends Component<MyProps, MyState> {
             label="Ordenar Pedido"
             icon="plus"
             onPress={() => {
-                this.props.navigation.push("RegisterPedido");
+                this.props.navigation.push("RegisterP");
             }}
           />
         </View>

@@ -6,6 +6,7 @@ import {Appbar,Button, Paragraph, Dialog, Portal } from "react-native-paper"
 import AppContext from "../../context/AppContext";
 import RegisterPedido from "./RegisterPedido";
 import ListPedi from "./ListPedi";
+import SelecProduc from "./SelecProduc";
 import Icons3 from "react-native-vector-icons/Foundation";
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
@@ -54,6 +55,24 @@ class Order extends Component<any, any> {
                   //this.props.navigation.pop();
                 }} />
                  <Appbar.Content title="Buscar Cliente"  />
+                   <Appbar.Action icon="magnify" size={30} onPress={() => {
+                     changeSearchBarVisible(!searchbarVisible);
+                   }} />
+                   
+                   <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
+               </Appbar.Header >
+              }
+            )}/>
+             <Stack.Screen name="SelecProduc" component={SelecProduc} options={() => (
+              {
+                header: (navigate) => <Appbar.Header>
+                 
+                 
+                  <Appbar.BackAction onPress={() => {
+                  navigate.navigation.pop();
+                  //this.props.navigation.pop();
+                }} />
+                 <Appbar.Content title="Seleccionar Producto"  />
                    <Appbar.Action icon="magnify" size={30} onPress={() => {
                      changeSearchBarVisible(!searchbarVisible);
                    }} />

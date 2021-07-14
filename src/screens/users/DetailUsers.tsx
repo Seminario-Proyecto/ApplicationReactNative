@@ -181,7 +181,7 @@ class DetailUsers extends Component<any, MyState> {
                     </View>
   
                   </Card>
-                  <Text style={{fontSize: 18, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos</Text>        
+                  <Text style={{fontSize: 18,marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Ultimos Pedidos:</Text>        
                       <View>
                        {
                          this.state.systemPedido.map(item =>{
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   enRuta:{
-    marginTop: 10,
+    marginTop: 270,
     flexDirection: "row"
   },
   suich:{
@@ -354,11 +354,12 @@ const styles = StyleSheet.create({
   containermap: {
     ...StyleSheet.absoluteFillObject,
     height: 250,
-    width: 380,
+    width: 370,
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop:30,
-    marginLeft:1.5
+    marginLeft:1.5,
+    marginRight:5
   },
   map: {
     ...StyleSheet.absoluteFillObject,

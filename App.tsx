@@ -7,6 +7,8 @@ import Index from "./src/screens/Login/Index";
 import PreLogin from "./src/screens/Login/Prelogin";
 import DataState from "./src/context/AppState"
 import { NavigationEvents } from "react-navigation";
+import EStyleSheet from 'react-native-extended-stylesheet';
+import theme from './theme';
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 var Stack = createStackNavigator();
 class App extends Component<any, any> {
@@ -28,6 +30,8 @@ class App extends Component<any, any> {
     )
   }
 }
+
+EStyleSheet.build({...theme});
 const styles = StyleSheet.create({
   container: {
     flex: 1

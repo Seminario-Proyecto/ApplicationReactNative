@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {View, Text, StyleSheet,Image} from "react-native"; 
 import MyColors from "../../color/MyColors";
-
+import { StackNavigationProp } from '@react-navigation/stack';
 import {Switch,Button} from "react-native-paper"
 import ButtonRadio from "../../Components/ButtonRadio";
 import AppContext from "../../context/AppContext";
@@ -72,7 +72,9 @@ class  RegisterPedido extends Component<any, MyState>{
                     <Text style={style.text}> 
                                     Productos
                     </Text>
-                      <Button style={{height:60 }} icon="shoppingcart" mode="contained" onPress={() => console.log('Pressed')}>
+                      <Button style={{height:60 }} icon="shoppingcart" mode="contained" onPress={() => {
+                      this.props.navigation.push("SelecProduc");
+                      }}>
                         Seleccionar Stock
                     </Button>
             </View>
