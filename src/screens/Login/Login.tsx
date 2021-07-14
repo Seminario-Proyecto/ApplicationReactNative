@@ -56,6 +56,11 @@ class Login extends Component <MyProps, Mystate> {
           
     }
 
+    IndexClientsVendedor() {
+        this.props.navigation.navigate("IndexClientsVendedor");
+    }
+
+    
     async DataSend() {
         const {dispatch} = this.context;
         console.log(this.state);
@@ -74,9 +79,15 @@ class Login extends Component <MyProps, Mystate> {
             dispatch({type: Types.CHANGEITEMUSER, payload: res})
 
 
+            var tipoUsuario: string = this.context.userToken.tipo.toString();
+            console.log(" aqui "+tipoUsuario)
 
-
-            this.IndexClients();
+            if (tipoUsuario.toLowerCase()=="vendedor"){
+                this.IndexClientsVendedor();
+            } else{
+                this.IndexClients();
+            }
+            
         }
 
 

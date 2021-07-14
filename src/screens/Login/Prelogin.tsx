@@ -5,6 +5,7 @@ import {View, Text,StyleSheet, Platform} from "react-native";
 import {StackRouter} from "@react-navigation/native";
 import Login from "../Login/Login";
 import IndexClients from "../users/IndexClients";
+import IndexClientsVendedor from "../users/IndexClientVendedor";
 
 import { NavigationEvents } from "react-navigation";
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
@@ -24,6 +25,7 @@ class Prelogin extends Component<any, any> {
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,}}>
                   <Stack.Screen name="Login" component={Login}/>
                   <Stack.Screen name="IndexClients" component={IndexClients}/>
+                  <Stack.Screen name="IndexClientsVendedor" component={IndexClientsVendedor}/>
               </Stack.Navigator>
           </NavigationContainer>
         

@@ -8,7 +8,7 @@ import Switch1 from "../../../Components/Switch";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import MyColors from "../../../color/MyColors";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
+import Slider from '@react-native-community/slider';
 import { black } from "react-native-paper/lib/typescript/styles/colors";
 interface ItemClient{
   _id: string;
@@ -48,6 +48,7 @@ interface Mystate {
   idUser: string;
 
   isLoad:boolean;
+  
 }
 interface MyProps {
     navigation: StackNavigationProp<any, any>
@@ -91,10 +92,10 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id)
             fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id, {
                 method: "POST",
-                headers: {
+                /*headers: {
                     "Content-Type": "multipart/form-data"
                     //Authorization: this.context.userToken.token
-                },
+                },*/
                 body: data
             }).then((result) => {
                 result.json();
@@ -154,8 +155,16 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
         const toggleSwitch = () => setIsEnabled(previousState => !previousState);
        
       }
+
+    async changevalueSlider(enable: number){
+       await     this.setState({
+          probability: enable,
+      })
+      console.log(this.state.probability+" slider")
+    }
   render() {
     var value =this.state.mayorista
+    var sliderInitial=this.state.probability
     console.log(this.context.userToken._id)
     return (
         <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
@@ -215,10 +224,24 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                         </View>
                         <View style={styles.stylescommit}>
                         <Text style={styles.datosin} >Estado del cliente      off/on </Text>
-                        <Text style={styles.datosin}>Potencial:                  <Switch1></Switch1></Text>
+                        <Text style={styles.datosin}>Regular              <Switch1></Switch1></Text>
                             
                         <Text style={styles.datosin}>Probabilidad de negosiacion:</Text>
-                        <Text style={styles.datosin}>80%</Text>
+                        <Text> {Math.round(this.state.probability)+" %"}</Text>
+                        <Slider
+                            style={{width: 200, height: 40}}
+                            minimumValue={0}
+                            maximumValue={100}
+                            minimumTrackTintColor="#FFFFFF"
+                            maximumTrackTintColor="#000000"
+                            value={sliderInitial}
+                            onValueChange={newvalue=>{
+                                this.changevalueSlider(newvalue);
+                                
+                             }}
+                            
+                        />
+                        {/*<Text style={styles.datosin}>80%</Text>*/}
                         </View>
                        
                        
