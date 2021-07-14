@@ -5,6 +5,21 @@ export interface ActionType {
 }
 export default (state: any, action: ActionType) => {
     switch (action.type) {
+
+        /*case Types.LOADCLIENTSREGULARES: {
+            return {
+                ...state,
+                listclientsregulares: action.payload
+            }
+        }*/
+
+        case Types.PHOTOLOADCLIENT: {
+            return {
+                ...state,
+                isLoadUriPhoto: action.payload
+            }
+        }
+
         case Types.CHANGEITEMUSER: {
             return {
                 ...state,

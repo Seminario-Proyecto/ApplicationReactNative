@@ -115,7 +115,9 @@ class ClientsRegulars extends Component<MyProps, MyState> {
     var direccion: string = "http://192.168.100.9:8000/client/client/tipo/Regular/"+id;
     console.log(direccion);
     var result: Array<IClients> = await axios.get<ServerResponse>(direccion, {
-      
+      headers: {
+        "Authorization": token.toString() //esto manda el token para la verificación del rol
+      }
     }).then((item) => {
       return item.data.serverResponse
     });
@@ -127,14 +129,17 @@ class ClientsRegulars extends Component<MyProps, MyState> {
       dataUsers: result,
       completeList: result,
     });
-
+    /*var {loadMainListClientsRegulares} =this.context;
+    loadMainListClientsRegulares(id, token);*/
+   
   }
+  
   
   listItem(item: IClients) {
     const {dispatch} = this.context;
     //var item : ItemUser = params.item
   
-    if(item.uriphoto == null) {
+    if(item.uriphoto == null || item.uriphoto=="") {
 
       return <List.Item
       title={item.firtsname+" "+item.lastname}
@@ -190,6 +195,7 @@ class ClientsRegulars extends Component<MyProps, MyState> {
   }
   render() {
     var {searchbarVisible} = this.context;
+    //var {listclientsregulares} = this.context;
     return (
 
       
