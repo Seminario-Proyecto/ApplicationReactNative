@@ -1,5 +1,5 @@
 import React, { Component ,useState} from "react";
-import {View, Text, StyleSheet,Switch,ImageBackground} from "react-native"; 
+import {View, Text, StyleSheet,Switch,ImageBackground, Alert} from "react-native"; 
 import {TextInput, Button, Avatar,Paragraph,Card,RadioButton} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
@@ -31,7 +31,7 @@ interface ItemClient{
   isLoad:boolean;
   }
 interface Mystate {
-  _id: string;
+  
   firtsname: string;
   lastname: string;
   email: string;
@@ -61,14 +61,16 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
     constructor(props: any) {
         super(props);
         this.state = {
-           _id:"",firtsname:"",lastname:"",email:"",telephone:"",descriptionphone:"", state:"En Ruta",probability:0,zona:"",street:"",tipo:"Regular",mayorista:"off",idUser:"".toString(),isLoad:false
+           firtsname:"",lastname:"",email:"",telephone:"", state:"En Ruta",probability:0,zona:"",street:"",tipo:"Regular",mayorista:"off",idUser:"",isLoad:false, uriphoto:"", pathphoto:""
         }
     }
     async checkandSendData() {
         var navigation:StackNavigationProp<any, any> = this.props.navigation;
-        console.log(this.state);
-        this.setState({
-            idUser: this.context.userToken._id
+        var {isLoadUriPhoto, uriphoto}=this.context
+        //console.log(this.state);
+        var auxiliar: string = this.context.userToken._id.toString()
+        await this.setState({
+            idUser: auxiliar
         })
         console.log(this.state.idUser+" aquiiiiiiiiiiiiiii");
         var result: any = await axios.post<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/client/client", this.state)
@@ -76,11 +78,15 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             return response.data;
         });
         console.log(result);
-        if (this.state.isLoad) {
+        if(!result.serverResponse._id){
+             Alert.alert("No se pudo enviar datos, fallo algo")   
+        } else{
+        if (isLoadUriPhoto) {
+            console.log("entre hasta aqui")
             var data = new FormData();
             data.append("avatar", {
             name: "avatar.jpg", 
-            uri: this.state.uriphoto, 
+            uri: uriphoto, 
             type: "image/jpg"});
             console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id)
             fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id, {
@@ -94,7 +100,9 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                 result.json();
             }).then((result) => {
                 console.log(result);
-                navigation.push("ClientesRegulares");
+
+                //navigation.push("ClientesRegulares");
+                navigation.pop();
             });
             /*var result_img = await axios.post("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id, data,{
                 headers: {
@@ -107,9 +115,10 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             //console.log(result_img);
             */
         } else {
-            navigation.push("ClientesRegulares");
+            //navigation.push("ClientesRegulares");
+            navigation.pop();
         }
-        
+    }
         
     }
     
@@ -147,7 +156,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
       }
   render() {
     var value =this.state.mayorista
-    
+    console.log(this.context.userToken._id)
     return (
         <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
         <KeyboardAwareScrollView style={{flex:1}}>
