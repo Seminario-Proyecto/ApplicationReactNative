@@ -131,7 +131,7 @@ class ClientsPotencials extends Component<MyProps, MyState> {
         description={item.email}
         onPress={() => {
             dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
-            this.props.navigation.push("DetailUsers");
+            this.props.navigation.push("DetailUsersPotenciales");
         }}
         left={props => <Avatar.Text size={48} label={item.firtsname.charAt(0)+item.lastname.charAt(0)} />}
         />

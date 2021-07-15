@@ -11,6 +11,7 @@ import {Types} from "../../../context/ContantTypes";
 import { Value } from "react-native-reanimated";
 import Switch1 from "../../../Components/Switch";
 import Fabgr from "../../../Components/FabGroup";
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 
@@ -50,7 +51,7 @@ class DetailUsersPotenciales extends Component<any, any> {
                         <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
                          
                         <TouchableHighlight onPress={()=>{
-                            this.call;
+                            this.call()
                               }}>
                             
                             <View style={styles.containerText2}>
@@ -72,8 +73,22 @@ class DetailUsersPotenciales extends Component<any, any> {
                     </Card.Content>
 
                     <Card.Content style={{marginTop: 4}}>    
-                        <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>      
-                        <Card.Cover style={styles.Maps} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />    
+                        <Paragraph style={{fontSize: 15, marginLeft: 5}}>Dirección</Paragraph>
+                        <View style={styles.containermap}>
+                            <MapView
+                                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                                style={styles.map}
+                                region={{
+                                latitude: -19.58877845631177,
+                                longitude:  -65.75353445345742,
+                                latitudeDelta: 0.015,
+                                longitudeDelta: 0.0121,
+                                
+                                }}
+                            >
+                            </MapView>
+                          </View>
+  
                     </Card.Content>
                             
                     <Card.Content style={styles.enRuta}>    
@@ -252,7 +267,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   enRuta:{
-    marginTop: 10,
+    marginTop: 270,
     flexDirection: "row"
   },
   suich:{
@@ -260,8 +275,21 @@ const styles = StyleSheet.create({
   },
   switch:{
     fontSize: 50,
-  }
-
+  },
+  containermap: {
+  
+    ...StyleSheet.absoluteFillObject,
+    height: 250,
+    width: 380,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop:30,
+    marginLeft:2,
+    marginRight:2
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
 
 });
 

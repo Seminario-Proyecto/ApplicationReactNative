@@ -47,7 +47,12 @@ class Login extends Component <MyProps, MyState> {
     constructor(props: MyProps){
         super(props);
         this.state={
+<<<<<<< HEAD
              password: "", email:"",//visible: true
+=======
+             password: "", email:""
+             //,visible: true
+>>>>>>> 3ef4eb3e35244234ae6ce3c8a7d7090fabf524fe
         }
     }
     
@@ -152,12 +157,27 @@ class Login extends Component <MyProps, MyState> {
                 <TextInput style={styles.txtStyles} 
                 label="Password"
                 secureTextEntry
+<<<<<<< HEAD
+=======
+                //={this.state.visible}
+>>>>>>> 3ef4eb3e35244234ae6ce3c8a7d7090fabf524fe
                 onChangeText={text => {  
                     this.setState({
                         password: text
                     })
                 }}
+<<<<<<< HEAD
                 
+=======
+            
+                right={<TextInput.Icon name="eye" 
+                
+                //onPress= {()=>
+                //this.setState({
+                   // visible: !this.state.visible)}}
+                   
+                   />}
+>>>>>>> 3ef4eb3e35244234ae6ce3c8a7d7090fabf524fe
                 />
 
                 <Button   style={styles.boton}  mode="contained" onPress={() =>{
