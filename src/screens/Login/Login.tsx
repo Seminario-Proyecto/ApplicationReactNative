@@ -29,10 +29,11 @@ interface ServerResponse {
 interface ItemData {
     item: DateUsers
 }
-interface Mystate {
+interface MyState {
     //username: string,
     email: string,
     password: string,
+    visible: boolean,
 }
 
 
@@ -41,12 +42,12 @@ interface Mystate {
 interface MyProps {
     navigation: NavigationScreenProp<any,any>
 }  
-class Login extends Component <MyProps, Mystate> {
+class Login extends Component <MyProps, MyState> {
     static contextType = AppContext;
     constructor(props: MyProps){
         super(props);
         this.state={
-             password: "", email:""
+             password: "", email:"",visible: true
         }
     }
     
@@ -114,7 +115,20 @@ class Login extends Component <MyProps, Mystate> {
         console.log(reg.test(this.state.email.toString()));
            
     }*/
-    
+    /*async loginGoogle() {
+        var data: any = await this.onGoogleButtonPress();
+        var userdata: IGoogleUser = data;
+        console.log(userdata)
+        var {loginGoogle, serverErrorMessages} = this.context;
+        loginGoogle(userdata, (result: Boolean) => {
+            if (result) {
+                this.props.navigation.navigate("main");
+            } else {
+                Alert.alert("Error", serverErrorMessages);
+            }
+        });
+        console.log(userdata);
+      }*/
 
   render() {
     return (
@@ -137,13 +151,16 @@ class Login extends Component <MyProps, Mystate> {
                 }}/>
                 <TextInput style={styles.txtStyles} 
                 label="Password"
-                secureTextEntry
+                secureTextEntry={this.state.visible}
                 onChangeText={text => {  
                     this.setState({
                         password: text
                     })
                 }}
-                right={<TextInput.Icon name="eye" />}
+                right={<TextInput.Icon name="eye" onPress= {()=>
+                this.setState({
+                    visible: !this.state.visible
+                })}/>}
                 />
 
                 <Button   style={styles.boton}  mode="contained" onPress={() =>{
@@ -155,7 +172,15 @@ class Login extends Component <MyProps, Mystate> {
                     
                 }>
                     Ingresar
+                
                 </Button>
+
+
+                <Button icon="google" style={styles.marginTop}  mode="contained" onPress={() => {
+                    //this.loginGoogle();
+                 }}>
+                Ingresa con cuenta Google
+          </Button>
                 </View>
         </View>
     )
@@ -224,6 +249,10 @@ const styles = StyleSheet.create({
        
         
       },
+      marginTop: {
+        marginTop: 10,
+        borderRadius:60,
+      }
   
 }   
 );
