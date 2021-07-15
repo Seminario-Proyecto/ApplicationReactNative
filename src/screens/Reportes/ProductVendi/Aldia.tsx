@@ -12,9 +12,9 @@ import {
 class aldia extends Component {
   render() {
 
-
+    
     const data = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
       datasets: [
         {
           data: [20, 45, 28, 80, 99, 43]
@@ -23,12 +23,12 @@ class aldia extends Component {
     };
 
     const chartConfig = {
-      backgroundGradientFrom: "#1E2923",
-      backgroundGradientFromOpacity: 0,
-      backgroundGradientTo: "#08130D",
+      backgroundGradientFrom: "#252850",
+      //backgroundGradientFromOpacity: 0.8,
+      //backgroundGradientTo: "rgb(255, 64, 71)",
       backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      strokeWidth: 2, // optional, default 3
+      color: (opacity = 0.1) => `rgba(26, 255, 146)`,
+      strokeWidth: 1, // optional, default 3
       barPercentage: 0.5,
       useShadowColorFromDataset: false // optional
     };
@@ -40,12 +40,12 @@ class aldia extends Component {
             <Text style={style.text}> 
                 Pedidos
             </Text>
-          <View>
+          <View style={style.container2}>
             <BarChart
             style={style.graphStyle}
             data={data}
             width={screenWidth}
-            height={220}
+            height={260}
             yAxisLabel="$"
             chartConfig={chartConfig}
             verticalLabelRotation={30}
@@ -58,6 +58,10 @@ class aldia extends Component {
 const style = StyleSheet.create({
   container:{
     flex:1,
+  },
+  container2:{
+   marginLeft:20,
+   marginRight:20
   },
   text:{
     color : "#ffffff"
