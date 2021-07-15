@@ -22,11 +22,13 @@ class TakePicturePotenciales extends PureComponent<MyProps, any> {
   }
   async takePicture() {
     const {changeUri} = this.context;
+    const {photoloadclient} = this.context;
     if (this.camera) {
         const options = { quality: 0.5, base64: true };
         const data = await this.camera.takePictureAsync(options);
         //console.log(data.uri);
         console.log("Enter here " + data.uri);
+        photoloadclient(true);
         changeUri(data.uri);
         //this.props.route.params.onTake(data.uri);
         this.props.navigation.navigate("RegisterUsersPotenciales");

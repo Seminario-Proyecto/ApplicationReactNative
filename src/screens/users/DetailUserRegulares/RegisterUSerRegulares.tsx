@@ -62,7 +62,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
     constructor(props: any) {
         super(props);
         this.state = {
-           firtsname:"",lastname:"",email:"",telephone:"", state:"En Ruta",probability:0,zona:"",street:"",tipo:"Regular",mayorista:"off",idUser:"",isLoad:false, uriphoto:"", pathphoto:""
+           firtsname:"",lastname:"",email:"",telephone:"", state:"En Ruta",probability:100,zona:"",street:"",tipo:"Regular",mayorista:"off",idUser:"",isLoad:false, uriphoto:"", pathphoto:""
         }
     }
     async checkandSendData() {
@@ -92,10 +92,10 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id)
             fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id, {
                 method: "POST",
-                /*headers: {
+                headers: {
                     "Content-Type": "multipart/form-data"
                     //Authorization: this.context.userToken.token
-                },*/
+                },
                 body: data
             }).then((result) => {
                 result.json();
@@ -226,7 +226,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                         <Text style={styles.datosin} >Estado del cliente      off/on </Text>
                         <Text style={styles.datosin}>Regular              <Switch1></Switch1></Text>
                             
-                        <Text style={styles.datosin}>Probabilidad de negosiacion:</Text>
+                        {/*<Text style={styles.datosin}>Probabilidad de negosiacion:</Text>
                         <Text> {Math.round(this.state.probability)+" %"}</Text>
                         <Slider
                             style={{width: 200, height: 40}}
@@ -240,7 +240,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                                 
                              }}
                             
-                        />
+                            />*/}
                         {/*<Text style={styles.datosin}>80%</Text>*/}
                         </View>
                        

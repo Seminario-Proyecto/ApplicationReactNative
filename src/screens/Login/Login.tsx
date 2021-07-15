@@ -33,7 +33,7 @@ interface MyState {
     //username: string,
     email: string,
     password: string,
-    visible: boolean,
+    //visible: boolean,
 }
 
 
@@ -47,7 +47,7 @@ class Login extends Component <MyProps, MyState> {
     constructor(props: MyProps){
         super(props);
         this.state={
-             password: "", email:"",visible: true
+             password: "", email:"",//visible: true
         }
     }
     
@@ -151,16 +151,13 @@ class Login extends Component <MyProps, MyState> {
                 }}/>
                 <TextInput style={styles.txtStyles} 
                 label="Password"
-                secureTextEntry={this.state.visible}
+                secureTextEntry
                 onChangeText={text => {  
                     this.setState({
                         password: text
                     })
                 }}
-                right={<TextInput.Icon name="eye" onPress= {()=>
-                this.setState({
-                    visible: !this.state.visible
-                })}/>}
+                
                 />
 
                 <Button   style={styles.boton}  mode="contained" onPress={() =>{
