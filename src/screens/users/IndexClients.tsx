@@ -3,16 +3,17 @@ import { NavigationContainer , DarkTheme} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Clients from "./Clients";
 import IndexOrder from "../Pedidos/Order"
-import Reports from "../Reportes/Reports";
+import Reports from "../Reportes/RoutesReports";
 import Icons from "react-native-vector-icons/AntDesign";
 import Icons2 from "react-native-vector-icons/Entypo";
 import Icons3 from "react-native-vector-icons/Foundation";
 import MyColors from "../../color/MyColors";
+import RoutesReports  from "../Reportes/RoutesReports";
 const Tab = createBottomTabNavigator();
 class IndexClients extends Component {
   render() {
     return (
-      <NavigationContainer  independent={true}>
+      <NavigationContainer theme={DarkTheme} independent={true}>
         <Tab.Navigator
         screenOptions={({route}) => ({
           
@@ -50,7 +51,7 @@ class IndexClients extends Component {
         >
           <Tab.Screen name="Usuarios" component={Clients} />
           <Tab.Screen name="Pedidos" component={IndexOrder} />
-          <Tab.Screen name="Reportes" component={Reports} />
+          <Tab.Screen name="Reportes" component={RoutesReports } />
         </Tab.Navigator>
       </NavigationContainer>)
   }

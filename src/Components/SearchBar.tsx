@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {Text, TouchableOpacity,Image} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -17,11 +17,11 @@ const SearchBar = ({placeholder, navigation, navigateTo}: SearchBoxProps) => {
   return (
     <TouchableOpacity onPress={() => goToSearchPage()} style={styles.searchBar}>
        <Image
-          source={require('../../images/apple.png')}
+          source={require('../../images/lupa.png')}
          
         />
       <Text style={styles.searchBarText}>
-        {placeholder ? placeholder : 'Busque su producto'}
+        {placeholder ? placeholder : 'Busque un Reporte '}
       </Text>
     </TouchableOpacity>
   );
