@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight} from "react-native";
+import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking} from "react-native";
 import AppContext from "../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../color/MyColors";
@@ -89,6 +89,11 @@ class DetailUsers extends Component<any, MyState> {
       open: !open,
   })
   }
+  call(){
+    const number= 'tel:${75728226}';
+    Linking.openURL(number);
+  }
+
 
   enruta(itemclient: IClients){
     console.log(itemclient.state.toString())
@@ -109,6 +114,7 @@ class DetailUsers extends Component<any, MyState> {
     var enable: boolean = this.state.isEnable;
     var opens: boolean = this.state.open;
     var itempedido: Array<IPedido> = this.state.systemPedido;
+    
     return (
       <View style={{flex:1}}>
       <KeyboardAwareScrollView >
@@ -122,7 +128,7 @@ class DetailUsers extends Component<any, MyState> {
                         <Text style={styles.textoCabecera2}>Email</Text>
                         <Text style={styles.textoCabecera3}>{itemclient.email}</Text>
                         
-                        <TouchableHighlight onPress={()=>{
+                        <TouchableHighlight onPress={()=>{this.call()
                             //this.click();
                               }}>
                             

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight} from "react-native";
+import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking} from "react-native";
 import AppContext from "../../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../../color/MyColors";
@@ -29,7 +29,10 @@ class DetailUsersPotenciales extends Component<any, any> {
   async componentDidMount() {
     
   }
-  
+  call(){
+    const number= 'tel:${75728226}';
+    Linking.openURL(number);
+  }
 
  
   render() {
@@ -47,7 +50,7 @@ class DetailUsersPotenciales extends Component<any, any> {
                         <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
                          
                         <TouchableHighlight onPress={()=>{
-                            //this.click();
+                            this.call;
                               }}>
                             
                             <View style={styles.containerText2}>
