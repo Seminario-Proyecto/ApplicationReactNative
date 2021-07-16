@@ -38,10 +38,13 @@ class DetailUsers extends Component<any, MyState> {
    
   }
   async componentDidMount() {
+    
     var direccion: string = "http://192.168.100.9:8000/pedido/pedidos/"+this.context.itemclient._id;
+    console.log(direccion)
     var result: Array<IPedido> = await axios.get<ServerResponse>(direccion).then((item) => {
       return item.data.serverResponse
     });
+    console.log(result)
     if(result==undefined){
       result=[];
     }
@@ -70,7 +73,7 @@ class DetailUsers extends Component<any, MyState> {
   }
   
   image(itemclient: IClients){
-      if(itemclient.uriphoto != null) {
+      if(itemclient.uriphoto != null && itemclient.uriphoto!="") {
         console.log(itemclient.uriphoto);
         return <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemclient.uriphoto }} />
       } else {
@@ -89,8 +92,8 @@ class DetailUsers extends Component<any, MyState> {
       open: !open,
   })
   }
-  call(){
-    const number= 'tel:${75728226}';
+  call(phone: string){
+    const number=  'tel:$'+phone
     Linking.openURL(number);
   }
 
@@ -124,11 +127,11 @@ class DetailUsers extends Component<any, MyState> {
                   <View style= {styles.Cabecera} >
                     {this.image(itemclient)}
                       <View style={styles.contacto}>
-                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.firtsname}</Text>
+                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.telephone}</Text>
                         <Text style={styles.textoCabecera2}>Email</Text>
                         <Text style={styles.textoCabecera3}>{itemclient.email}</Text>
                         
-                        <TouchableHighlight onPress={()=>{this.call()
+                        <TouchableHighlight onPress={()=>{this.call(itemclient.telephone.toString())
                             //this.click();
                               }}>
                             
@@ -176,7 +179,7 @@ class DetailUsers extends Component<any, MyState> {
                           thumbColor={enable ? MyColors.secondary : MyColors.thirth} //colores cuando se prende
                           //ios_backgroundColor="#3e3e3e"
                           value={enable}
-                          
+                          style={{}}
                           onValueChange={()=>{
                                 this.changevalueSwitch(enable);
                           }}
@@ -237,8 +240,9 @@ class DetailUsers extends Component<any, MyState> {
                           label: 'Eliminar',
                           onPress: () => {
                             Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
-                              {text: "Confirmar", onPress: () => {
-      
+                              {text: "Confirmar", onPress: async () => {
+                                var result = await axios.delete("http://192.168.100.9:8000/client/client/" + itemclient._id);
+                                this.props.navigation.pop();
                               }},
                               {text: "Cancelar", onPress: () => {
       

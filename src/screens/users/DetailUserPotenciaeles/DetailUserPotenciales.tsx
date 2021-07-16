@@ -12,7 +12,7 @@ import { Value } from "react-native-reanimated";
 import Switch1 from "../../../Components/Switch";
 import Fabgr from "../../../Components/FabGroup";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
+import {StackNavigationProp} from "@react-navigation/stack";
 
 
 interface MyState{
@@ -26,7 +26,11 @@ interface ServerResponsePutRoles {
   serverResponse: IClients
 }
 
-class DetailUsersPotenciales extends Component<any, MyState> {
+interface MyProps {
+  navigation: StackNavigationProp<any, any>
+}
+
+class DetailUsersPotenciales extends Component<MyProps, MyState> {
   static contextType = AppContext;
   
   constructor(props: any) {
@@ -40,13 +44,13 @@ class DetailUsersPotenciales extends Component<any, MyState> {
   async componentDidMount() {
     
   }
-  call(){
-    const number= 'tel:${75728226}';
+  call(phone: string){
+    const number=  'tel:$'+phone
     Linking.openURL(number);
   }
 
   image(itemclient: IClients){
-    if(itemclient.uriphoto != null) {
+    if(itemclient.uriphoto != null && itemclient.uriphoto!="") {
       console.log(itemclient.uriphoto);
       return <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemclient.uriphoto }} />
     } else {
@@ -54,7 +58,9 @@ class DetailUsersPotenciales extends Component<any, MyState> {
     }
 
   }
-
+  click(){
+    this.props.navigation.navigate("Agendar una Reunion")
+  }
 
   stateFabGroup(open: boolean){
     this.setState({
@@ -75,12 +81,12 @@ class DetailUsersPotenciales extends Component<any, MyState> {
                   <View style= {styles.Cabecera} >
                   {this.image(itemclient)}
                       <View style={styles.contacto}>
-                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.firtsname}</Text>
+                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.telephone}</Text>
                         <Text style={styles.textoCabecera2}>Email</Text>
                         <Text style={styles.textoCabecera3}>{itemclient.email}</Text>
                          
                         <TouchableHighlight onPress={()=>{
-                            this.call()
+                            this.call(itemclient.telephone.toString())
                               }}>
                             
                             <View style={styles.containerText2}>
@@ -131,7 +137,7 @@ class DetailUsersPotenciales extends Component<any, MyState> {
 
                   <View style={styles.containerText4}>
                           <TouchableHighlight onPress={()=>{
-                            //this.click();
+                            this.click();
                               }}>
                             
                             <View style={styles.containerText3}>
@@ -190,9 +196,15 @@ class DetailUsersPotenciales extends Component<any, MyState> {
                           icon: 'account-edit',
                           label: 'Cambiar a Cliente Regular ',
                           onPress: () => {
-                            Alert.alert("¿Desea Cambiar el tipo de cliente a Regular?", "¿Cambiar tipo al Cliente " + itemclient.firtsname+ "?", [
-                              {text: "Confirmar", onPress: () => {
-
+                            Alert.alert("¿Desea cambiar el tipo de cliente a Regular?", "¿Cambiar a Cliente Regular a " + itemclient.firtsname+ "?", [
+                              {text: "Confirmar", onPress: async () => {
+                                const {dispatch} = this.context;
+                                var tipo = "Regular"
+                                var result = await axios.put("http://192.168.100.9:8000/client/client/" + itemclient._id,{tipo: tipo}).then((item) => {
+                                  return item.data.serverResponse;
+                                });
+                                  dispatch({type: Types.CHANGEITEMCLIENT, payload: result});
+                                this.props.navigation.pop();
                               }},
                               {text: "Cancelar", onPress: () => {
 
@@ -204,10 +216,15 @@ class DetailUsersPotenciales extends Component<any, MyState> {
                         {
                           icon: 'account-edit',
                           label: 'Eliminar',
-                          onPress: () => {
+                          onPress:  () => {
                             Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
-                              {text: "Confirmar", onPress: () => {
-
+                              {text: "Confirmar", onPress: async () => {
+                                
+                                var result = await axios.delete("http://192.168.100.9:8000/client/client/" + itemclient._id).then((item) => {
+                                  return item.data.serverResponse;
+                                });
+                                  
+                                this.props.navigation.pop();
                               }},
                               {text: "Cancelar", onPress: () => {
 

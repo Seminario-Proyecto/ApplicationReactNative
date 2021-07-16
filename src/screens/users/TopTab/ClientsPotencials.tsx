@@ -123,30 +123,34 @@ class ClientsPotencials extends Component<MyProps, MyState> {
   listItem(item: IClients) {
       const {dispatch} = this.context;
       //var item : ItemUser = params.item
-    
-      if(item.uriphoto == null) {
+      if(item!= undefined){
+        var probabilitys= "Probabilidad de captar al cliente: "+ item.probability + "%"
+        if(item.uriphoto == null || item.uriphoto=="") {
 
-        return <List.Item
-        title={item.firtsname+" "+item.lastname}
-        description={item.email}
-        onPress={() => {
-            dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
-            this.props.navigation.push("DetailUsersPotenciales");
-        }}
-        left={props => <Avatar.Text size={48} label={item.firtsname.charAt(0)+item.lastname.charAt(0)} />}
-        />
+          return <List.Item
+          title={item.firtsname+" "+item.lastname}
+          description={probabilitys}
+          onPress={() => {
+              dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
+              this.props.navigation.push("DetailUsersPotenciales");
+          }}
+          left={props => <Avatar.Text size={48} label={item.firtsname.charAt(0)+item.lastname.charAt(0)} />}
+          />
+        } else {
+          var uriImg: string = "http://192.168.100.9:8000" + item.uriphoto;
+          return <List.Item
+                    title={item.firtsname+" "+item.lastname}
+                    description={probabilitys}
+                    onPress={() => {
+                      dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
+                      this.props.navigation.push("DetailUsersPotenciales");
+                  }}
+                    left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
+          />
+        }  
       } else {
-        var uriImg: string = "http://192.168.100.9:8000" + item.uriphoto;
-        return <List.Item
-                  title={item.firtsname+" "+item.lastname}
-                  description={item.email}
-                  onPress={() => {
-                    dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
-                    this.props.navigation.push("DetailUsersPotenciales");
-                }}
-                  left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
-        />
-      }  
+        return <View></View>
+      }
   }
 
 
