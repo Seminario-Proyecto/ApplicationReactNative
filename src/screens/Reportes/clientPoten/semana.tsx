@@ -16,22 +16,22 @@ class semana extends Component {
 
 
     const data = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["S1", "S2", "S3", "S4"],
       datasets: [
         {
-          data: [20, 45, 28, 80, 99, 43],
+          data: [20, 45, 28, 80],
           color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
           strokeWidth: 2 // optional
         }
       ],
-      legend: ["Rainy Days"] // optional
+      legend: ["Reporte Semanal"] // optional
     };
     const chartConfig = {
       backgroundGradientFrom: "#1E2923",
-     // backgroundGradientFromOpacity: 0,
+      backgroundGradientFromOpacity: 1,
       backgroundGradientTo: "#08130D",
       backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       strokeWidth: 2, // optional, default 3
       barPercentage: 0.5,
       useShadowColorFromDataset: false // optional
@@ -47,22 +47,14 @@ class semana extends Component {
         <View style={style.container}>
             <Text style={style.text}> 
                       <LineChart
+            style={style.graphStyle}
             data={data}
-            width={screenWidth}
+            width={395}
             height={220}
             chartConfig={chartConfig}
           />
 
-        <ProgressChart
-          data={data1}
-          width={screenWidth}
-          height={220}
-          strokeWidth={16}
-          radius={32}
-          chartConfig={chartConfig}
-          hideLegend={false}
-        />
-
+        
            
             </Text>
         </View>
@@ -72,10 +64,21 @@ class semana extends Component {
 const style = StyleSheet.create({
   container:{
     flex:1,
+    marginTop:5,
+ 
+    marginLeft:8
+
   },
   text:{
     color : "#ffffff"
-  }
+  }, 
+  graphStyle:{
+    marginVertical: 8,
+    borderRadius: 16,
+    marginTop:5,
+    height:220,
+    marginLeft:8
+  },
 })
   
 

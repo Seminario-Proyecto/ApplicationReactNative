@@ -63,7 +63,6 @@ class SelecProduc extends Component<MyProps, MyState> {
             <FlatList
                   data={ui_array}
                   keyExtractor={(item) => item.id}
-                  
                   scrollEnabled={true}
                   numColumns={4}
                   renderItem={({item}) => {
@@ -147,7 +146,7 @@ class SelecProduc extends Component<MyProps, MyState> {
             onPress={() => {
                 this.props.navigation.push("RegisterP");
             }}
-          />
+      />
 
 
   </ImageBackground>
