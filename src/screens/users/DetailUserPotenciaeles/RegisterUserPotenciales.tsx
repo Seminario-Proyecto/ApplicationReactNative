@@ -1,34 +1,60 @@
 import React, { Component ,useState} from "react";
 import {View, Text, StyleSheet,Switch,ImageBackground} from "react-native"; 
-import {TextInput, Button, Avatar,Paragraph,Card,} from "react-native-paper";
+import {TextInput, Button, Avatar,Paragraph,Card,RadioButton} from "react-native-paper";
 import {StackNavigationProp} from "@react-navigation/stack";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../../context/AppContext";
 import Switch1 from "../../../Components/Switch";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import MyColors from "../../../color/MyColors";
-import RadioButton  from "../../../Components/ButtonRadio"
 import { black } from "react-native-paper/lib/typescript/styles/colors";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-interface ItemUser{
-    username?: string,
-    email?: string,
-    password?: string,
-    repassword?: string
-  }
-interface Mystate {
-    username: string,
-    email: string,
-    password: string,
-    repassword: string,
-    isload: boolean,
-    pathImg?: string
+import Slider from '@react-native-community/slider';
+interface ItemClient{
+    _id: string;
+    firtsname: string;
+    lastname: string;
+    email: string;
+    telephone: string;
+    descriptionphone?: string;
+    uriphoto?: string; //aqui entrara la uri donde nos llevara a la imagen
+    pathphoto?: string;
+    state: string;
+    probability: number;
+    zona: string;
+    street: string;
+    tipo: string; //Regular o Potencial
+    mayorista: string;
+    registerdate: Date;
+    idUser: string;
+  
+    isLoad:boolean;
+    }
+  interface Mystate {
+    
+    firtsname: string;
+    lastname: string;
+    email: string;
+    telephone: string;
+    descriptionphone?: string;
+    uriphoto?: string; //aqui entrara la uri donde nos llevara a la imagen
+    pathphoto?: string;
+    state: string;
+    probability: number;
+    zona: string;
+    street: string;
+    tipo: string; //Regular o Potencial
+    mayorista: string;
+    idUser: string;
+  
+    isLoad:boolean;
+    
 }
 interface MyProps {
     navigation: StackNavigationProp<any, any>
 }
 interface ServerResponsePutRoles {
-    serverResponse: ItemUser
+    serverResponse: ItemClient
   }
   
 class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
@@ -36,29 +62,29 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
     constructor(props: any) {
         super(props);
         this.state = {
-            isload: false,
-            username: "", email: "", password: "", repassword:""
+            firtsname:"",lastname:"",email:"",telephone:"", state:"En Ruta",probability:0,zona:"",street:"",tipo:"Potencial",mayorista:"off",idUser:"",isLoad:false, uriphoto:"", pathphoto:""
         }
     }
     async checkandSendData() {
         var navigation:StackNavigationProp<any, any> = this.props.navigation;
-        console.log(this.state);
-        if (this.state.password != this.state.repassword) {
-            return;
-        }
-        var result: any = await axios.post<ItemUser, AxiosResponse<any>>("http://192.168.100.9:8000/api/users", this.state)
+        var {isLoadUriPhoto, uriphoto}=this.context
+        var auxiliar: string = this.context.userToken._id.toString()
+        await this.setState({
+            idUser: auxiliar
+        })
+        var result: any = await axios.post<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/client/client", this.state)
         .then((response) => {
             return response.data;
         });
         console.log(result);
-        if (this.state.isload) {
+        if (isLoadUriPhoto) {
             var data = new FormData();
             data.append("avatar", {
             name: "avatar.jpg", 
-            uri: this.state.pathImg, 
+            uri: uriphoto, 
             type: "image/jpg"});
-            console.log("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id)
-            fetch("http://192.168.100.9:8000/api/uploadportrait/" + result.serverResponse._id, {
+            console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id)
+            fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id, {
                 method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -68,7 +94,8 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                 result.json();
             }).then((result) => {
                 console.log(result);
-                navigation.push("list");
+                //navigation.push("list");
+                navigation.pop();
             });
             /*var result_img = await axios.post("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id, data,{
                 headers: {
@@ -80,14 +107,24 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             navigation.push("list");
             //console.log(result_img);
             */
+        }else {
+            //navigation.push("ClientesRegulares");
+            navigation.pop();
         }
         
     }
+    changevalueRadio(values: string){
+        console.log(values);
+        this.setState({
+            mayorista : values
+        })
+    }
+
     onTakePicture(path: string) {
         //console.log(path);
         this.setState({
-            pathImg: path,
-            isload: true
+            uriphoto: path,
+            isLoad: true
         })
     }
    nuevo(max:boolean) {
@@ -106,40 +143,50 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
         const [isEnabled, setIsEnabled] = useState(false);
         const toggleSwitch = () => setIsEnabled(previousState => !previousState);
        
-      }
+    }
+    async changevalueSlider(enable: number){
+        await     this.setState({
+           probability: enable,
+       })
+       console.log(this.state.probability+" slider")
+     }
   render() {
+    var value =this.state.mayorista
+    var sliderInitial=this.state.probability
+      
+                       
     return (
         <ImageBackground style={styles.container} source={require("../../../../images/fondo6.jpg")}>
         <KeyboardAwareScrollView style={{flex:1}}>
        
             <View style={styles.container2}>
                     <View style={styles.text}>
-                            <TextInput style={styles.datos}
+                    <TextInput style={styles.datos}
                             label="Nombres"
                             onChangeText={text => {  
                                 this.setState({
-                                    username: text
+                                    firtsname: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
                             label="Apellidos"
                             onChangeText={text => {   
                                 this.setState({
-                                    email: text
+                                    lastname: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
                             label="Contacto "
                             onChangeText={text => {   
                                 this.setState({
-                                    password: text
+                                    telephone: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
                             label="Correo electronico "
                             onChangeText={text => {   
                                 this.setState({
-                                    repassword: text
+                                    email: text
                                 })
                             }}/>
                     </View>
@@ -166,10 +213,23 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                         </View>
                         <View style={styles.stylescommit}>
                         <Text style={styles.datosin} >Estado del cliente      off/on </Text>
-                        <Text style={styles.datosin}>Potencial:                  <Switch1></Switch1></Text>
+                        <Text style={styles.datosin}>Regular              <Switch1></Switch1></Text>
                             
                         <Text style={styles.datosin}>Probabilidad de negosiacion:</Text>
-                        <Text style={styles.datosin}>80%</Text>
+                        <Text> {Math.round(this.state.probability)+" %"}</Text>
+                        <Slider
+                            style={{width: 200, height: 40}}
+                            minimumValue={0}
+                            maximumValue={100}
+                            minimumTrackTintColor="#FFFFFF"
+                            maximumTrackTintColor="#000000"
+                            value={sliderInitial}
+                            onValueChange={newvalue=>{
+                                this.changevalueSlider(newvalue);
+                                
+                             }}
+                            
+                        />
                         </View>
                        
                        
@@ -192,26 +252,45 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                             >
                             </MapView>
                             </View>
-                        <View style={styles.cont3}>
+                            <View style={styles.contcon}>
                         <TextInput style={styles.datos}
-                            label="Zona "
+                            label="zona"
                             onChangeText={text => {   
-                                this.setState({
-                                    repassword: text
-                                })
-                            }}/>
-                             <TextInput style={styles.datos}
-                            label="Calle"
-                            onChangeText={text => {   
-                                this.setState({
-                                    repassword: text
-                                })
-                            }}/>
-                            </View>
-                            <View style={styles.cont4}>
-                            <Text style={{fontSize: 17, marginTop:20,fontWeight:"bold" }}>Tipo de Cliente </Text>
+                            this.setState({
+                                zona: text
+                            })
+                        }}/>
 
-                            <RadioButton ></RadioButton>
+                        <TextInput style={styles.datos}
+                            label="street"
+                            onChangeText={text => {   
+                            this.setState({
+                                street: text
+                            })
+                        }}/>
+                        
+                        <Text style={{fontSize: 17, marginTop:20,fontWeight:"bold" }}>Tipo de Cliente </Text>
+                      
+                        <RadioButton.Group onValueChange={newvalue=>{
+                                this.changevalueRadio(newvalue);
+                                }} value={value} >
+                                <View style={styles.buttoncontainer}>
+                                <View style={styles.buttoncontainer2}>
+                                <Text>Mayorista</Text>
+                                <RadioButton value="Mayorista" />
+                                </View>
+                                <View style={styles.buttoncontainer2}>
+                                <Text>Supermercado</Text>
+                                <RadioButton value="Supermercado" />
+                                </View>
+                                <View style={styles.buttoncontainer2}>
+                                <Text>Off</Text>
+                                <RadioButton value="Off" />
+                                </View>
+                
+                            </View>
+                        </RadioButton.Group>
+               
                         
                                 
                         <Button style={styles.buton}  mode="contained" onPress={() => {
@@ -305,6 +384,26 @@ const styles = StyleSheet.create({
       map: {
         ...StyleSheet.absoluteFillObject,
       },
+      buttoncontainer:{
+        flexDirection:"row",
+        padding:4
+        
+        
+      },
+      buttoncontainer2:{
+        alignContent:"center",
+        marginLeft:10,
+        padding:20
+        
+      },
+      
+      contcon: {
+        
+        marginTop: 250
+        
+        
+    },
+      
     
 }   
 );

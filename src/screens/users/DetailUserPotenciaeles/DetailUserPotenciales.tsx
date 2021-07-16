@@ -3,8 +3,8 @@ import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking,Ima
 import AppContext from "../../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../../color/MyColors";
-import {IRoles, ItemUser} from "../TopTab/ClientsRegulars"
-import { Avatar, Button, Card, Title, Paragraph, FAB , Chip, Searchbar, List, Switch} from 'react-native-paper';
+import {IRoles, ItemUser, IClients} from "../TopTab/ClientsRegulars"
+import { Avatar, Button, Card, Title, Paragraph, FAB , Chip, Searchbar, List, Switch,Portal, Provider as ProviderFAB} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
 import {Types} from "../../../context/ContantTypes"; 
@@ -15,17 +15,27 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 
-
-interface ServerResponsePutRoles {
-  serverResponse: ItemUser
+interface MyState{
+  isEnable: boolean;
+  open: boolean,
+  
 }
 
-class DetailUsersPotenciales extends Component<any, any> {
+
+interface ServerResponsePutRoles {
+  serverResponse: IClients
+}
+
+class DetailUsersPotenciales extends Component<any, MyState> {
   static contextType = AppContext;
   
   constructor(props: any) {
     super(props);
-   
+    this.state={
+      isEnable: false,
+      open: false,
+      
+    }
   }
   async componentDidMount() {
     
@@ -35,21 +45,39 @@ class DetailUsersPotenciales extends Component<any, any> {
     Linking.openURL(number);
   }
 
- 
+  image(itemclient: IClients){
+    if(itemclient.uriphoto != null) {
+      console.log(itemclient.uriphoto);
+      return <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemclient.uriphoto }} />
+    } else {
+     return <Avatar.Text size={178} label={itemclient.firtsname.charAt(0)+itemclient.lastname.charAt(0)} />
+    }
+
+  }
+
+
+  stateFabGroup(open: boolean){
+    this.setState({
+      open: !open,
+  })
+  }
+
   render() {
-    var itemuser: ItemUser = this.context.itemuser;
+    var itemclient: IClients = this.context.itemclient;
+    var opens: boolean = this.state.open;
     return (
-      <ImageBackground style={styles.container} source={require("../../../../images/fondo6.jpg")}>
-      <KeyboardAwareScrollView style={{flex:1}}>
+      <View style={{flex:1}}>
+      <KeyboardAwareScrollView >
+
           <View style={styles.container}>
               <View> 
                   <Card >
                   <View style= {styles.Cabecera} >
-                    <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
+                  {this.image(itemclient)}
                       <View style={styles.contacto}>
-                        <Text style={styles.textoCabecera1}>Contacto: {itemuser.username}</Text>
+                        <Text style={styles.textoCabecera1}>Contacto: {itemclient.firtsname}</Text>
                         <Text style={styles.textoCabecera2}>Email</Text>
-                        <Text style={styles.textoCabecera3}>{itemuser.email}</Text>
+                        <Text style={styles.textoCabecera3}>{itemclient.email}</Text>
                          
                         <TouchableHighlight onPress={()=>{
                             this.call()
@@ -70,7 +98,8 @@ class DetailUsersPotenciales extends Component<any, any> {
                     <Card.Content>
                       {/*<Title>{itemuser.username}</Title>*/}
                       {/*<Paragraph style={styles.segundaCabecera}>Probabilidad de captar cliente: 90 %</Paragraph>*/}
-                      <Paragraph style={styles.segundaCabecera}>{itemuser.username}</Paragraph>
+                      <Paragraph style={styles.segundaCabecera}>Prob. de captaral cliente: {itemclient.probability} %</Paragraph>
+                      <Paragraph style={styles.segundaCabecera}>{itemclient.firtsname}</Paragraph>
                     </Card.Content>
 
                     <Card.Content style={{marginTop: 4}}>    
@@ -97,15 +126,7 @@ class DetailUsersPotenciales extends Component<any, any> {
                         <Switch1></Switch1>
                     </Card.Content > 
 
-                      <FAB
-                            style={styles.fab}
-                          small={false}
-                          icon="gesture-tap-button"
-                          label="editar"
-                          onPress={() => {
-                              this.props.navigation.push("RegisterUsers");
-                          }}
-                        />
+                      
                
 
                   <View style={styles.containerText4}>
@@ -129,7 +150,7 @@ class DetailUsersPotenciales extends Component<any, any> {
                           </View>
 
                           <View>
-                        <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Agenda de Negociacion para cliente: {itemuser.username}</Text>        
+                        <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Agenda de Negociacion para cliente: {itemclient.firtsname}</Text>        
                           <List.Item
                            title="First Item"
                            description="Item description"
@@ -153,13 +174,71 @@ class DetailUsersPotenciales extends Component<any, any> {
             
           </View>
 
-          
-
-          
-
-          
         </KeyboardAwareScrollView>
-       </ImageBackground>
+
+                  <ProviderFAB>
+                  <Portal>
+                    <FAB.Group
+                    
+                    visible={true}
+                    
+                      style={{ }}
+                      open={opens}
+                      icon={opens ? 'calendar-today' : 'folder'}
+                      actions={[
+                        {
+                          icon: 'account-edit',
+                          label: 'Cambiar a Cliente Regular ',
+                          onPress: () => {
+                            Alert.alert("¿Desea Cambiar el tipo de cliente a Regular?", "¿Cambiar tipo al Cliente " + itemclient.firtsname+ "?", [
+                              {text: "Confirmar", onPress: () => {
+
+                              }},
+                              {text: "Cancelar", onPress: () => {
+
+                              }}
+                            ])
+                          }
+                        },
+                        
+                        {
+                          icon: 'account-edit',
+                          label: 'Eliminar',
+                          onPress: () => {
+                            Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
+                              {text: "Confirmar", onPress: () => {
+
+                              }},
+                              {text: "Cancelar", onPress: () => {
+
+                              }}
+                            ])
+                          }
+                        },
+                        {
+                            icon: 'account-edit',
+                            label: 'Editar',
+                            onPress: () => console.log('Pressed editar'),
+                            small: false
+                          },
+                          
+                      ]}
+                      onStateChange={()=>{
+                        this.stateFabGroup(opens)
+                      }}
+                      onPress={() => {
+                        if (!opens) {
+                          this.setState({
+                            open: true,
+                        })
+                        }
+                      }}
+                    />
+                  </Portal>
+                  </ProviderFAB>
+
+</View>
+
         
     )
   }
