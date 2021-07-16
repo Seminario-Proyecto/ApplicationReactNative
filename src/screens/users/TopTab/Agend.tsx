@@ -71,13 +71,14 @@ class Agenda extends Component<MyProps, MyState> {
       } else {
         var uriImg: string = "http://192.168.100.9:8000" + item.uriavatar;
         return <List.Item
+                
                   title={item.username}
                   description={item.email}
                   onPress={() => {
                     dispatch({type: Types.CHANGEITEMUSER, payload: item});
                     this.props.navigation.push("DetailUsersAgenda");
                 }}
-                  left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
+                  left={props => <Avatar.Image size={60} source={{uri : uriImg}} />}
         />
       }
   }
@@ -107,7 +108,7 @@ class Agenda extends Component<MyProps, MyState> {
     var {searchbarVisible} = this.context;
     return (
 
-      <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+      <ImageBackground style={styles.container} source={require("../../../../images/fon77.jpg")}>
         
           <View>
           {
@@ -124,10 +125,12 @@ class Agenda extends Component<MyProps, MyState> {
           <View>
             <FlatList
               data={this.state.dataUsers}
-              renderItem={({item}) => (
-                this.listItem(item)
-              )}
+              renderItem={({item}) => {
+                return(this.listItem(item)
+                
+              )}}
               keyExtractor={(item) => item._id}
+              
             />
           </View>
           <FAB
@@ -152,6 +155,15 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+  },
+  text: {
+    
+    fontSize: 120,
+        
+    fontFamily: '$gilroyMedium',
+  
+    color: "#555555",
+    fontWeight:"bold"
   },
 })
 export default Agenda;

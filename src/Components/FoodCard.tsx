@@ -14,14 +14,17 @@ render() {
     <TouchableOpacity onPress={() => null} style={styles.card}>
       <View style={styles.imageBox}>
       <Image
-          source={require('../../images/singa.jpg')}
+          source={require('../../images/casar.jpeg')}
           style={{ width: 100, height: 90}}
         />
       </View>
-      <Text style={styles.title}>Red Apple</Text>
-      <Text style={styles.subtitle}>1kg, Price</Text>
+      <View style={styles.cap2}>
+      <Text style={styles.title}>Casa Real Negra</Text>
+      <Text style={styles.subtitle}>1Ltr</Text>
+      </View>
+
       <View style={styles.footer}>
-        <Text style={styles.price}>$4.99</Text>
+        <Text style={styles.price}>Bs. 140</Text>
         <TouchableOpacity onPress={() => null} style={styles.button}>
         <Image
           source={require('../../images/pluss.png')}
@@ -37,12 +40,13 @@ const styles = EStyleSheet.create({
   card: {
     width: widthScreen * 0.42,
     maxHeight: heightScreen * 0.28,
-    borderWidth: 3.0,
-    borderColor: '#000000',
+    borderWidth: 2.0,
+    borderColor: "#39A2DB",
     borderRadius: 10.0,
     padding: 15.0,
     flexDirection: 'column',
     marginRight: 15.0,
+    backgroundColor: '#053742',
   },
   imageBox: {
     height: heightScreen * 0.11,
@@ -50,12 +54,14 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: '$blackColour',
+    
+    color: 'rgb(248, 249, 249 )',
     fontFamily: '$gilroyNormal600',
     fontSize: '1rem',
+    
   },
   subtitle: {
-    color: '$darkGreyColour',
+    color: 'rgb(248, 249, 249 )',
     fontFamily: '$gilroyMedium',
     fontSize: '0.825rem',
   },
@@ -64,10 +70,14 @@ const styles = EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: heightScreen * 0.02,
+    marginTop: heightScreen * 0.01,
+  },
+  cap2: {
+  
+    marginTop:11
   },
   price: {
-    color: '$blackColour',
+    color: 'rgb(248, 249, 249 )',
     fontFamily: '$gilroyNormal600',
     fontSize: '1.125rem',
   },

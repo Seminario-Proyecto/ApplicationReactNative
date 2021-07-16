@@ -241,7 +241,7 @@ const styles = EStyleSheet.create({
 export default Reports */
 
 import React ,{Component} from 'react';
-import {View, Dimensions,TouchableOpacity,Image,Text} from 'react-native';
+import {View, Dimensions,TouchableOpacity,Image,Text,ImageBackground } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 
@@ -282,7 +282,8 @@ class Reports extends Component<MyProps, MyState> {
   render() {
 
   return (
-    <ScrollView style={styles.container}>
+    <ImageBackground style={styles.container} source={require("../../../images/fondo6.jpg")}>
+    
       
       <View style={styles.body}>
             <View style={[styles.localBox, styles.searchBox]}>
@@ -374,7 +375,8 @@ class Reports extends Component<MyProps, MyState> {
             
       </View>
       <View style={styles.scrollFooter} />
-    </ScrollView>
+  
+    </ImageBackground>
   );
 }}
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, ScrollView, Dimensions,TouchableOpacity, Image,ImageBackground} from "react-native"; 
+import {View, Text, StyleSheet, ScrollView,FlatList, Dimensions,TouchableOpacity, Image,ImageBackground} from "react-native"; 
 import {} from "react-native"
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import AppContext from "../../context/AppContext";
@@ -37,8 +37,15 @@ class SelecProduc extends Component<MyProps, MyState> {
    
   }
   render() {
+
+    const ui_array = [
+      {id: 0},
+      {id: 1},
+      {id: 2},
+      {id: 3},
+    ];
     return (
-      <ImageBackground style={styles.container} source={require("../../../images/fondoP.jpg")}>
+      <ImageBackground style={styles.container} source={require("../../../images/fondo6.jpg")}>
 
 <ScrollView style={styles.container}>
       
@@ -50,10 +57,52 @@ class SelecProduc extends Component<MyProps, MyState> {
             </TouchableOpacity>
           </View>
       </View>
-      <ScrollView style={styless.horizontalScroll} horizontal={true}>
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
+            <ScrollView style={styless.horizontalScroll} horizontal={true}>
+            <View>
+
+            <FlatList
+                  data={ui_array}
+                  keyExtractor={(item) => item.id}
+                  
+                  scrollEnabled={true}
+                  numColumns={4}
+                  renderItem={({item}) => {
+                  return (
+
+                  <TouchableOpacity onPress={() => null} style={styless.card}>
+                      <View style={styless.imageBox}>
+                      <Image
+                          source={require('../../../images/casar.jpeg')}
+                          style={{ width: 100, height: 90}}
+                        />
+                      </View>
+                      <View style={styless.cap2}>
+                      <Text style={styless.title}>Casa Real Negra</Text>
+                      <Text style={styless.subtitle}>1Ltr</Text>
+                      </View>
+
+                      <View style={styless.footer}>
+                        <Text style={styless.price}>Bs. 140</Text>
+                        <TouchableOpacity onPress={() => null} style={styless.button}>
+                        <Image
+                          source={require('../../../images/pluss.png')}
+                          style={{ width: 40, height: 40}}
+                        />
+                        </TouchableOpacity>
+                      </View>
+                </TouchableOpacity>
+                 );
+                }}
+              />
+
+
+
+          </View>
+
+
+                  <FoodCard />
+                  <FoodCard />
+                  <FoodCard />
       </ScrollView>
       <View style={styless.localBox}>
           <View style={styless.container2}>
@@ -196,6 +245,61 @@ const styless = EStyleSheet.create({
     fontSize: '1rem',
     color: '#00BCD4',
   },
+
+  card: {
+    width: widthScreen * 0.42,
+    maxHeight: heightScreen * 0.30,
+    borderWidth: 2.0,
+    borderColor: "#39A2DB",
+    borderRadius: 10.0,
+    padding: 15.0,
+    flexDirection: 'column',
+    marginRight: 15.0,
+    backgroundColor: '#053742',
+  },
+  imageBox: {
+    height: heightScreen * 0.11,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  title: {
+    
+    color: 'rgb(248, 249, 249 )',
+    fontFamily: '$gilroyNormal600',
+    fontSize: '1rem',
+    
+  },
+  subtitle: {
+    color: 'rgb(248, 249, 249 )',
+    fontFamily: '$gilroyMedium',
+    fontSize: '0.825rem',
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: heightScreen * 0.01,
+  },
+  cap2: {
+  
+    marginTop:15
+  },
+  price: {
+    color: 'rgb(248, 249, 249 )',
+    fontFamily: '$gilroyNormal600',
+    fontSize: '1.125rem',
+  },
+  button: {
+    backgroundColor: '#00BCD4',
+    borderRadius: 25.0,
+    padding: 3.0,
+  },
+
+
+
+
+
 });
 
   

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking} from "react-native";
+import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking,ImageBackground} from "react-native";
 import AppContext from "../../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
 import MyColors from "../../../color/MyColors";
@@ -39,10 +39,11 @@ class DetailUsersPotenciales extends Component<any, any> {
   render() {
     var itemuser: ItemUser = this.context.itemuser;
     return (
+      <ImageBackground style={styles.container} source={require("../../../../images/fondo6.jpg")}>
       <KeyboardAwareScrollView style={{flex:1}}>
           <View style={styles.container}>
               <View> 
-                <Card >
+                  <Card >
                   <View style= {styles.Cabecera} >
                     <Card.Cover style= {styles.images} source={{ uri: 'http://192.168.100.9:8000' + itemuser.uriavatar }} />
                       <View style={styles.contacto}>
@@ -158,6 +159,7 @@ class DetailUsersPotenciales extends Component<any, any> {
 
           
         </KeyboardAwareScrollView>
+       </ImageBackground>
         
     )
   }

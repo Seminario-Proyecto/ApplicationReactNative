@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
+import {View, Text, Platform, FlatList, StyleSheet,ImageBackground} from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List, Avatar, FAB, Searchbar} from "react-native-paper";
@@ -178,7 +178,8 @@ class ClientsPotencials extends Component<MyProps, MyState> {
   render() {
     var {searchbarVisible} = this.context;
     return (
-      
+          
+      <ImageBackground style={styles.container} source={require("../../../../images/fondo7.jpg")}>
         <View style={styles.container}>
           <View>
           {
@@ -193,9 +194,10 @@ class ClientsPotencials extends Component<MyProps, MyState> {
           }
           </View>
         
-          <View>
+          <View >
           { 
              <FlatList
+                      
                       data={this.state.dataUsers}
                       renderItem={({item}) => (
                         this.listItem(item)
@@ -217,6 +219,7 @@ class ClientsPotencials extends Component<MyProps, MyState> {
             }}
           />
         </View>
+        </ImageBackground>
         
     )
   }
@@ -230,6 +233,15 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+  },
+  text: {
+         fontSize: 120,
+        
+        fontFamily: '$gilroyMedium',
+      
+        color: "#555555",
+        fontWeight:"bold"
+      
   },
 })
 export default ClientsPotencials;

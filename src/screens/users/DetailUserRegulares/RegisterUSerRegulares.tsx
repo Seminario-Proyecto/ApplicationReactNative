@@ -167,7 +167,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
     var sliderInitial=this.state.probability
     console.log(this.context.userToken._id)
     return (
-        <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+        <ImageBackground style={styles.container} source={require("../../../../images/fondo6.jpg")}>
         <KeyboardAwareScrollView style={{flex:1}}>
        
             <View style={styles.container2}>

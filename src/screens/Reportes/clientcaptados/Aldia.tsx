@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet,Dimensions} from "react-native"; 
+import {View, Text, StyleSheet,Dimensions,ImageBackground} from "react-native"; 
 import {} from "react-native"
 import {LineChart} from "react-native-chart-kit"
 class aldia extends Component {
   render() {
     return (
+      <ImageBackground style={style.container} source={require("../../../../images/fondo6.jpg")}>
         <View style={style.container}>
             <Text style={style.text}> 
                 Pedidos
@@ -12,7 +13,7 @@ class aldia extends Component {
 
     <LineChart
     data={{
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
       datasets: [
         {
           data: [
@@ -57,6 +58,7 @@ class aldia extends Component {
     }}
   />
         </View>
+        </ImageBackground>
     )
   }
 }

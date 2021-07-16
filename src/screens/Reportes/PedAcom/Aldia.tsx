@@ -1,17 +1,18 @@
 import React, { Component } from "react";
-import {View, Text, StyleSheet,Dimensions} from "react-native"; 
+import {View, Text, StyleSheet,Dimensions,ImageBackground} from "react-native"; 
 import {} from "react-native"
 import {LineChart} from "react-native-chart-kit"
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 class aldia extends Component {
   render() {
     return (
+      <ImageBackground style={style.container} source={require("../../../../images/fondo6.jpg")}>
         <View style={style.container}>
                      <View>
                                 
                                   <LineChart
                           data={{
-                            labels: ["January", "February", "March", "April", "May", "June"],
+                            labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
                             datasets: [
                               {
                                 data: [
@@ -71,13 +72,14 @@ class aldia extends Component {
                                     </MapView>
                           </View>
         </View>
+        </ImageBackground>
     )
   }
 }
 const style = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor: "#0CB7F2",
+    backgroundColor: "#053742",
   },
   text:{
     color : "#ffffff"

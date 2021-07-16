@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View, Text, Platform, FlatList, StyleSheet} from "react-native"; 
+import {View, Text, Platform, FlatList, StyleSheet,ImageBackground} from "react-native"; 
 import { StackNavigationProp } from '@react-navigation/stack';
 import axios from "axios";
 import {Appbar, List,Avatar, Menu,FAB, Searchbar,  Paragraph, Dialog, Portal,Button, Colors } from "react-native-paper";
@@ -139,7 +139,7 @@ class ListPedi extends Component<MyProps, MyState> {
     var {searchbarrVisible} = this.context;
     var res= []
     return (
-      
+      <ImageBackground style={styles.container} source={require("../../../images/fondo3.jpg")}>
         <View style={styles.container}>
           <View>
           {
@@ -196,6 +196,7 @@ class ListPedi extends Component<MyProps, MyState> {
             }}
           />
         </View>
+        </ImageBackground>
         
     )
   }

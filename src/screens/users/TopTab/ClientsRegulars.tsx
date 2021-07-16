@@ -159,7 +159,7 @@ class ClientsRegulars extends Component<MyProps, MyState> {
                   dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
                   this.props.navigation.push("DetailUsers");
               }}
-                left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
+                left={props => <Avatar.Image size={80} source={{uri : uriImg}} />}
       />
     }  
 }
@@ -199,7 +199,7 @@ class ClientsRegulars extends Component<MyProps, MyState> {
     return (
 
       
-      <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+      <ImageBackground style={styles.container} source={require("../../../../images/fondo3.jpg")}>
         
           <View>
           {
@@ -217,7 +217,8 @@ class ClientsRegulars extends Component<MyProps, MyState> {
           <View>
           { 
             
-            this.state.dataUsers.length!=0 ? <FlatList //aqui pregunto si dataUsers tiene algun elemento, si lo tiene muestro la lista
+            this.state.dataUsers.length!=0 ?
+             <FlatList //aqui pregunto si dataUsers tiene algun elemento, si lo tiene muestro la lista
                 
                       data={this.state.dataUsers}
                       renderItem={({item}) => (

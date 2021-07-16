@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import {View, Text, StyleSheet} from "react-native"; 
 import {} from "react-native"
 class Almes extends Component {
+  
   render() {
+    
     return (
         <View style={style.container}>
             <Text style={style.text}> 
                 Pedidos
             </Text>
+            
+
         </View>
     )
   }

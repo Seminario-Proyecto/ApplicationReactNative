@@ -133,7 +133,7 @@ class RegisterUsersAgenda extends Component<MyProps, MyState> {
     var {searchbarVisible} = this.context;
     return (
 
-      <ImageBackground style={styles.container} source={require("../../../../images/fondoP.jpg")}>
+      <ImageBackground style={styles.container} source={require("../../../../images/fondo5.jpg")}>
         
           <View>
           {

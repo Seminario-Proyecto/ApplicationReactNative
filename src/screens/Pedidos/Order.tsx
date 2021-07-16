@@ -7,6 +7,7 @@ import AppContext from "../../context/AppContext";
 import RegisterPedido from "./RegisterPedido";
 import ListPedi from "./ListPedi";
 import SelecProduc from "./SelecProduc";
+import Recibo from "./ReciboPedido";
 import Icons3 from "react-native-vector-icons/Foundation";
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
@@ -79,6 +80,14 @@ class Order extends Component<any, any> {
                    
                    <Appbar.Action icon={MORE_ICON} onPress={() => {}} />
                </Appbar.Header >
+              }
+            )}/>
+              <Stack.Screen name="Recibo" component={Recibo} options={() => (
+              {
+                header: (navigate) => 
+                 
+                 <View></View>
+             
               }
             )}/>
             
