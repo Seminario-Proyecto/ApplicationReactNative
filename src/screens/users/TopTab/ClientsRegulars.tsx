@@ -159,7 +159,7 @@ class ClientsRegulars extends Component<MyProps, MyState> {
                   dispatch({type: Types.CHANGEITEMCLIENT, payload: item});
                   this.props.navigation.push("DetailUsers");
               }}
-                left={props => <Avatar.Image size={80} source={{uri : uriImg}} />}
+                left={props => <Avatar.Image size={48} source={{uri : uriImg}} />}
       />
     }  
 }
