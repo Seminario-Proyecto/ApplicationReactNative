@@ -235,7 +235,7 @@ class DetailUsersPotenciales extends Component<MyProps, MyState> {
                         {
                             icon: 'account-edit',
                             label: 'Editar',
-                            onPress: () => console.log('Pressed editar'),
+                            onPress: () => this.props.navigation.navigate("UpdateClientsPotentials"),
                             small: false
                           },
                           

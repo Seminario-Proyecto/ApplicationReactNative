@@ -19,6 +19,8 @@ import Icons3 from "react-native-vector-icons/Foundation";
 import TakePicturePotenciales from "./DetailUserPotenciaeles/TakePicturePotenciales";
 import TakePictureRegulares from "./DetailUserRegulares/TakePictureRegulares";
 import AgendReunionPotential from "./DetailUserPotenciaeles/AgendReunionPotential"
+import UpdateClientsRegulars from "./DetailUserRegulares/UpdateClientsRegulars"
+import UpdateClientsPotentials from "./DetailUserPotenciaeles/UpdateClientsPotentials"
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 var Stack = createStackNavigator();
@@ -115,7 +117,8 @@ class Clients extends Component<any, any> {
             <Stack.Screen name="TakePictureRegulares" component={TakePictureRegulares}/>
             <Stack.Screen name="ClientesRegulares" component={ClientesRegulares}/>
             <Stack.Screen name="Agendar una Reunion" component={AgendReunionPotential}/>
-            
+            <Stack.Screen name="Actualizar Cliente Regular" component={UpdateClientsRegulars}/>
+            <Stack.Screen name="Actualizar Cliente Potencial" component={UpdateClientsPotentials}/>
           </Stack.Navigator>
         </NavigationContainer>
     )

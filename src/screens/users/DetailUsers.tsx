@@ -13,6 +13,7 @@ import Fabgr from "../../Components/FabGroup";
 import { DarkTheme } from "@react-navigation/native";
 import Switch1 from "../../Components/Switch";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 
 
@@ -25,7 +26,10 @@ interface ServerResponse {
   serverResponse: Array<IPedido>
 }
 
-class DetailUsers extends Component<any, MyState> {
+interface MyProps {
+  navigation: StackNavigationProp<any, any>
+}
+class DetailUsers extends Component<MyProps, MyState> {
   static contextType = AppContext;
   
   constructor(props: any) {
@@ -253,7 +257,7 @@ class DetailUsers extends Component<any, MyState> {
                         {
                             icon: 'account-edit',
                             label: 'Editar',
-                            onPress: () => console.log('Pressed editar'),
+                            onPress: () => this.props.navigation.navigate("Actualizar Cliente Regular"),
                             small: false
                           },
                       ]}
