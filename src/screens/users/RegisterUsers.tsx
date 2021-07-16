@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import AppContext from "../../context/AppContext";
 import ButtonRadio from "../../Components/ButtonRadio";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-interface ItemUser{
+export interface ItemUser{
     username?: string,
     email?: string,
     tipo: string,

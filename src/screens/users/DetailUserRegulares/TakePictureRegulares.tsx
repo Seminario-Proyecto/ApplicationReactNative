@@ -30,9 +30,10 @@ class TakePictureRegulares extends PureComponent<MyProps, any> {
         //console.log(data.uri);
         console.log("Enter here " + data.uri);
         photoloadclient(true);
-        changeUri(data.uri);
+        changeUri(data.uri, true);
         //this.props.route.params.onTake(data.uri);
-        this.props.navigation.navigate("RegisterUsersR");
+        //this.props.navigation.navigate("RegisterUsersR");
+        this.props.navigation.pop();
       }
   }
 

@@ -3,20 +3,34 @@ import {View, Text, StyleSheet, ScrollView,FlatList, Dimensions,TouchableOpacity
 import {} from "react-native"
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import AppContext from "../../context/AppContext";
-
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { StackNavigationProp } from '@react-navigation/stack';
-
-
 import SearchBar from '../../Components/SearchBar';
 import SectionTitle from '../../screens/Reportes/SectionTitle';
 import FoodCard from '../../Components/FoodCard';
+import axios from "axios";
+
 
 import {Appbar, List,Avatar, Menu,FAB, Searchbar,  Paragraph, Dialog, Portal,Button, Colors } from "react-native-paper";
+import { Item } from "react-native-paper/lib/typescript/components/List/List";
+
+export interface IProducts{
+  _id: string
+  name: string;
+  uriimage: string;
+  pathavathar: string;
+  stock: number;
+  price: number;
+  ofert: number;
+}
+
+interface ServerResponse {
+  serverResponse:Array<IProducts>
+}
+
 interface MyState{
-  isEnable: boolean;
-  open: boolean,
- 
+  dataProducts: Array<IProducts>,
+  completeList: Array<IProducts>,
 }
 
 const {width: widthScreen, height: heightScreen} = Dimensions.get('window');
@@ -30,20 +44,37 @@ class SelecProduc extends Component<MyProps, MyState> {
   constructor(props: any) {
     super(props);
     this.state={
-      isEnable: false,
-      open: false,
+      dataProducts: [],
+      completeList: [],
       
     }
    
   }
-  render() {
 
-    const ui_array = [
-      {id: 0},
-      {id: 1},
-      {id: 2},
-      {id: 3},
-    ];
+  async componentDidMount(){
+    var direccion: string = "http://192.168.100.9:8000/pedido/producto";
+    console.log(direccion);
+    var result: Array<IProducts> = await axios.get<ServerResponse>(direccion, {
+      /*headers: {
+        "Authorization": token.toString() //esto manda el token para la verificación del rol
+      }*/
+    }).then((item) => {
+      return item.data.serverResponse
+    });
+    if(result==undefined){
+      result=[];
+    }
+    console.log("Hasta aqui llegue " +result  + "tambien aqui")
+    this.setState({
+      dataProducts: result,
+      completeList: result,
+    });
+  }
+
+
+
+  render() {
+    var numCol: number = this.state.dataProducts.length
     return (
       <ImageBackground style={styles.container} source={require("../../../images/fondo6.jpg")}>
 
@@ -60,48 +91,53 @@ class SelecProduc extends Component<MyProps, MyState> {
             <ScrollView style={styless.horizontalScroll} horizontal={true}>
             <View>
 
-            <FlatList
-                  data={ui_array}
-                  keyExtractor={(item) => item.id}
-                  scrollEnabled={true}
-                  numColumns={4}
-                  renderItem={({item}) => {
-                  return (
+            <FlatList //aqui pregunto si dataUsers tiene algun elemento, si lo tiene muestro la lista
+                
+                      data={this.state.dataProducts}
+                      scrollEnabled={true}
+                      numColumns={10}
+                      renderItem={({item}) => {
+                        return (
+                          
+                          <View  style={styless.card}>
+                            
+                            
+                              <View style={{alignItems: "center"}}>
+                              <Image
+                                source={{uri :"http://192.168.100.9:8000"+item.uriimage}}
+                                style={{ width: 100, height: 90}}
+                              />
+                              {/*<Avatar.Image size={100} style={styles.images} source={{uri :"http://192.168.100.9:8000"+item.uriimage}} />*/}
+                              </View>
+                              <View style={styless.cap2}>
+                              <Text style={styless.title}>{item.name}</Text>
+                              <Text style={styless.subtitle}>Stock disponible {item.stock}</Text>
+                              </View>
+        
+                              <View style={styless.footer}>
+                                <Text style={styless.price}>Bs {item.price}</Text>
+                                <TouchableOpacity onPress={() => null} style={styless.button}>
+                                <Image
+                                  source={require('../../../images/pluss.png')}
+                                  style={{ width: 40, height: 40}}
+                                />
+                                </TouchableOpacity>
+                              </View>
+                        </View>
+                        );
+                      }}
+                      
+                      keyExtractor={(item) => item._id}
+                  /> 
 
-                  <TouchableOpacity onPress={() => null} style={styless.card}>
-                      <View style={styless.imageBox}>
-                      <Image
-                          source={require('../../../images/casar.jpeg')}
-                          style={{ width: 100, height: 90}}
-                        />
-                      </View>
-                      <View style={styless.cap2}>
-                      <Text style={styless.title}>Casa Real Negra</Text>
-                      <Text style={styless.subtitle}>1Ltr</Text>
-                      </View>
-
-                      <View style={styless.footer}>
-                        <Text style={styless.price}>Bs. 140</Text>
-                        <TouchableOpacity onPress={() => null} style={styless.button}>
-                        <Image
-                          source={require('../../../images/pluss.png')}
-                          style={{ width: 40, height: 40}}
-                        />
-                        </TouchableOpacity>
-                      </View>
-                </TouchableOpacity>
-                 );
-                }}
-              />
+                  
 
 
 
           </View>
 
 
-                  <FoodCard />
-                  <FoodCard />
-                  <FoodCard />
+                  
       </ScrollView>
       <View style={styless.localBox}>
           <View style={styless.container2}>
@@ -157,7 +193,9 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
   },
-  
+  images: {
+    borderRadius: 10
+  },
   containermap: {
     ...StyleSheet.absoluteFillObject,
     height: 200,

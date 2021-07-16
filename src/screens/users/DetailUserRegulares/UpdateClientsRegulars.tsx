@@ -6,10 +6,15 @@ import axios, { AxiosResponse } from "axios";
 import AppContext from "../../../context/AppContext";
 import Switch1 from "../../../Components/Switch";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {ItemUser} from "../RegisterUsers"
 import MyColors from "../../../color/MyColors";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Slider from '@react-native-community/slider';
 import { black } from "react-native-paper/lib/typescript/styles/colors";
+interface ServerResponsePutUser {
+    serverResponse: ItemUser
+  }
+
 interface ItemClient{
   _id: string;
   firtsname: string;
@@ -65,32 +70,74 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
            firtsname:"",lastname:"",email:"",telephone:"", state:"En Ruta",probability:100,zona:"",street:"",tipo:"Regular",mayorista:"off",idUser:"",isLoad:false, uriphoto:"", pathphoto:""
         }
     }
+    componentDidMount(){
+        var {changeUri} = this.context
+
+        this.setState({
+            firtsname: this.context.itemclient.firtsname,
+            lastname: this.context.itemclient.lastname,
+            email:this.context.itemclient.email,
+            telephone: this.context.itemclient.telephone, 
+            state: this.context.itemclient.state,
+            probability: this.context.itemclient.probability,
+            zona: this.context.itemclient.zona,
+            street: this.context.itemclient.street,
+            tipo:this.context.itemclient.tipo,
+            mayorista:this.context.itemclient.mayorista,
+            idUser:this.context.itemclient.idUser,
+         
+
+        })
+
+
+
+        if(this.context.itemclient.uriphoto!="" && this.context.itemclient.uriphoto!=undefined) {
+            changeUri("http://192.168.100.9:8000"+this.context.itemclient.uriphoto, false)
+        } else {
+            changeUri("",false)
+        }
+        
+    }
     async checkandSendData() {
         var navigation:StackNavigationProp<any, any> = this.props.navigation;
-        var {isLoadUriPhoto, uriphoto}=this.context
+        var {isLoadUriPhoto, uriphoto, IsInTheTelephone}=this.context
         //console.log(this.state);
         var auxiliar: string = this.context.userToken._id.toString()
         await this.setState({
             idUser: auxiliar
         })
-        console.log(this.state.idUser+" aquiiiiiiiiiiiiiii");
-        var result: any = await axios.post<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/client/client", this.state)
+        //console.log(this.state.idUser+" aquiiiiiiiiiiiiiii");
+        var dataSend = {
+            firtsname: this.state.firtsname,
+            lastname: this.state.lastname,
+            email: this.state.email,
+            telephone: this.state.telephone,
+            state: this.state.state,
+            probability: this.state.probability,
+            zona: this.state.zona,
+            street: this.state.street ,
+            tipo : this.state.tipo,
+            mayorista: this.state.mayorista,
+            idUser: this.state.idUser,
+          
+        }
+        var result: any = await axios.put<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/client/client/"+this.context.itemclient._id, dataSend)
         .then((response) => {
             return response.data;
         });
         console.log(result);
-        if(!result.serverResponse._id){
+        if(!result.serverResponse.nModified){
              Alert.alert("No se pudo enviar datos, fallo algo")   
         } else{
-        if (isLoadUriPhoto) {
+        if (IsInTheTelephone) {
             console.log("entre hasta aqui")
             var data = new FormData();
             data.append("avatar", {
             name: "avatar.jpg", 
             uri: uriphoto, 
             type: "image/jpg"});
-            console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id)
-            fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + result.serverResponse._id, {
+            console.log("http://192.168.100.9:8000/client/clientSendPhoto/" + this.context.itemclient._id)
+            fetch("http://192.168.100.9:8000/client/clientSendPhoto/" + this.context.itemclient._id, {
                 method: "POST",
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -103,16 +150,26 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
                 console.log(result);
 
                 //navigation.push("ClientesRegulares");
+                //this.modificarClienteEnUsuario();
                 navigation.pop();
             });
             
         } else {
             //navigation.push("ClientesRegulares");
+            //this.modificarClienteEnUsuario();
             navigation.pop();
         }
+        
+
     }
         
     }
+
+    async modificarClienteEnUsuario() {
+        var result2: any = await axios.put<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/api/removeclient/"+this.context.userToken._id, {idCli: this.context.itemclient._id})
+        var result3: any = await axios.put<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: this.context.itemclient._id})
+    }
+
     
     changevalueRadio(values: string){
         console.log(values);
@@ -134,7 +191,7 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
             return false;
     }
     showAvatar() {
-        if (this.context.uriphoto != "") {
+        if (this.context.uriphoto != "" && this.context.uriphoto !=undefined) {
             return <Avatar.Image size={150} source={{uri: this.context.uriphoto}} />
         } else {
             return <Avatar.Image size={150} source={require('../../../../assets/img/batman.png')} />
@@ -154,8 +211,11 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
       console.log(this.state.probability+" slider")
     }
   render() {
+    
     var value =this.state.mayorista
     var sliderInitial=this.state.probability
+    
+    
     console.log(this.context.userToken._id)
     return (
         <ImageBackground style={styles.container} source={require("../../../../images/fondo6.jpg")}>
@@ -197,28 +257,32 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
                     </View>
                     <View style={styles.text}>
                             <TextInput style={styles.datos}
-                            label="Nombres"
+                            label="first name"
+                            value={this.state.firtsname}
                             onChangeText={text => {  
                                 this.setState({
                                     firtsname: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
-                            label="Apellidos"
+                            label="last name"
+                            value={this.state.lastname}
                             onChangeText={text => {   
                                 this.setState({
                                     lastname: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
-                            label="Contacto "
+                            label="telephone"
+                            value={this.state.telephone}
                             onChangeText={text => {   
                                 this.setState({
                                     telephone: text
                                 })
                             }}/>
                             <TextInput style={styles.datos}
-                            label="Correo electronico "
+                            label="email"
+                            value={this.state.email}
                             onChangeText={text => {   
                                 this.setState({
                                     email: text
@@ -226,7 +290,8 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
                             }}/>
 
                         <TextInput style={styles.datos}
-                            label="zona"
+                            label="Zona"
+                            value={this.state.zona}
                             onChangeText={text => {   
                             this.setState({
                                 zona: text
@@ -235,6 +300,7 @@ class UpdateClientsRegulars extends Component<MyProps, Mystate> {
 
                         <TextInput style={styles.datos}
                             label="street"
+                            value={this.state.street}
                             onChangeText={text => {   
                             this.setState({
                                 street: text

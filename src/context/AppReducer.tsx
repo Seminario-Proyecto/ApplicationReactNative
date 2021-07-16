@@ -12,6 +12,12 @@ export default (state: any, action: ActionType) => {
                 listclientsregulares: action.payload
             }
         }*/
+        case Types.ISINTHETELEPHONE: {
+            return {
+                ...state,
+                IsInTheTelephone: action.payload
+            }
+        }
 
         case Types.PHOTOLOADCLIENT: {
             return {

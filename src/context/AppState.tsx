@@ -27,7 +27,8 @@ const DataState = (props: any) => {
         itemclient:{},
         SignIn: false,
         userToken: null,
-        listclientsregulares:[]
+        listclientsregulares:[],
+        IsInTheTelephone: false
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);//esto siempre
     const changeSearchBarVisible = (value: Boolean) => {
@@ -36,8 +37,9 @@ const DataState = (props: any) => {
     const changeSearchBarrVisible = (value: Boolean) => {
         dispatch({type: Types.SEARCHBARRVISIBLE, payload: value});
     }
-    const changeUri = (value: string) => {
+    const changeUri = (value: string, IsInTheTelephone: Boolean) => {
         dispatch({type: Types.CHANGEURI, payload: value});
+        dispatch({type: Types.ISINTHETELEPHONE, payload: IsInTheTelephone})
     }
     
     const photoloadclient = (value: boolean) => {
@@ -76,6 +78,7 @@ const DataState = (props: any) => {
         changeSearchBarrVisible, 
         uriphoto: state.uriphoto, 
         changeUri, 
+        IsInTheTelephone: state.IsInTheTelephone,
         dispatch,
         itemuser: state.itemuser,
         itemclient:state.itemclient,
