@@ -6,6 +6,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 class aldia extends Component {
   render() {
     return (
+      
       <ImageBackground style={style.container} source={require("../../../../images/fondo6.jpg")}>
         <View style={style.container}>
                      <View>
@@ -32,11 +33,11 @@ class aldia extends Component {
                           yAxisSuffix="k"
                           yAxisInterval={1} // optional, defaults to 1
                           chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#fb8c00",
-                            backgroundGradientTo: "#ffa726",
+                            backgroundColor: "#5F939A",
+                            backgroundGradientFrom: "#3A6351",
+                            backgroundGradientTo: "#A0937D",
                             decimalPlaces: 2, // optional, defaults to 2dp
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            color: (opacity = 0) => `rgb(255, 255, 255, ${opacity})`,
                             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                             style: {
                               borderRadius: 16
@@ -44,7 +45,7 @@ class aldia extends Component {
                             propsForDots: {
                               r: "6",
                               strokeWidth: "2",
-                              stroke: "#ffa726"
+                              stroke: "#2940D3"
                             }
                           }}
                           bezier

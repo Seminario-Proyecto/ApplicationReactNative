@@ -10,24 +10,24 @@ class Almes extends Component {
 
 
     const data = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
       datasets: [
         {
           data: [20, 45, 28, 80, 99, 43],
-          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+          color: (opacity = 1) => `rgb(0, 0, 0, ${opacity})`, // optional
           strokeWidth: 2 // optional
         }
       ],
-      legend: ["Rainy Days"] // optional
+      legend: ["Reportes Al mes "] // optional
     };
     const chartConfig = {
-      backgroundGradientFrom: "#1E2923",
-     // backgroundGradientFromOpacity: 0,
-      backgroundGradientTo: "#08130D",
+      backgroundGradientFrom: "#F9DFDC",
+     backgroundGradientFromOpacity: 0,
+      backgroundGradientTo: "#0A81AB",
       backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      color: (opacity = 1) => `rgb(0, 0, 0, ${opacity})`,
       strokeWidth: 2, // optional, default 3
-      barPercentage: 0.5,
+      barPercentage: 0.3,
       useShadowColorFromDataset: false // optional
     };
     const screenWidth = Dimensions.get("window").width;
@@ -37,7 +37,7 @@ class Almes extends Component {
             <Text style={style.text}> 
                       <LineChart
             data={data}
-            width={screenWidth}
+            width={395}
             height={220}
             chartConfig={chartConfig}
           />
@@ -50,6 +50,9 @@ class Almes extends Component {
 const style = StyleSheet.create({
   container:{
     flex:1,
+    marginLeft:10,
+    marginRight:10,
+    marginTop:10
   },
   text:{
     color : "#ffffff"

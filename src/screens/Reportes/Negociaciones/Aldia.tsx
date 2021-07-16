@@ -15,15 +15,15 @@ class aldia extends Component {
  
   render() {
     const data = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
       datasets: [
         {
           data: [20, 45, 28, 80, 99, 43],
-          color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+          color: (opacity = 1) => `rgb(24, 90, 219, ${opacity})`, // optional
           strokeWidth: 2 // optional
         }
       ],
-      legend: ["Rainy Days"] // optional
+      legend: ["Reporte diario"] // optional
 
     };
     const chartConfig = {
@@ -31,7 +31,7 @@ class aldia extends Component {
      // backgroundGradientFromOpacity: 0,
       backgroundGradientTo: "#08130D",
       backgroundGradientToOpacity: 0.5,
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       strokeWidth: 2, // optional, default 3
       barPercentage: 0.5,
       useShadowColorFromDataset: false // optional
@@ -62,7 +62,7 @@ class aldia extends Component {
       {
         name: "Maria",
         population: 8538000,
-        color: "#ffffff",
+        color: "#FB743E",
         legendFontColor: "#7F7F7F",
         legendFontSize: 15
       },
@@ -96,9 +96,10 @@ class aldia extends Component {
             </View>
             <View style={style.container2}>
             <LineChart
+              style={style.graphStyle}
               data={data}
-              width={screenWidth}
-              height={300}
+              width={395}
+              height={200}
               chartConfig={chartConfig}
             />
             </View>
@@ -123,7 +124,14 @@ const style = StyleSheet.create({
   },
   text:{
     color : "#ffffff"
-  }
+  },
+  graphStyle:{
+    marginVertical: 8,
+    borderRadius: 16,
+    marginTop:2,
+    height:220,
+    marginLeft:8
+  },
 })
   
 
