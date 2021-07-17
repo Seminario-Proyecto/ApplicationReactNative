@@ -106,11 +106,16 @@ class ClientsPotencials extends Component<MyProps, MyState> {
   async componentDidMount() {
     const {userToken}=this.context;
     const {_id} = userToken; 
+    const {token} = userToken;
     const id: string = _id.toString();
     //console.log("hola"+_id+" fin");
     var direccion: string = "http://192.168.100.9:8000/client/client/tipo/Potencial/"+id;
     console.log(direccion);
-    var result: Array<IClients> = await axios.get<ServerResponse>(direccion).then((item) => {
+    var result: Array<IClients> = await axios.get<ServerResponse>(direccion,{
+      headers: {
+        "Authorization": token.toString() //esto manda el token para la verificación del rol
+      }
+    }).then((item) => {
       return item.data.serverResponse
     });
     console.log("Hasta aqui llegue " +result+ "tambien aqui")

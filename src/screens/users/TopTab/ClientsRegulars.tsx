@@ -111,6 +111,7 @@ class ClientsRegulars extends Component<MyProps, MyState> {
     const {_id} = userToken; 
     const {token} = userToken;
     const id: string = _id.toString();
+    console.log(token)
     //console.log("hola"+_id+" fin");
     var direccion: string = "http://192.168.100.9:8000/client/client/tipo/Regular/"+id;
     console.log(direccion);

@@ -36,7 +36,7 @@ interface MyState {
     //username: string,
     email: string,
     password: string,
-    //visible: boolean,
+    visible: boolean,
 }
 export interface IGoogleUser {
     photo: string
@@ -60,7 +60,7 @@ class Login extends Component <MyProps, MyState> {
         this.state={
 
              password: "", email:""
-             //,visible: true
+             ,visible: true
 
         }
     }
@@ -159,7 +159,11 @@ onGoogleButtonPress() {
     async DataSend() {
         const {dispatch} = this.context;
         console.log(this.state);
-        var result: any = await axios.post<DateUsers, AxiosResponse<any>>("http://192.168.100.9:8000/api/login", this.state)
+        var datasend={
+            password : this.state.password,
+            email: this.state.email
+        }
+        var result: any = await axios.post<DateUsers, AxiosResponse<any>>("http://192.168.100.9:8000/api/login", datasend)
         .then((response) => {
             return response.data;
         });
@@ -247,7 +251,7 @@ onGoogleButtonPress() {
                 label="Password"
                 secureTextEntry
 
-                //={this.state.visible}
+                ={this.state.visible}
 
                 onChangeText={text => {  
                     this.setState({
@@ -258,9 +262,9 @@ onGoogleButtonPress() {
             
                 right={<TextInput.Icon name="eye" 
                 
-                //onPress= {()=>
-                //this.setState({
-                   // visible: !this.state.visible)}}
+                onPress= {()=>
+                this.setState({
+                   visible: !this.state.visible})}
                    
                    />}
 

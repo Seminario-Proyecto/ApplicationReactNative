@@ -55,19 +55,23 @@ class ListPedi extends Component<MyProps, MyState> {
   async componentDidMount() {
     const {userToken}=this.context;
     const {_id} = userToken; 
+    const {token} = userToken;
     const id: string = _id.toString();
     //console.log("hola"+_id+" fin");
     var direccion: string = "http://192.168.100.9:8000/client/client/tipo/Regular/"+id;
     console.log(direccion);
     var result: Array<IClients> = await axios.get<ServerResponse>(direccion, {
-      
+      headers: {
+        "Authorization": token.toString() //esto manda el token para la verificación del rol
+      }
     }).then((item) => {
       return item.data.serverResponse
     });
     if(result==undefined){
       result=[];
     }
-    console.log("Hasta aqui llegue " +result+ "tambien aqui")
+    console.log("Hasta aqui llegue " +result[0]+" otro pedido "+result[1]+ "tambien aqui")
+    console.log(result)
     var res = await result.filter(item=>{
       if(item.pedidos.length==0){
         return false

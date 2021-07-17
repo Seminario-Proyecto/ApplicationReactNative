@@ -158,13 +158,13 @@ class DetailUsersPotenciales extends Component<MyProps, MyState> {
                           <View>
                         <Text style={{fontSize: 18, marginTop:20, fontFamily: "sans-serif-medium", marginLeft: 25, }}>Agenda de Negociacion para cliente: {itemclient.firtsname}</Text>        
                           <List.Item
-                           title="First Item"
-                           description="Item description"
+                           title="Agenda de Negociacion para el Cliente america "
+                           description="Reunion para el 15 de octubre del 2021"
                             left={props => <List.Icon {...props} icon="book-open" />}
                             />
                              <List.Item
-                           title="First Item"
-                           description="Item description"
+                           title="Agenda de Negociacion para el Cliente america"
+                           description="Reunion para el 31 de diciembre del 2021"
                             left={props => <List.Icon {...props} icon="book-open" />}
                             />
                       </View>
@@ -219,7 +219,7 @@ class DetailUsersPotenciales extends Component<MyProps, MyState> {
                           onPress:  () => {
                             Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
                               {text: "Confirmar", onPress: async () => {
-                                
+                                var auxiliar = await axios.put("http://192.168.100.9:8000/api/removeclient/" + this.context.userToken._id,{idCli: itemclient._id});
                                 var result = await axios.delete("http://192.168.100.9:8000/client/client/" + itemclient._id).then((item) => {
                                   return item.data.serverResponse;
                                 });

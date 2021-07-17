@@ -213,7 +213,7 @@ class DetailUsers extends Component<MyProps, MyState> {
                                 right={props=> <Text style={{}}>{item.Recibo.map(item=>{
                                   return "Bs." + item.total 
                                 })}</Text> } 
-                                left={props => <List.Icon {...props} icon="folder" />}
+                                left={props => <List.Icon {...props} icon="dropbox" />}
                               />
                           )
                           
@@ -245,6 +245,7 @@ class DetailUsers extends Component<MyProps, MyState> {
                           onPress: () => {
                             Alert.alert("Borrar Cliente", "¿Desea Borrar al Cliente " + itemclient.firtsname+ "?", [
                               {text: "Confirmar", onPress: async () => {
+                                var auxiliar = await axios.put("http://192.168.100.9:8000/api/removeclient/" + this.context.userToken._id,{idCli: itemclient._id});
                                 var result = await axios.delete("http://192.168.100.9:8000/client/client/" + itemclient._id);
                                 this.props.navigation.pop();
                               }},

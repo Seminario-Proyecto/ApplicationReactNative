@@ -77,6 +77,7 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
             return response.data;
         });
         console.log(result);
+        var auxiliar : string = result.serverResponse._id
         if (isLoadUriPhoto) {
             var data = new FormData();
             data.append("avatar", {
@@ -92,23 +93,21 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                 body: data
             }).then((result) => {
                 result.json();
-            }).then((result) => {
+            }).then(async (result) => {
                 console.log(result);
-                //navigation.push("list");
+                var aux: any = await axios.put<any, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: auxiliar})
+                .then((response) => {
+                    return response.data;
+                });
                 navigation.pop();
             });
-            /*var result_img = await axios.post("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id, data,{
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then((response) => {
-                return response.data;
-            });
-            navigation.push("list");
-            //console.log(result_img);
-            */
+            
         }else {
             //navigation.push("ClientesRegulares");
+            var aux: any = await axios.put<any, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: auxiliar})
+                .then((response) => {
+                    return response.data;
+                });
             navigation.pop();
         }
         

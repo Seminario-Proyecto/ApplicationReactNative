@@ -81,7 +81,9 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
         console.log(result);
         if(!result.serverResponse._id){
              Alert.alert("No se pudo enviar datos, fallo algo")   
-        } else{
+        } else{ 
+            var auxiliar : string = result.serverResponse._id
+            console.log(auxiliar+" id del cliente creado")
         if (isLoadUriPhoto) {
             console.log("entre hasta aqui")
             var data = new FormData();
@@ -99,30 +101,36 @@ class RegisterUsersPotenciales extends Component<MyProps, Mystate> {
                 body: data
             }).then((result) => {
                 result.json();
-            }).then((result) => {
+            }).then(async (result) => {
                 console.log(result);
 
                 //navigation.push("ClientesRegulares");
-                navigation.pop();
-            });
-            /*var result_img = await axios.post("http://192.168.0.106:8000/api/uploadportrait/" + result.serverResponse._id, data,{
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then((response) => {
-                return response.data;
-            });
-            navigation.push("list");
-            //console.log(result_img);
-            */
+                var aux: any = await axios.put<any, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: auxiliar})
+                .then((response) => {
+                    return response.data;
+                });
+                        navigation.pop();
+                    });
+
         } else {
             //navigation.push("ClientesRegulares");
+            var aux: any = await axios.put<any, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: auxiliar})
+                .then((response) => {
+                    return response.data;
+                });
+            //this.addclientUSer(result);
             navigation.pop();
         }
     }
         
     }
-    
+    async addclientUSer(res: any){
+        console.log(res.serverResponse._id+" estoy por aca")
+        var auxiliar: any = await axios.put<ItemClient, AxiosResponse<any>>("http://192.168.100.9:8000/api/addclient/"+this.context.userToken._id, {idCli: res.serverResponse._id})
+        .then((response) => {
+            return response.data;
+        });
+    }
     changevalueRadio(values: string){
         console.log(values);
         this.setState({
