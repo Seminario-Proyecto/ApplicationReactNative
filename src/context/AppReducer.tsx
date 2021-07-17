@@ -12,6 +12,19 @@ export default (state: any, action: ActionType) => {
                 listclientsregulares: action.payload
             }
         }*/
+
+        /*case Types.SETSERVERERRORMSN: {
+            return {
+                ...state,
+                serverErrorMessages: action.payload
+            }
+        }*/
+        case Types.SETAUTHUSER: {
+            return {
+                ...state,
+                userAuth: action.payload
+            }
+        }
         case Types.ISINTHETELEPHONE: {
             return {
                 ...state,

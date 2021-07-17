@@ -6,6 +6,7 @@ import { AppState, AsyncStorage } from "react-native";
 import {IClients,IPedido,IRecibo} from "../screens/users/TopTab/ClientsRegulars"
 import {ItemUser} from "../screens/users/TopTab/ClientsRegulars"
 import axios from "axios"
+import {IGoogleUser} from "./../screens/Login/Login"
 // Es el conjunto de datos
 
 interface ServerResponse {
@@ -13,10 +14,28 @@ interface ServerResponse {
     //serverResponse:Array<IClients>
   }
 
+  interface ServerResponse1 {
+    serverResponse:Array<ItemUser>
+    //serverResponse:Array<IClients>
+  }
+interface ServerResponseLogin {
+    serverResponse: ItemUser | UserCreateError
+}
+interface ServerResponseLogin {
+    serverResponse: ItemUser | UserCreateError
+}
+interface UserCreateError {
+    driver: Boolean,
+    name: string,
+    index: number,
+    code: number,
+}
 
 
 
-const DataState = (props: any) => {
+const DataState = (props: any) => 
+{
+
     const initialState = {//variables
         searchbarVisible: false,//para el boton
         earchbarrVisible: false, //para mi otro  snak
@@ -28,7 +47,10 @@ const DataState = (props: any) => {
         SignIn: false,
         userToken: null,
         listclientsregulares:[],
-        IsInTheTelephone: false
+        IsInTheTelephone: false,
+        //serverErrorMessages:"",
+        userAuth: {}
+        
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);//esto siempre
     const changeSearchBarVisible = (value: Boolean) => {
@@ -45,6 +67,23 @@ const DataState = (props: any) => {
     const photoloadclient = (value: boolean) => {
         dispatch({type: Types.PHOTOLOADCLIENT, payload: value});
     }
+
+        const loginGoogle = async (user: IGoogleUser, callBack: Function) => 
+ {
+        var dataresult: any = await axios.post<ServerResponseLogin>("http://192.168.100.9:8000/api/users", {username: user.name, email: user.email, password: user.id});
+        var result: any = dataresult.data;
+        if (result.serverResponse.code != null) {
+        //Login user 
+        var loginr: any = await axios.post("http://192.168.100.9:8000/api/login", {email: user.email, password: user.id});
+        if (loginr.data.serverResponse == "Credenciales incorrectas") {
+          //  dispatch({type: Types.SETSERVERERRORMSN, payload: loginr.data.serverResponse});
+            callBack(false);
+        } else {
+            dispatch({type: Types.SETAUTHUSER, payload: loginr.data.serverResponse});
+            callBack(true);
+        }
+    
+        }}
 
    /*const loadMainListClientsRegulares = async (idUs: string, token: any) =>{
         /*const {userToken}=this.context;
@@ -87,9 +126,12 @@ const DataState = (props: any) => {
         listclientsregulares: state.listclientsregulares,
         isLoadUriPhoto: state.isLoadUriPhoto,
         photoloadclient,
+        userAuth: state.userAuth,
+        //serverErrorMessages: state.serverErrorMessages,
         /*loadMainListClientsRegulares */}}>
        {props.children}   
         </AppContext.Provider>//children a los  hijos
     )
+    
 }
 export default DataState;

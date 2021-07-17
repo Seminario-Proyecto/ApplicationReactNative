@@ -1,3 +1,5 @@
+
+
 import React, { Component } from "react";
 import {View, Text, StyleSheet, Dimensions, Image, ImageBackground,ColorPropType, Touchable, Alert} from "react-native"; 
 import {TextInput, Button, Avatar, RadioButton} from "react-native-paper";
@@ -6,7 +8,8 @@ import Icons from "react-native-vector-icons/AntDesign";
 import axios, { AxiosResponse } from "axios";
 import AppContext from "../../context/AppContext";
 import { Types } from "../../context/ContantTypes";
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import firebase from  "./../../firebase"
 const background = require('../../../images/desvanecido.png');
 
 const {width: widthScreen, height: heightScreen} = Dimensions.get('window');
@@ -35,6 +38,14 @@ interface MyState {
     password: string,
     //visible: boolean,
 }
+export interface IGoogleUser {
+    photo: string
+    email: string
+    familyName?: string
+    givenName: string
+    name: string
+    id: string
+  }
 
 
 
@@ -53,6 +64,86 @@ class Login extends Component <MyProps, MyState> {
 
         }
     }
+
+    /*onGoogleButtonPress() {
+            
+        
+        // Get the users ID token
+        return new Promise(async (resolve, reject) => {
+          console.log("Login");
+          const {user } = await GoogleSignin.signIn();
+          resolve(user);
+        });
+        
+      }*/
+
+
+     /* async  onGoogleButtonPress() {
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+      
+        // Create a Google credential with the token
+        const googleCredential = firebase.getApp().auth.GoogleAuthProvider.credential(idToken);
+      
+        // Sign-in the user with the credential
+        return firebase.getApp().auth().signInWithCredential(googleCredential);
+      }*/
+
+    /*componentDidMount() {
+        GoogleSignin.configure({
+          webClientId: '46510480196-keceja0914bpqcko6a271qo2pna6jfi8.apps.googleusercontent.com',
+        });
+      }*/
+
+      /*loginGoogle(){
+          this.onGoogleButtonPress();
+      }*/
+    /*async loginGoogle() {
+        var data: any = await this.onGoogleButtonPress();
+        var userdata: IGoogleUser = data;
+        console.log(userdata)
+        var {loginGoogle, serverErrorMessages} = this.context;
+        loginGoogle(userdata, (result: Boolean) => {
+            if (result) {
+                this.props.navigation.navigate("main");
+            } else {
+                Alert.alert("Error", serverErrorMessages);
+            }
+        });
+        console.log(userdata);
+    }
+*/
+onGoogleButtonPress() {
+    // Get the users ID token
+    return new Promise(async (resolve, reject) => {
+      console.log("Login");
+      const { idToken, user } = await GoogleSignin.signIn();
+      resolve(user);
+    });
+    
+  }
+  componentDidMount() {
+    GoogleSignin.configure({
+      webClientId: '46510480196-keceja0914bpqcko6a271qo2pna6jfi8.apps.googleusercontent.com',
+    });
+  }
+  async loginGoogle() {
+    var data: any = await this.onGoogleButtonPress();
+    var userdata: IGoogleUser = data;
+    console.log(userdata)
+    var {loginGoogle} = this.context;
+    loginGoogle(userdata, (result: Boolean) => {
+        if (result) {
+            this.IndexClients()
+           //this.props.navigation.navigate("IndexClients");
+           console.log("Ver error ")
+        } else {
+            Alert.alert("Error");
+        }
+    });
+    console.log(userdata);
+  }
+
     
     IndexClients() {
         
@@ -64,7 +155,7 @@ class Login extends Component <MyProps, MyState> {
         this.props.navigation.navigate("IndexClientsVendedor");
     }
 
-    
+    /*
     async DataSend() {
         const {dispatch} = this.context;
         console.log(this.state);
@@ -105,7 +196,7 @@ class Login extends Component <MyProps, MyState> {
 
         console.log(result.serverResponse._id+" "+result.serverResponse.username+ " "+result.serverResponse.token)
         
-    }
+    }*/
     /*validar() {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         console.log(this.state.email.toString());
@@ -179,7 +270,8 @@ class Login extends Component <MyProps, MyState> {
                     
                     //this.validar() //validamos si es un correo electronico lo que esta mandando, sino es un correo electronico se envia como "" 
                     //
-                    this.DataSend();
+                    //this.DataSend();
+                    this.IndexClients()
                 }
                     
                 }>
@@ -189,7 +281,7 @@ class Login extends Component <MyProps, MyState> {
 
 
                 <Button icon="google" style={styles.marginTop}  mode="contained" onPress={() => {
-                    //this.loginGoogle();
+                    this.loginGoogle();
                  }}>
                 Ingresa con cuenta Google
           </Button>
@@ -269,3 +361,7 @@ const styles = StyleSheet.create({
 }   
 );
 export default Login;
+
+
+
+

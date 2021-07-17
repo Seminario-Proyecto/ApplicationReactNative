@@ -9,6 +9,11 @@ import DataState from "./src/context/AppState"
 import { NavigationEvents } from "react-navigation";
 import EStyleSheet from 'react-native-extended-stylesheet';
 import theme from './theme';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 var Stack = createStackNavigator();
 class App extends Component<any, any> {
@@ -45,6 +50,10 @@ const styles = StyleSheet.create({
 })
 export default App;
 /* probando */ 
+
+
+
+
 
 
 
