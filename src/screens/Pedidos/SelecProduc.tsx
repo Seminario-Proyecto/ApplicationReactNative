@@ -148,9 +148,16 @@ class SelecProduc extends Component<MyProps, MyState> {
           </View>
       </View>
       <ScrollView style={styless.horizontalScroll} horizontal={true}>
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
+                
+
+
+
+            <FoodCard />
+
+            <FoodCard />
+      
+             <FoodCard />
+      
       </ScrollView>
       <View style={styless.localBox}>
 
@@ -165,6 +172,10 @@ class SelecProduc extends Component<MyProps, MyState> {
        
       </View>
       <ScrollView style={styless.horizontalScroll} horizontal={true}>
+
+
+
+    
         <FoodCard />
         <FoodCard />
         <FoodCard />
@@ -316,7 +327,7 @@ const styless = EStyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: heightScreen * 0.01,
+    marginTop: 0,
   },
   cap2: {
   
@@ -330,7 +341,8 @@ const styless = EStyleSheet.create({
   button: {
     backgroundColor: '#00BCD4',
     borderRadius: 25.0,
-    padding: 3.0,
+    padding: 2.0,
+    
   },
 
 
