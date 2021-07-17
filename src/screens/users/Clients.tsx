@@ -3,9 +3,9 @@ import {createStackNavigator} from "@react-navigation/stack"
 import { NavigationContainer } from '@react-navigation/native';
 import {View, Text,StyleSheet, Platform,Image} from "react-native"; 
 import {Appbar} from "react-native-paper"
-import ListUsers from "./ListUsers";
+import ListUsers from "./DetailUserRegulares/ListUsers";
 import RegisterUsers from "./RegisterUsers";
-import DetailUsers from "./DetailUsers";
+import DetailUsers from "./DetailUserRegulares/DetailUsers";
 import TakePicture from "./TakePicture";
 import AppContext from "../../context/AppContext";
 import  DetailUsersPotenciales from "../users/DetailUserPotenciaeles/DetailUserPotenciales";

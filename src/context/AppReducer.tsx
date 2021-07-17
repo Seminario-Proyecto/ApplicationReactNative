@@ -19,12 +19,12 @@ export default (state: any, action: ActionType) => {
                 serverErrorMessages: action.payload
             }
         }*/
-        case Types.SETAUTHUSER: {
+       /* case Types.SETAUTHUSER: {
             return {
                 ...state,
                 userAuth: action.payload
             }
-        }
+        }*/
         case Types.ISINTHETELEPHONE: {
             return {
                 ...state,

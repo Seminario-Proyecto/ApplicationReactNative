@@ -141,7 +141,7 @@ onGoogleButtonPress() {
             Alert.alert("Error");
         }
     });
-    console.log(userdata);
+    console.log("aauauauau "+userdata);
   }
 
     
@@ -155,7 +155,7 @@ onGoogleButtonPress() {
         this.props.navigation.navigate("IndexClientsVendedor");
     }
 
-    /*
+    
     async DataSend() {
         const {dispatch} = this.context;
         console.log(this.state);
@@ -196,7 +196,7 @@ onGoogleButtonPress() {
 
         console.log(result.serverResponse._id+" "+result.serverResponse.username+ " "+result.serverResponse.token)
         
-    }*/
+    }
     /*validar() {
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         console.log(this.state.email.toString());
@@ -270,8 +270,8 @@ onGoogleButtonPress() {
                     
                     //this.validar() //validamos si es un correo electronico lo que esta mandando, sino es un correo electronico se envia como "" 
                     //
-                    //this.DataSend();
-                    this.IndexClients()
+                    this.DataSend();
+                   // this.IndexClients()
                 }
                     
                 }>

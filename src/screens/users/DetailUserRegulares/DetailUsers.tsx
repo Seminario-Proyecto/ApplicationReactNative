@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import {View, Text, StyleSheet, Alert, FlatList, TouchableHighlight, Linking} from "react-native";
-import AppContext from "../../context/AppContext";
+import AppContext from "../../../context/AppContext";
 import Icons from "react-native-vector-icons/Feather"
-import MyColors from "../../color/MyColors";
-import {IRoles, ItemUser, IClients, IPedido, IRecibo, ISimpleProducts} from "./TopTab/ClientsRegulars"
+import MyColors from "../../../color/MyColors";
+import {IRoles, ItemUser, IClients, IPedido, IRecibo, ISimpleProducts} from "../TopTab/ClientsRegulars"
 import { Avatar, Button, Card, Title, Paragraph , Chip, Searchbar, List, Switch, FAB, Portal, Provider as ProviderFAB, DefaultTheme, withTheme} from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import axios from "axios";
-import {Types} from "../../context/ContantTypes"; 
+import {Types} from "../../../context/ContantTypes"; 
 import { Value } from "react-native-reanimated";
-import Fabgr from "../../Components/FabGroup";
+import Fabgr from "../../../Components/FabGroup";
 import { DarkTheme } from "@react-navigation/native";
-import Switch1 from "../../Components/Switch";
+import Switch1 from "../../../Components/Switch";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { StackNavigationProp } from '@react-navigation/stack';
 

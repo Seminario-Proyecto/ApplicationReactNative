@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import {View, Text, StyleSheet} from "react-native"; 
 import { DarkTheme} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import ClientsRegulars from "./TopTab/ClientsRegulars";
-import ClientsPotencials from "./TopTab/ClientsPotencials";
-import Agend from "./TopTab/Agend";
+import ClientsRegulars from "../TopTab/ClientsRegulars";
+import ClientsPotencials from "../TopTab/ClientsPotencials";
+import Agend from "../TopTab/Agend";
 
 const TopTab = createMaterialTopTabNavigator();
 

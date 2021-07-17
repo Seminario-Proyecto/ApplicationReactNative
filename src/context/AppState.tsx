@@ -14,7 +14,7 @@ interface ServerResponse {
     //serverResponse:Array<IClients>
   }
 
-  interface ServerResponse1 {
+ /* interface ServerResponse1 {
     serverResponse:Array<ItemUser>
     //serverResponse:Array<IClients>
   }
@@ -29,7 +29,7 @@ interface UserCreateError {
     name: string,
     index: number,
     code: number,
-}
+}*/
 
 
 
@@ -49,7 +49,7 @@ const DataState = (props: any) =>
         listclientsregulares:[],
         IsInTheTelephone: false,
         //serverErrorMessages:"",
-        userAuth: {}
+        //userAuth: {}
         
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);//esto siempre
@@ -68,7 +68,7 @@ const DataState = (props: any) =>
         dispatch({type: Types.PHOTOLOADCLIENT, payload: value});
     }
 
-        const loginGoogle = async (user: IGoogleUser, callBack: Function) => 
+       /* const loginGoogle = async (user: IGoogleUser, callBack: Function) => 
  {
         var dataresult: any = await axios.post<ServerResponseLogin>("http://192.168.100.9:8000/api/users", {username: user.name, email: user.email, password: user.id});
         var result: any = dataresult.data;
@@ -83,7 +83,7 @@ const DataState = (props: any) =>
             callBack(true);
         }
     
-        }}
+        }}*/
 
    /*const loadMainListClientsRegulares = async (idUs: string, token: any) =>{
         /*const {userToken}=this.context;
@@ -126,7 +126,8 @@ const DataState = (props: any) =>
         listclientsregulares: state.listclientsregulares,
         isLoadUriPhoto: state.isLoadUriPhoto,
         photoloadclient,
-        userAuth: state.userAuth,
+        //userAuth: state.userAuth,
+        //loginGoogle
         //serverErrorMessages: state.serverErrorMessages,
         /*loadMainListClientsRegulares */}}>
        {props.children}   
